@@ -5,7 +5,7 @@
         <responseData field="replies[1].buttons">[{text:"Санкт-Петербург",transition:"/ChooseCity/RememberCity"},{text:"Москва",transition:"/ChooseCity/RememberCity"}]</responseData>
         <a state="/ChooseCity"/>
         <q>Спб</q>
-        <a state=""/>
+        <!--<a state=""/>-->
         <a state="/ChooseCity"/>
     </test-case>
 
