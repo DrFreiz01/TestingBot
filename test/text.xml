@@ -9,7 +9,7 @@
     <test-case id="2">
     <mockData>
         <query method="get">http://api.openweathermap.org/data/2.5/weather?APPID=c27d8259a0f5d66f6f4d9029861afdc5&amp;units=metric&amp;lang=ru&amp;lat=59&amp;lon=30</query>
-        <response type="json" status = "200">{"coord":{"lon":30,"lat":59},"weather":[{"id":803,"main":"Clouds","description":"пасмурно","icon":"04d"}],"base":"stations","main":{"temp":-1.04,"pressure":1010.2,"humidity":97,"temp_min":-1.04,"temp_max":-1.04,"sea_level":1017.81,"grnd_level":1010.2},"wind":{"speed":3.51,"deg":155.002},"clouds":{"all":56},"dt":1514456206,"sys":{"message":0.0027,"country":"RU","sunrise":1514444062,"sunset":1514466563},"id":525988,"name":"Mshinskaya","cod":200}</response>
+        <!--<response type="json" status = "200">{"coord":{"lon":30,"lat":59},"weather":[{"id":803,"main":"Clouds","description":"пасмурно","icon":"04d"}],"base":"stations","main":{"temp":-1.04,"pressure":1010.2,"humidity":97,"temp_min":-1.04,"temp_max":-1.04,"sea_level":1017.81,"grnd_level":1010.2},"wind":{"speed":3.51,"deg":155.002},"clouds":{"all":56},"dt":1514456206,"sys":{"message":0.0027,"country":"RU","sunrise":1514444062,"sunset":1514466563},"id":525988,"name":"Mshinskaya","cod":200}</response>-->
     </mockData>
 
         <q>/start</q>
