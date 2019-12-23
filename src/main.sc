@@ -9,7 +9,7 @@ theme: /
 
     state: GetWeather
         script:
-            openWeatherMapCurrent("metric", "ru", 59, 30).then(function (res) {
+            openWeatherMapCurrent("metric", "ru", 30, 30).then(function (res) {
                 if (res && res.weather) {
                     $reactions.answer("Сегодня в городе Санкт-Петербурге " + res.weather[0].description + ", " + Math.round(res.main.temp) + "°C" );
                 } else {
