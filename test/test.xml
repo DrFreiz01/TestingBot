@@ -6,7 +6,7 @@
         <a state="/ChooseCity"/>
         <q>Спб</q>
         <a state=""/>
-        <!--<a state="/ChooseCity"/>-->
+        <a state="/ChooseCity"/>
     </test-case>
 
     <test-case id = "общий catchAll">
