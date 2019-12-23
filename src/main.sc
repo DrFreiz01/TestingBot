@@ -1,5 +1,5 @@
-require: pizza.sc
-require: cart.sc
+require: /pizza.sc
+require: /cart.sc
 
 theme: /
 
