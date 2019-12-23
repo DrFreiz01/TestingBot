@@ -1,35 +1,25 @@
-require: pizza.sc
-require: cart.sc
+require: requirements.sc
+
 
 theme: /
+    state: Start
+        q!: $regex</start>
+        if: !$client.name
+            a: Здравствуйте! Как я могу к вам обращаться?
+            go!: /Start/GetName
+        else:
+            a: Здравствуйте! Чем я могу вам помочь?
 
-    state: Welcome
-        q!: * *start
-        script:
-            $context.session = {}
-            $context.client = {}
-            $context.temp = {}
-            $context.response = {}
-        a: Привет! Я электронный помощник. 
-        go!: /ChooseCity
+        state: GetName
+            state:
+                q: * @pymorphy.name *
+                script: $client.name = $parseTree.value
+                a: Чем могу помочь, {{ $client.name }}?
 
-    state: ChooseCity || modal = true
-        a: Выберите свой город.
-        buttons:
-            "Санкт-Петербург" -> ./RememberCity
-            "Москва" -> ./RememberCity
+            state:
+                event: noMatch
+                a: Чем я могу вам помочь?
 
-        state: RememberCity
-            script:
-                $client.city = $request.query;
-                $session.cart = [];
-            go!: /ChoosePizza  
-
-        state: ClickButtons
-            q: *
-            a: Нажмите, пожалуйста, кнопку.
-            go!: ..
-
-    state: CatchAll
-        q!: *
-        a: Я вас не понимаю.
+    state:
+       event!: noMatch
+       a: Пожалуйста, уточните запрос.
