@@ -1,5 +1,5 @@
 theme: / 
     state: start 
-    q!: * *start
-    a: Привет. Рандом?
-    go: / 
+        q!: * *start
+        a: Привет. Рандом?
+        go: / 
