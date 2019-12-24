@@ -1,6 +1,4 @@
 theme: / 
     state: start 
-        q: * *start
+        q!: *
         a: Привет. Рандом?
-        q: *
-        a: Точно?
