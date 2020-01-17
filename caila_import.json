@@ -1,0 +1,24 @@
+{
+  "project" : {
+    "id" : "crisp_support_bot-81761537-ePp",
+    "name" : "crisp_support_bot-81761537-ePp",
+    "folder" : "/"
+  },
+  "settings" : {
+    "language" : "ru",
+    "spellingCorrection" : false,
+    "classificationAlgorithm" : "sts",
+    "timezone" : "UTC",
+    "extendedSettings" : { }
+  },
+  "intents" : [ ],
+  "entities" : [ ],
+  "enabledSystemEntities" : [
+    "duckling.number",
+    "duckling.time",
+    "duckling.duration",
+    "duckling.phone-number",
+    "duckling.email",
+    "duckling.url"
+  ]
+}

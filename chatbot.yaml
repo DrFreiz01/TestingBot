@@ -1,5 +1,33 @@
-name:
-  - hello
+name: echo-template
 
-entryPoint: 
+
+dependencies:
+  - name: common
+    type: git
+    url: https://bitbucket.org/just-ai/zb-common
+    version: heads/master
+
+entryPoint:
   - main.sc
+
+tests:
+  include:
+    - test.xml
+
+nlp:
+  tokenizer: myStem
+  lengthLimit: 
+    symbols: 500
+  timeLimit: 
+    timeout: 30000
+  vocabulary: common-vocabulary.json 
+    
+classifier:
+  enable: true
+  engine: sts
+  noMatchThreshold: 0.45
+  parameters:
+    algorithm: match-aligner
+
+exampleGroups:
+  - src/dictionaries/crisp.json

@@ -1,0 +1,231 @@
+{
+  "positions" : [ {
+    "id" : "/Start",
+    "name" : "1",
+    "actionTitles" : [ null ],
+    "x" : 200,
+    "y" : 9778
+  }, {
+    "id" : "/CatchAll",
+    "name" : "2",
+    "actionTitles" : [ null ],
+    "x" : 200,
+    "y" : 9580
+  }, {
+    "id" : "/Hello",
+    "name" : "3",
+    "actionTitles" : [ null ],
+    "x" : 200,
+    "y" : 9332
+  }, {
+    "id" : "/howToStart",
+    "name" : "4",
+    "actionTitles" : [ null ],
+    "x" : 200,
+    "y" : 9034
+  }, {
+    "id" : "/whatsYourName",
+    "name" : "5",
+    "actionTitles" : [ null ],
+    "x" : 200,
+    "y" : 8836
+  }, {
+    "id" : "/Bye",
+    "name" : "6",
+    "actionTitles" : [ null ],
+    "x" : 200,
+    "y" : 8638
+  }, {
+    "id" : "/Thanks",
+    "name" : "7",
+    "actionTitles" : [ null ],
+    "x" : 200,
+    "y" : 8440
+  }, {
+    "id" : "/AllNotWorking",
+    "name" : "8",
+    "actionTitles" : [ null, null ],
+    "x" : 200,
+    "y" : 8192
+  }, {
+    "id" : "/WhatDoYouKnow",
+    "name" : "9",
+    "actionTitles" : [ null ],
+    "x" : 200,
+    "y" : 7994
+  }, {
+    "id" : "/WhatDoYouKnow/1",
+    "name" : "10",
+    "actionTitles" : [ null ],
+    "x" : 736,
+    "y" : 7919
+  }, {
+    "id" : "/Compliment",
+    "name" : "11",
+    "actionTitles" : [ null ],
+    "x" : 200,
+    "y" : 7796
+  }, {
+    "id" : "/Stupid",
+    "name" : "12",
+    "actionTitles" : [ null ],
+    "x" : 200,
+    "y" : 7498
+  }, {
+    "id" : "/templatesEnglish",
+    "name" : "13",
+    "actionTitles" : [ null ],
+    "x" : 200,
+    "y" : 7150
+  }, {
+    "id" : "/reanimateCommunity",
+    "name" : "14",
+    "actionTitles" : [ null ],
+    "x" : 200,
+    "y" : 6902
+  }, {
+    "id" : "/youBot",
+    "name" : "15",
+    "actionTitles" : [ null ],
+    "x" : 200,
+    "y" : 6654
+  }, {
+    "id" : "/deleteMe",
+    "name" : "16",
+    "actionTitles" : [ null ],
+    "x" : 200,
+    "y" : 6456
+  }, {
+    "id" : "/question",
+    "name" : "17",
+    "actionTitles" : [ null ],
+    "x" : 200,
+    "y" : 6258
+  }, {
+    "id" : "/Images",
+    "name" : "18",
+    "actionTitles" : [ null ],
+    "x" : 200,
+    "y" : 5910
+  }, {
+    "id" : "/Socials",
+    "name" : "19",
+    "actionTitles" : [ null, null, null ],
+    "x" : 200,
+    "y" : 5612
+  }, {
+    "id" : "/EngWebhooks",
+    "name" : "20",
+    "actionTitles" : [ null, null ],
+    "x" : 200,
+    "y" : 5364
+  }, {
+    "id" : "/webhooks",
+    "name" : "21",
+    "actionTitles" : [ null ],
+    "x" : 200,
+    "y" : 5166
+  }, {
+    "id" : "/webhooksNotWorking",
+    "name" : "22",
+    "actionTitles" : [ null, null ],
+    "x" : 200,
+    "y" : 4868
+  }, {
+    "id" : "/Whatsapp",
+    "name" : "23",
+    "actionTitles" : [ null ],
+    "x" : 200,
+    "y" : 4520
+  }, {
+    "id" : "/sorryIDontGetIt",
+    "name" : "24",
+    "actionTitles" : [ null ],
+    "x" : 200,
+    "y" : 4322
+  }, {
+    "id" : "/website",
+    "name" : "25",
+    "actionTitles" : [ null ],
+    "x" : 200,
+    "y" : 3924
+  }, {
+    "id" : "/howAreYou",
+    "name" : "26",
+    "actionTitles" : [ null ],
+    "x" : 200,
+    "y" : 3726
+  }, {
+    "id" : "/recommend",
+    "name" : "27",
+    "actionTitles" : [ null, null ],
+    "x" : 200,
+    "y" : 3478
+  }, {
+    "id" : "/sendOut",
+    "name" : "28",
+    "actionTitles" : [ null ],
+    "x" : 200,
+    "y" : 3280
+  }, {
+    "id" : "/moreBotsInOneAccount",
+    "name" : "29",
+    "actionTitles" : [ null ],
+    "x" : 200,
+    "y" : 3082
+  }, {
+    "id" : "/ScriptError:",
+    "name" : "30",
+    "actionTitles" : [ null ],
+    "x" : 200,
+    "y" : 2534
+  }, {
+    "id" : "/UseHTTP",
+    "name" : "31",
+    "actionTitles" : [ null ],
+    "x" : 200,
+    "y" : 2236
+  }, {
+    "id" : "/test",
+    "name" : "32",
+    "actionTitles" : [ null, null ],
+    "x" : 200,
+    "y" : 1888
+  }, {
+    "id" : "/talkToBot",
+    "name" : "33",
+    "actionTitles" : [ null, null, null ],
+    "x" : 200,
+    "y" : 1590
+  }, {
+    "id" : "/arduino",
+    "name" : "34",
+    "actionTitles" : [ null, null ],
+    "x" : 200,
+    "y" : 1342
+  }, {
+    "id" : "/howold",
+    "name" : "35",
+    "actionTitles" : [ null ],
+    "x" : 200,
+    "y" : 1144
+  }, {
+    "id" : "/developer",
+    "name" : "36",
+    "actionTitles" : [ null ],
+    "x" : 200,
+    "y" : 846
+  }, {
+    "id" : "/mailing",
+    "name" : "37",
+    "actionTitles" : [ null, null, null ],
+    "x" : 200,
+    "y" : 448
+  }, {
+    "id" : "/developerOnMyOwn",
+    "name" : "38",
+    "actionTitles" : [ null, null ],
+    "x" : 200,
+    "y" : 200
+  } ]
+}
