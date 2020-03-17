@@ -1,1 +1,1 @@
-this is develop branch of hoff-bot-prj01
+this is hoff-bot-prj01

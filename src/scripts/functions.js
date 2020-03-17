@@ -6,7 +6,7 @@ function getcity() {
 
 //Функция для таймаута ответа бота в милисекундах, со значением по умолчанию в 1500 миллисекунд
 function sleep(milliseconds) { 
-    milliseconds = typeof milliseconds !== 'undefined' ? milliseconds : '1500';
+    milliseconds = typeof milliseconds !== "undefined" ? milliseconds : "1500";
     var timeStart = new Date().getTime(); 
     while (true) { 
         var elapsedTime = new Date().getTime() - timeStart; 
@@ -23,7 +23,7 @@ function getStatus() {
     var url = $session.wsUrl;
     var options = {
         dataType: "json",
-        method: "POST",
+        method: $session.wsMethod,
         headers: {},
         body: $session.wsBody
     };
@@ -43,32 +43,31 @@ function arrayObjectIndexOf(myArray, property, searchTerm) {
     }
     return -1;
 }
-    
-//          script:
-//            var headers = {
-//            };
-//            var result = $http.query("http://95.181.203.86:88/SalesExternalWebServices/GetSalesOrders.ashx", {
-//                method: "POST",
-//                headers: headers,
-//                query: $session,
-//                body: _.template("{\r    \"RequestSource\" : \"BOT\",\r    \"SearchType\":\"ByAttributes\",\r    \"SearchData\":\r        {\r            \"TelephoneNum\" : \"{{$session.uid1Phone}}\",\r            \"OrderNum\" : \"{{$session.uid1}}\"\r        }\r}", {variable: '$session'})($session),
-//                dataType: "json",
-//                timeout: 0 || 10000
-//            });
-//            var $httpResponse = result.data;
-//            $session.httpStatus = result.status;
-//            $session.httpResponse = $httpResponse;
-//            if (result.isOk && result.status >= 200 && result.status < 300) {
-//                addClientVarToSession("RequestSource", $httpResponse.RequestSource);
-//                addClientVarToSession("RequestStatus", $httpResponse.RequestStatus);
-//                addClientVarToSession("RequestInfo", $httpResponse.RequestInfo);
-//                addClientVarToSession("RequestInfoID", $httpResponse.RequestInfoID);
-//                addClientVarToSession("AmountToPay", $httpResponse.AmountToPay);
-//                addClientVarToSession("AmountTotal", $httpResponse.AmountTotal);
-//                addClientVarToSession("DeliveryAddress", $httpResponse.DeliveryAddress);
-//                addClientVarToSession("DeliveryServiceTelephoneNum", $httpResponse.DeliveryServiceTelephoneNum);
-//                addClientVarToSession("OrderList", $httpResponse.OrderList);
-//                $reactions.transition("/001/SDD/SDD-04-good");
-//            } else {
-//                $reactions.transition("/001/SDD/SDD-04-bad");
-//            }
+
+//Функция подсчета и сортировки повторяющихся элементов в строке "str", разбиваемой в массив символом "/"
+function strSortNCount(str) {
+    str = typeof str !== "undefined" ? str : "/";                   //на случай ошибки (TypeError: Cannot read property "split" from undefined)
+    var arr = str.split("/");                                       //делим строку, содержащую полный путь стейта по разделителю в кавычках
+    for (var len = arr.length, i = len; --i >= 0;) {                //объединяем повторяющиеся элементы массива и считаем их частотность
+      if (arr[arr[i]]) {
+        arr[arr[i]] += 1;
+        arr.splice(i, 1);
+      } else {
+        arr[arr[i]] = 1;
+      }
+    }
+    arr.sort(function(a, b) {                                       //сортируем элементы массива по убыванию их частотности
+      return arr[b] - arr[a];
+    });                                                             //задаем массив с элементами, по которым будет фильтрация
+    var toRemove = ["ИОБ","ИКО","ИТО","ИУО","ИУД","ИУС","ИУК","ЛОБ","ЛКБ","ЗОБ","ЗСТ","ЗСГ","ЗИМ","СОБ","СНА","СКО","ПОБ","КОБ","КВЫ","КНА","КНЕ","МОБ","МБО","МНД","МНЦ","МТТ"];
+    arr = arr.filter(function(x) {                                  //оставляем в массиве только те элементы, которые перечислены в массиве toRemove
+        return toRemove.indexOf(x) !== -1;                           
+    });
+//    var stringResult = JSON.stringify(arr, function(k, v) {       //выводим названия стейтов и их частотность с переносом на следующую строку
+//      if (k === '') return v;
+//      return `${arr[v]} - ${v}`;
+//    },1);
+    var stringResult = arr.join(", ");                              //выводим названия стейтов в виде строки без переноса на следующую строку
+    return stringResult;
+}
+
