@@ -1,4 +1,10 @@
-state: ChoosePizza
+require: pizza.csv
+    name = pizza
+    var = pizza
+
+theme: /
+
+    state: ChoosePizza
         a: Какую пиццу будем заказывать сегодня?
         script:
             for (var id = 1; id < Object.keys(pizza).length + 1; id++) {
@@ -52,4 +58,3 @@ state: ChoosePizza
                 "Меню" -> /ChoosePizza 
         buttons:
                 "Оформить заказ" -> /Cart
-                
