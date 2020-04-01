@@ -41,6 +41,23 @@ theme: /
         script:
             $session.pizza_id = parseInt($request.query);
         go!: /ChooseQuantity
+        
+    state: ChooseQuantity
+        a: Выберите, пожалуйста, количество:
+        buttons:
+            "1" -> GetQuantity
+            "2" -> GetQuantity
+            "3" -> GetQuantity
+
+        state: GetQuantity
+            script:
+                $session.quantity = parseInt($request.query);
+                $session.cart.push({name: $session.pizza_name, id: $session.pizza_id, quantity: $session.quantity});
+        a: Хотите ли выбрать что-нибудь еще, или перейдем к оформлению заказа?
+        buttons:
+                "Меню" -> /ChoosePizza 
+        buttons:
+                "Оформить заказ" -> /Cart
 
     state: ChooseQuantity
         a: Выберите, пожалуйста, количество:
