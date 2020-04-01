@@ -1,66 +1,9 @@
-name: hoff-bot-clients
+name: pizza-test
 
-botEngine: v2
-language: ru
-
-sts:
-    noMatchThreshold: 0.2
-
-caila:
-    noMatchThreshold: 0.2
-
-
-entryPoint: main.sc
+entryPoint:
+    - main.sc
 
 tests:
-    include:
-        - test.xml
-        - test_main.xml
-        - test_003-faq-Loyalty.xml
-        
-    exclude:
-            
-#injector:
+  include:
+    - test.xml
 
-
-messages:
-    onError:
-        defaultMessage: Ошибка.
-        locales:
-            ru: Ошибка.
-            en: Oops! I have a bug in my program.
-
-dependencies:
-  - name: common
-    type: git
-    url: https://bitbucket.org/just-ai/zb-common
-    version: heads/master
-    
-nlp:
-    morphology: pyMorphy
-    tokenizer: myStem
-    lengthLimit:
-        symbols: 1200
-    vocabFile: common-vocabulary.json
-    speller:
-        dictionary: prepared-ruscorpora.txt
-    vocabulary: common-vocabulary.json
-    timeLimit: 
-        timeout: 1500
-
-classifier:
-    enable: true
-    engine: sts
-    noMatchThreshold: 0.2
-    parameters:
-        algorithm: aligner2
-
-scriptsPreLoad:
-  global:
-   - /jslib/moment.min.js
-   - /jslib/underscore.js
-   - /jsapi/common.js
-   - /jsapi/http.js
-  local:
-   - /jsapi/mail.js
-   - /jsapi/reactions.js
