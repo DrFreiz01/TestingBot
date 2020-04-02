@@ -10,7 +10,7 @@ theme: /
             $context.client = {}
             $context.temp = {}
             $context.response = {}
-        a: Привет! Я электронный помощник. 
+        a: Привет! Я электронный. 
         go!: /ChooseCity
 
     state: ChooseCity || modal = true
