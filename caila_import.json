@@ -1,0 +1,23 @@
+{
+  "project" : {
+    "id" : "pizza_bot-118496027-dXf",
+    "name" : "pizza_bot-118496027-dXf",
+    "folder" : "/"
+  },
+  "settings" : {
+    "language" : "ru",
+    "spellingCorrection" : false,
+    "classificationAlgorithm" : "sts",
+    "timezone" : "UTC"
+  },
+  "intents" : [ ],
+  "entities" : [ ],
+  "enabledSystemEntities" : [
+    "duckling.number",
+    "duckling.time",
+    "duckling.duration",
+    "duckling.phone-number",
+    "duckling.email",
+    "duckling.url"
+  ]
+}
