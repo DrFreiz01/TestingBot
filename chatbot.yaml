@@ -1,9 +1,0 @@
-name: pizza-test
-
-entryPoint:
-    - main.sc
-
-tests:
-  include:
-    - test.xml
-
