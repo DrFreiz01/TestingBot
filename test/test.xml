@@ -1,4 +1,14 @@
 <test>
     <test-case>
+        <q>привет</q>
+        <a>Привет! Могу подсказать расписание поездов. Что вас интересует?</a>
     </test-case>
-</test>
+    <test-case>
+        <q>пока</q>
+        <a state="/goodbye"/>
+    </test-case>
+    <test-case>
+        <q>нужен билет из москвы в казань на завтра в купе</q>
+        <a state="/GetTrainSchedule"/>
+    </test-case>
+</test>    

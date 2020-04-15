@@ -1,0 +1,38 @@
+{
+  "classes" : [
+    {
+      "id" : "schedule",                          
+      "path" : "/Train/Schedule",              
+      "description" : "",                       
+      "disabled" : false,                       
+      "phrases" : [                             
+        "интересует расписание",
+        "по каким дням ходит поезд",
+        "хочу узнать расписание",
+        "расписание поездов"
+      ]
+    },
+    {
+      "id" : "tickets",
+      "path" : "/Train/Tickets",
+      "description" : "",
+      "disabled" : false,
+      "phrases" : [
+        "налчие билетов",
+        "есть ли места",
+        "хочу узнать про билеты на поезд"
+      ]
+    },
+    {
+      "id" : "price",
+      "path" : "/Train/Price",
+      "description" : "",
+      "disabled" : false,
+      "phrases" : [
+        "сколько стоит билет",
+        "стоимость билетов",
+        "узнать цену на билет"
+      ]
+    }
+  ]
+}

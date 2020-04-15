@@ -1,580 +1,859 @@
-# -----------------------------------------------------------------------------
-# ------------------------ Подключение слот-филинга ---------------------------
-# -----------------------------------------------------------------------------
-
-#подключаем модуль слот-филлинга
-require: slotfilling/slotFilling.sc
-    module = sys.zb-common
-
-# ----------------------------------------------------------------------------
-# ------------------------ Подключение справочников --------------------------
-# ----------------------------------------------------------------------------
-
-#Справочник функций javascript
-require: scripts/functions.js
-
-#Справочник цифр
-require: number/number.sc
-    module = common
-
-#Справочник бизнес-юнитов
-require: dictionaries/bunits.csv
-    name = bunit
-    var = $bunit
-
-#Справочник городов
-require: dictionaries/cities-ru.csv
-    name = city
-    var = $city
-
-#Справочник паттернов
-require: scenarios/patterns.sc
-
-# ----------------------------------------------------------------------------
-# -------------------------- Подключение сценариев ---------------------------
-# ----------------------------------------------------------------------------
-
-require: scenarios/S001-support-FAQ-hr.sc
-
-#require: scenarios/archive/operators.sc
-#require: scenarios/archive/edu02.sc
-
-# -----------------------------------------------------------------------------
-# --------------------------- Скрипты-обработчики -----------------------------
-# -----------------------------------------------------------------------------
-
-init:
-
-# Запрос переопределение всех ошибок
-
-#    bind("onAnyError", function($context) {
-#        $reactions.answer('К сожалению, по техническим причинам я не смогу сейчас помочь. Попробуйте переключиться на оператора, отправиа фразу "[Переключить на оператора]" в чат или обратитесь позже.');
-#        $reactions.inlineButtons({text: "Переключить на оператора", transition: "/Operator"})
-#    });
-
-        # или <a href="https://hoff.ru/feedback" target="_blank">отправить email в рубрику «Напишите нам» на сайте hoff.ru</a>
-        # $reactions.inlineButtons({text: "Форма обращения по Email", url: "https://hoff.ru/feedback"});
-
-# Глобальные таймауты при неответе клиента (120 = 2 мин | 180 = 3 мин | 300 сек = 5 мин)
-# метод .startsWith(); проверяет текст, начиная с начала строки, поэтому все вложенные стейты тоже буду ему сответствовать.  
- 
-
-    #Только, когда находимся в любом стейте, кроме уточнения вопросов, прощания, оценки или закрытия сессии
-    bind("postProcess", function() {
-        if (!$jsapi.context().currentState.startsWith("/ВопросыОстались")                               // кроме стейта, уточняющего наличие доп вопросов у клиента
-        &&  !$jsapi.context().currentState.startsWith("/ВопросПереформулируйте")                        // кроме стейта, с просьбой переформулировать вопрос
-        &&  !$jsapi.context().currentState.startsWith("/ВопросУточните")                                // кроме стейта, с просьбой уточнить вопрос
-        &&  !$jsapi.context().currentState.startsWith("/Начало")                                        // кроме стейта, с приветствием
-        &&  !$jsapi.context().currentState.startsWith("/Operator")                                      // кроме стейта, переводящего на стейт Switch
-        &&  !$jsapi.context().currentState.startsWith("/CloseSessionByTimeout")                         // кроме стейта, переводящего на стейт Bye по таймауту
-        &&  !$jsapi.context().currentState.startsWith("/Bye")                                           // кроме стейта, переводящего на оценку удовлетворенности
-        &&  !$jsapi.context().currentState.startsWith("/Оценка")                                        // кроме стейта, уточняющего уровень удовлетовренности у клиента (также на этот стейт попадаем, когда оператор закрывает чат)
-        &&  !$jsapi.context().currentState.startsWith("/CloseSession")                                  // кроме стейта, закрывающего сессию
-        &&  !testMode())
-            {
-                $reactions.timeout({interval: 120, targetState: '/ВопросыОстались'});
-            }
-    });
-
-    #Только, когда находимся в стейте, с приветствием
-    bind("postProcess", function() {
-        if ($jsapi.context().currentState.startsWith("/Начало")                                         // когда в стейте, с приветствием
-        &&  !testMode())
-            {
-                $reactions.timeout({interval: 600, targetState: '/CloseSession'});
-            }
-    });
-
-    #Только, когда находимся в стейте, уточняющем не сотались ли еще вопросы
-    bind("postProcess", function() {
-        if ($jsapi.context().currentState.startsWith("/ВопросыОстались")                                // когда в стейте, уточняющем наличие доп вопросов у клиента
-        ||  $jsapi.context().currentState.startsWith("/ВопросПереформулируйте")                         // когда в стейте, с просьбой переформулировать вопрос
-        ||  $jsapi.context().currentState.startsWith("/ВопросУточните")                                 // когда в стейте, с просьбой уточнить вопрос
-        &&  !testMode())
-            {
-                $reactions.timeout({interval: 180, targetState: '/CloseSessionByTimeout'});
-            }
-    });
-
-    #Только, когда находимся в стейтах прощания или оценки
-    bind("postProcess", function() {
-        if ($jsapi.context().currentState.startsWith("/Bye")                                            // когда в стейте, переводящем на оценку удовлетворенности
-        ||  $jsapi.context().currentState.startsWith("/Оценка")                                         // когда в стейте, уточняющем уровень удовлетовренности у клиента (также на этот стейт попадаем, когда оператор закрывает чат)
-        &&  !testMode())
-            {
-                $reactions.timeout({interval: 300, targetState: '/CloseSession'});
-            }
-    });
-
-# Препроцсс-обработчик, который отлавливает стейт, с которого был переход на оператора
-
-    bind("preProcess", function(ctx) {
-        var currState = ctx.currentState;
-        var currContx = ctx.contextPath;
-        var nextState = ctx.temp.classifierTargetState;
-        if (currContx != "/Operator"
-        &&  nextState == "/Operator")
-            {
-                ctx.session.smartSwitchLastState = currContx;
-            }
-        //$reactions.answer("CS: "+currState);
-        //$reactions.answer("CC: "+currContx);
-        //$reactions.answer("NS: "+nextState);
-        //$reactions.answer(ctx.session.smartSwitchLastState);
-    });
-
-# Переопределение ответа бота, когда он начинает повторяться
-
-    bind("postProcess", function($context) {
-        var currentAnswer = $context.response.replies.reduce(function(allAnswers, reply) {
-            allAnswers += reply.type === "text" ? reply.text : "";  
-            return allAnswers;
-        },"");
-        if ($context.session.lastAnswer === currentAnswer && !testMode()) {
-            $context.response.replies = [
-            {
-                "type":"text",
-                "text":"Потребуется помощь оператора."
-            }
-            ];
-            $reactions.transition({value: "/Operator", deferred: false});       // deferred: false = go!:
-        }
-        $context.session.lastAnswer = currentAnswer;
-    });
-
-#    bind("postProcess", function($context) {
-#        var currentAnswer = $context.response.replies.reduce(function(allAnswers, reply) {
-#            allAnswers += reply.type === "text" ? reply.text : "";  
-#            return allAnswers;
-#        },"");
-#        if ($context.session.lastAnswer === currentAnswer && !testMode()) {
-#            $context.response.replies = [
-#            {
-#                "type":"text",
-#                "text":"..."
-#            }
-#            ];
-#            $reactions.transition("/Operator");
-#        }
-#        $context.session.lastAnswer = currentAnswer;
-#    });
-
-# Переопределение последовательнсоти матчера
-
-    bind("selectNLUResult", function(ctx) {                                     // задаем обработчик для фазы `selectNLUResult`
-            log(ctx.nluResults);                                                // выводим результаты в лог
-            if (ctx.nluResults.intents.length > 0)
-                {
-                    ctx.nluResults.selected = ctx.nluResults.intents[0];        // используем результат от интентов
-                    return;
-                }
-            if (ctx.nluResults.patterns.length > 0)
-                {
-                    ctx.nluResults.selected = ctx.nluResults.patterns[0];       // если результата от интентов нет, используем паттерны
-                    return;
-                }
-            if (ctx.nluResults.examples.length > 0)
-                {
-                    ctx.nluResults.selected = ctx.nluResults.examples[0];       // если результата от интентов и паттернов нет, используем примеры
-                }
-    });
-
-# Глобальные конвертеры
-
-    if (!$global.$converters) {
-        $global.$converters = {};
-    }
-    $global.$converters
-        .BunitCSVConverter = function(parseTree) {
-            var id = parseTree.bunit[0].value;
-            return $bunit[id].value;
-        };
-    $global.$converters
-        .CityCSVConverter = function(parseTree) {
-            var id = parseTree.city[0].value;
-            return $city[id].value;
-        };
-
-# Сбор истории переписки для команды switch
-# Запрос препроцесс собирает реплики клиента, а постпроцесс — реплики бота
-# В переменную $context.session.chatHistorySTAT нарастающим итогом записывается значение полного пути стейта, из которого взят ответ бота
-
-    $jsapi.bind({
-        type: "preProcess",
-        name: "savingVisitorChatHistory",
-        path: "/",
-        handler: function($context) {
-            $context.client.chatHistory = $context.client.chatHistory || [];
-            var chatHistory = $context.client.chatHistory;
-            if ($context.request.query) {
-                chatHistory.push({type: "Клиент", state: "", text: $context.request.query});
-            }
-            chatHistory.splice(0, chatHistory.length - 10);
-        }
-    });
-    $jsapi.bind({
-        type: "postProcess",
-        name: "savingBotChatHistory",
-        path: "/",
-        handler: function($context) {
-            $context.client.chatHistory = $context.client.chatHistory || [];
-            var chatHistory = $context.client.chatHistory;
-            if ($context.response.replies) {
-                $context.response.replies
-                    .filter(function(val) { return val.type === "text"; })
-                    .forEach(function(val) { chatHistory.push({ type: "BOT", state: "( Тема: "+$context.currentState+" )", text: val.text }); });
-            }
-            chatHistory.splice(0, chatHistory.length - 10);
-            $context.session.chatHistorySTAT += $context.currentState;
-        }
-    });
-
-# -----------------------------------------------------------------------------
-# ----------------------------- Главный сценарий ------------------------------
-# -----------------------------------------------------------------------------
+require: requirements.sc
 
 theme: /
+    state: Start
+        q!: * *start
+        a: Привет! Могу подобрать билеты на поезд. Напишите, откуда, куда и когда вы собираетесь поехать?
+        script: $session = {}
 
-    state: Начало
-        intent!: /Общие/MainMenu
-        intent!: /Общие/Hello
-        q!: (*start/*старт/*ыефке/*cnfhn)
-        a:  Привет! Я виртуальный помощник сотрудников Hoff. Могу подсказать:
-            <ul>
-                <li>даты выплат [зарплаты] и [премии];</li>
-                <li>[коды магазинов], дирекций, прочих БЮ и кто их руководитель;</li>
-                <li>[расписание автобуса];</li>
-                <li>[Все навыки].</li>
-#                <li><a href="http://confluence.kifr-ru.local:8090/pages/viewpage.action?pageId=46041071" target="_blank">Все навыки</a>.</li>
-            </ul>
-            По другим кадровым вопросам я подключаю специалистов по графику (c 10 до 18 МСК, пн-пт).
-            По техническим вопросам:
-            <ul>
-                <li>звоните в [helpdesk] на внутренний номер 333+1.</li>
-                <li>или пишите письмо на почту <a href="mailto:helpdesk@hoff.ru" target="_blank">helpdesk@hoff.ru</a></li>
-            </ul>
-            Спрашивайте, не стесняйтесь... ;)
-        random:
-            a:  Чем могу помочь?
-            a:  Какой ваш вопрос?
-            a:  Что бы вы хотели обсудить?
-            a:  В чём ваш вопрос?
+        state:
+            q!: (привет|приветствую|приветики)
+            q!: (здравствуйте|здраствуйте|здрасьте|здрасте)
+            q!: (здорово|здоров|дарова|даров)
+            q!: (добрый|доброго)
+            q!: (добрый день|доброго дня|день добрый)
+            q!: (добрый вечер|доброго вечера|вечер добрый)
+            q!: (доброе утро|доброго утра|утро доброе)
+            q!: (доброй ночи)
+            a: Укажите, пожалуйста, город отправления, город прибытия и дату поездки^hello
+        
+    state: GetTrainSchedule
+        intent!: /GetRawDirection
+        
+        # a: Parsed Tree: {{ toPrettyString($parseTree) }}
+        a: All entities: {{ toPrettyString($entities) }}
 
-        state: ЧтоТыУмеешь || noContext=true
-            intent!: /Общие/ЧтоТыУмеешь
-            q: * {все * навыки} *
-            script:
-                sleep();
-            a:  Со всеми вопросами, на которые я отвечаю, можно ознакомиться по ссылке: <a href="http://confluence.kifr-ru.local:8090/pages/viewpage.action?pageId=46041071" target="_blank">все навыки</a>.</li>.
-                Спрашивайте, не стесняйтесь...
-            go!: /S001/К00
+        script:
+            $session = {}
+            $session.retryParam = 2; // параметр число переспросов
+            $session.retry = 0;
+            $session.result = ""
+            var loc0;
+            var loc1;
+            var locationsCount = 0;
+            var datesCount = 0;
+            var date_result = {};
+            var datereturn_result = {};
 
-        state: helpdesk || noContext=true
-            intent!: /Общие/Helpdesk
-            q: (*техвопрос | *тех вопрос | *helpdesk | *рудзвуыл)
-            q: (*helpdesk | *рудзвуыл | *хелпдеск | *tkgltcr)
-            script:
-                sleep();
-            a:  В службе технической поддержки Hoff (helpdesk):
-                <ul>
-                    <li>работают квалифицированные специалисты, только они обладают сверхспособностью договариваться с техникой, чтобы она снова заработала, даже казалось бы в безнадёжных ситуациях.</li>
-                </ul>
-                При проблемах с техникой:
-                <ul>
-                    <li>смело звоните в helpdesk на внутренний номер 333+1;</li>
-                    <li>или пишите письмо на почту <a href="mailto:helpdesk@hoff.ru" target="_blank">helpdesk@hoff.ru</a></li>
-                </ul>
-                В обоих случаях:
-                <ul>
-                    <li>будьте готовы указать ваш <b>табельный номер</b>, а также имя компьютера (на котором возникла проблема) или его IP адрес;</li>
-                    <li>конечно же, наизусть достаточно помнить только табельный номер, остальные данные чаще всего выведены на рабочий стол компьютера справа над часами и датой (Host Name - это имя компьютера, IP Addres - это IP адрес компьютера), либо приклены стикером на монитор.</li>
-                </ul>        
-            a:  И ещё, последнее по порядку, но не по значению:
-                <ul>
-                    <li>обращаясь в тех. поддержку всегда будьте вежливы и корректны, помните, что специалист, принимающий вашу заявку и специалист, занимающийся ее решением могут оказаться разными людьми, да ещё и работающими в разных отделах, а то и в разных городах или даже частях нашей страны.</li>
-                    <li>работа специалиста в линии связана с определенной долей стресса, когда за короткий промежуток времени необходимо принять ответственное решение или правильно оформить вашу заявку и отправить её по назначению, поэтому хорошим тоном с вашей стороны будет как можно точнее описать суть проблемы, нежели начинать диалог с высказывания недовольства по поводу сложившейся ситуации, даже при повторном обращении.</li>
-                    <li>подавляющая часть процессов в работе тех. поддержки уже отлажена и проверена на значимом количестве ситуаций с учётом всех деталей, поэтому бессмысленно настаивать на своём видении того, как должно быть, вы лишь в праве предложить свой вариант при желании, но не преподносить его как единственно верный.</li>
-                </ul>
+            
+            var locations = [];
+            var locationsFrom = [];
+            var locationsTo = [];
+            var dates = [];
+            
+            var locationsCount = 0;
+            var loctoCount = 0;
+            var locfromCount = 0;
+            var datesCount = 0;
+            var roundTrip = 0;
+            
+            // parse entities
+            if ($entities) {
+                var entities_count = $entities.length;
+                for (var i=0; i<entities_count; i++) {
+                    if ($entities[i]["pattern"] == "LocationNewDictionary") locations.push($entities[i]["value"]);
+                    if ($entities[i]["pattern"] == "LocationTo") locationsTo.push($entities[i]["value"]);
+                    if ($entities[i]["pattern"] == "LocationFrom") locationsFrom.push($entities[i]["value"]);
+                    if ($entities[i]["pattern"] == "Date") dates.push($entities[i]["value"]);
                     
-# ------------------- Действие, если бот непонимает клиента -------------------
-    
-    #отлов всех нераспознанных фраз клиента
-    state: CatchAll || noContext=true
-        event!: noMatch
-        script:
-            sleep();
-        go!: /Operator
-
-# ----------------------- Уведомление о смене контекста -----------------------
-
-    state: ContextChangeAcception
-        script:
-            $response.replies = [];
-        a:  — ВНИМАНИЕ —
-            <ul>    
-                <li>вы написали: "{{ $request.query }}"</li>
-            </ul>
-            Вы уверены, что хотите перейти к другому вопросу? (Да/Нет)
-            <ul>
-                <li>нажмите "[Да]" и работа по предыдущему вопросу прервётся, нажмите "[Нет]" и мы продожим рассмотрение предыдущего вопроса.</li>
-            </ul>
-        inlineButtons:
-            {text:"Да"}  -> ./ContextChangeAcception-yes
-            {text:"Нет"} -> ./ContextChangeAcception-no
-
-        state: ContextChangeAcception-yes 
-            intent: /Общие/Согласие
-            go!: {{ $session.nextState }}
-   
-        state: ContextChangeAcception-no
-            intent: /Общие/Отказ
-            go!: {{ $session.lastState }}
-
-# ------------------------- Переключение на оператора -------------------------
-
-    #можно просто написать "ожидайте, пожалуйста..." 
-    state: Operator || noContext=true
-        intent!: /Общие/Operator
-        script:
-            sleep();
-#        a:  — Подключаю оператора —
-#            <ul>
-#                <li>для возврата к виртуальному помощнику введите любую из команд: /close, /bot, /закрыть чат, /вернуть бота.</li>
-#            </ul>
-#            Ожидайте, пожалуйста...
-        go!: ./Switch
-
-        state: Switch || noContext=true
-            script:
-                smartSwitch($session.smartSwitchLastState);
-
-#        state: Switch || noContext=true
-#            script:
-#                $context.session.ltxFirstMessage = "—————————————————" + "\n" + "ИСТОРИЯ ДИАЛОГА до переключения на оператора:" + "\n" + $context.client.chatHistory.map(function(val) {return val.type + "\n" + val.state + "\n" + val.text;}).join("\n\n") + "\n" + "—————————————————" + "\n" + "Рекомендации бота (тематики):" + "\n" + strSortNCount($context.session.chatHistorySTAT);
-#                $response.replies.push({
-#                    type:"switch",
-#                    appendCloseChatButton: false,
-#                    closeChatPhrases: ["/close", "/сдщыу",
-#                                        "/bot", "/ище","/бот", "/,jn",
-#                                        "/закрыть чат", "/pfrhsnm xfn", "/закройте чат", "/pfrhjqnt xfn", "/закрой чат", "/pfrh* xfn",
-#                                        "/вернуть бота", "/dthyenm ,jnf", "/верните бота", "/dthybnt ,jnf", "/верни бота", "/dthyb ,jnf",
-#                                        "\close", "\сдщыу",
-#                                        "\bot", "\ище","\бот", "\,jn",
-#                                        "\закрыть чат", "\pfrhsnm xfn", "\закройте чат", "\pfrhjqnt xfn", "\закрой чат", "\pfrh* xfn",
-#                                        "\вернуть бота", "\dthyenm ,jnf", "\верните бота", "\dthybnt ,jnf", "\верни бота", "\dthyb ,jnf",
-#                                        "закрыть чат", "pfrhsnm xfn", "закройте чат", "pfrhjqnt xfn", "закрой чат", "pfrh* xfn",
-#                                        "вернуть бота", "dthyenm ,jnf", "верните бота", "dthybnt ,jnf", "верни бота", "dthyb ,jnf"],
-#                    firstMessage: $context.session.ltxFirstMessage,
-#                    lastMessage: "— Диалог завершён —",
-#                    attributes: {
-#                        "Рекомендации бота (тематики)": strSortNCount($context.session.chatHistorySTAT),
-#                    }
-#                });
+                    if ($entities[i]["pattern"] == "ReservedSeatTicket") $session.reserved_ticket = 1;
+                    if ($entities[i]["pattern"] == "RegularSeatTicket") $session.regular_ticket = 1;
+                    if ($entities[i]["pattern"] == "LuxeSeatTicket") $session.lux_ticket = 1;
+                    
+                    if ($entities[i]["pattern"] == "MorningTime") $session.morning_time = 1;
+                    if ($entities[i]["pattern"] == "DayTime") $session.day_time = 1;
+                    if ($entities[i]["pattern"] == "EveningTime") $session.evening_time = 1;
+                    if ($entities[i]["pattern"] == "NightTime") $session.night_time = 1;
+                    
+                    if ($entities[i]["pattern"] == "ChildTicket") $session.child_ticket = 1;
+                    
+                    if ($entities[i]["pattern"] == "RoundTripWords") roundTrip = 1;
+                }
+                    
+                locationsCount = locations.length;
+                loctoCount = locationsTo.length;
+                locfromCount = locationsFrom.length;
+                datesCount = dates.length;
+            }
             
-            #Действие, если оператор закрыл чат или клиент послал закрывающую фразу
-            state: livechatFinished || noContext=true
-                event!: livechatFinished
-                q: (*close | *сдщыу)
-                q: (*bot | *ище | *бот | *,jn)
-                q: (*закрыть чат | *pfrhsnm xfn | *закройте чат | *pfrhjqnt xfn | *закрой чат | *pfrh* xfn)
-                q: (*вернуть бота | *dthyenm ,jnf | *верните бота | *dthybnt ,jnf | *верни бота | *dthyb ,jnf)
-                a:  — Оператор отключен —
-                    <ul>
-                        <li>с вами снова виртуальный помощник.</li>
-                    </ul>
-                go!: /Оценка
+            // check directions count    
+            var multiDirection = 0;
+            if (locationsCount > 2) {
+                if (locationsCount == 3 && locations[0].stations_codes == locations[2].stations_codes) {
+                    roundTrip = 1;
+                    }
+                else if (locationsCount == 4 && locations[0].stations_codes == locations[3].stations_codes
+                && locations[1].stations_codes == locations[2].stations_codes) {
+                    roundTrip = 1;
+                    }
+                else multiDirection = 1;
+            }
             
-            #Действие, если нет доступных операторов в линии
-            state: NoOperatorsOnline || noContext=true
-                event!: noLivechatOperatorsOnline
-                script:
-                    if ($session.smartSwitchlastGroup != "G20sup"
-                    &&  $session.smartSwitchlastGroup != "all")
-                        {
-                            $reactions.answer('— Нет доступных операторов — <ul><li>Пробую переключить на другую группу операторов.</li></ul>');
-                            smartSwitch();
+            if ((loctoCount > 1 || locfromCount > 1) && (roundTrip === 0)) {
+                if (loctoCount == 2 && locfromCount == 2 && locationsFrom[0].stations_codes == locationsTo[1].stations_codes 
+                    && locationsFrom[1].stations_codes == locationsTo[0].stations_codes) roundTrip = 1;
+                else  multiDirection = 1;
+            }
+            
+            if ((loctoCount + locationsCount > 2 || locfromCount + locationsCount > 2) && (roundTrip === 0)) {
+                multiDirection = 1;
+            }
+            
+            $session.multiDirection = multiDirection;
+            $session.roundTrip = roundTrip;
+            
+            $session.locations = locations;
+            $session.locationsTo = locationsTo;
+            $session.locationsFrom = locationsFrom;
+            $session.dates = dates;
+            
+            // parse locations
+            if (!multiDirection) {
+                if (locationsFrom) $session.from = locationsFrom[0];
+                if (locationsTo) $session.to = locationsTo[0];
+                
+                if (locations) {
+                    loc0 = locations[0];
+                    if (locationsCount > 1) loc1 = locations[1];
+                }
+                
+                if ($session.to === undefined && $session.from === undefined && loc0 && loc1) {
+                    $session.from = loc0;
+                    $session.to = loc1;
+                }
+                
+                if ($session.to === undefined && $session.from && loc1) {
+                    if (loc1.stations_codes != $session.from.stations_codes) {
+                        $session.to = loc1;
+                    }
+                }
+                
+                if ($session.from === undefined && $session.to && loc0) {
+                    if (loc0.stations_codes != $session.to.stations_codes) {
+                        $session.from = loc0;
+                    }
+                }
+            }
+            
+            // parse dates
+            if (dates) {
+                if ($session.roundTrip == 0) {
+                    if (datesCount == 1) {
+                        date_result = handle_request(toPrettyString(dates[0]));
+                        $session.date_relevant = date_result["relevant"];
+                        $session.date_old = date_result["old"];
+                        $session.date_list = date_result["dates"];
                         }
-                    else
-                        {
-                            $reactions.answer('— Нет доступных операторов —<ul><li>график работы операторов с 10 до 18 (МСК) ежедневно.</li></ul>— С вами снова виртуальный помощник —<ul><li>напишите другой вопрос или попробуйте позже.</li></ul>');
+                    else if (datesCount > 1) $session.multiDate = 1;
+                }
+                
+                if ($session.roundTrip == 1) {
+                    date_result = handle_request(toPrettyString(dates[0]));
+                    $session.date_relevant = date_result["relevant"];
+                    $session.date_old = date_result["old"];
+                    $session.date_list = date_result["dates"];
+                    
+                    if (datesCount == 2) {
+                        datereturn_result = handle_request(toPrettyString(dates[1]));
+                        $session.datereturn_relevant = datereturn_result["relevant"];
+                        $session.datereturn_old = datereturn_result["old"];
+                        $session.datereturn_list = datereturn_result["dates"];
+                    }
+                    else if (datesCount > 2) $session.multiDate = 1;
+                    
+                }
+            }
+            
+            log($session);
+            
+        a: locations: {{ toPrettyString($session.locations) }}
+        a: locationsTo: {{ toPrettyString($session.locationsTo) }}
+        a: locationsFrom: {{  toPrettyString($session.locationsFrom) }}
+        a: dates: {{ $session.dates }}
+        
+        a: multiDate: {{ $session.multiDate }}
+        a: multiDirection: {{ $session.multiDirection }}
+        a: roundTrip: {{ $session.roundTrip }}
+        a: From: {{ toPrettyString($session.from) }}
+        a: To: {{ toPrettyString($session.to) }}
+
+                    
+        if: $session.multiDate
+            go!: /MultiDirection
+        
+        if: $session.multiDirection
+            go!: /MultiDirection
+            
+        if: $session.date_list
+            if: !$session.date_relevant
+                a: Указана некорректная дата. Уточните, пожалуйста, свой запрос.
+            elseif: $session.date_old
+                a: Указанная дата уже прошла. Уточните, пожалуйста, свой запрос.
+            elseif: $session.date_list
+                script: $session.date = $session.date_list
+            
+        if: $session.datereturn_list
+            if: !$session.datereturn_relevant
+                a: Указана некорректная дата для поездки обратно. Уточните, пожалуйста, свой запрос.
+            elseif: $session.datereturn_old
+                a: Указанная дата для поездки обратно уже прошла. Уточните, пожалуйста, свой запрос.
+            elseif: $session.datereturn_list
+                script: $session.datereturn = $session.datereturn_list
+
+        go!: /ChooseStationOptions
+        
+    state: ChooseStationOptions
+        script:  
+            var locFromDict = {};
+            var locToDict = {};
+            
+            if ($session.from) locFromDict = get_location_options($session.from);
+            if ($session.to) locToDict = get_location_options($session.to);
+            
+            $session.chooseFromOptions = locFromDict["chooseOptions"];
+            $session.chooseToOptions = locToDict["chooseOptions"];
+            
+            if ($session.chooseFromOptions === 1) {
+                $session.locfromNameOptions = locFromDict["locNameOptions"];
+                $session.locfromNumberOptions = locFromDict["locNumberOptions"];
+                $session.locfromSuggestOptions = locFromDict["locSuggestOptions"];
+            }
+            
+            if ($session.chooseToOptions === 1) {
+                $session.loctoNameOptions = locToDict["locNameOptions"];
+                $session.loctoNumberOptions = locToDict["locNumberOptions"];
+                $session.loctoSuggestOptions = locToDict["locSuggestOptions"];
+            }
+
+        if: $session.chooseFromOptions == 1
+            script: 
+                $session.retry = $session.retryParam
+            go!: /ChooseStationOptionFrom
+            
+        if: $session.chooseToOptions == 1
+            script: 
+                $session.retry = $session.retryParam
+            go!: /ChooseStationOptionTo
+            
+        if: $session.from
+            if: $session.to
+                if: $session.from.number == $session.to.number
+                    go!: /EqualFromTo 
+            
+        go!: /FillSlots
+        
+            
+    state: ChooseStationOptionFrom
+        script: $session.retry = $session.retry - 1
+        
+        a: Уточните, пожалуйста, станцию отправления (введите номер станции из списка)
+
+        script: 
+            $session.optionsFrom = "";
+            $session.optionsFromCount = $session.locfromSuggestOptions.length;
+            
+            for (var i=0;i<$session.optionsFromCount;i++) {
+                $session.optionsFrom += i + " - " + $session.locfromSuggestOptions[i] + "\n";
+            }
+            
+        a: {{ $session.optionsFrom }}
+        
+        state: GetStation
+            q: @OptionNumber
+            
+            if: $parseTree._OptionNumber > $session.optionsFromCount - 1
+                go!: /ChooseStationOptionFrom/nomatch
+                
+            if: $session.to
+                if: $session.to.number == $session.locfromNumberOptions[$parseTree._OptionNumber]
+                    a: Выбранная станция отправления совпадает со станцией назначения.
+                    script: $session.samestationfrom = 1
+                    go!: /ChooseStationOptionFrom/nomatch
+            
+            script: 
+                $session.from.name = $session.locfromNameOptions[$parseTree._OptionNumber]
+                $session.from.station_suggests = $session.locfromSuggestOptions[$parseTree._OptionNumber]
+                $session.from.number = $session.locfromNumberOptions[$parseTree._OptionNumber]
+            a: Вы выбрали станцию {{ $session.from.name }}, {{ $session.from.number }}
+            
+            if: $session.to
+                if:  $session.to.number == ""
+                    script: $session.retry = $session.retryParam
+                    go!: /ChooseStationOptionTo
+            go!: /FillSlots 
+            
+        state: nomatch
+            event: noMatch
+            
+            if: !$session.samestationfrom
+                a: Не могу найти подходящую станцию.
+            
+            if: $session.retry > 0
+                go!: /ChooseStationOptionFrom
+            else:
+                go!: /nomatch
+        
+        
+    state: ChooseStationOptionTo
+        script: $session.retry = $session.retry - 1
+        
+        a: Уточните, пожалуйста, станцию назначения (введите номер станции из списка)
+        script: 
+            $session.optionsTo = "";
+            $session.optionsToCount = $session.loctoSuggestOptions.length;
+            
+            for (var i=0;i<$session.optionsToCount;i++) {
+                $session.optionsTo += i + " - " + $session.loctoSuggestOptions[i] + "\n";
+            }
+            
+        a: {{ $session.optionsTo }}
+        
+        state: GetStation
+            q: @OptionNumber
+            
+            if: $parseTree._OptionNumber > $session.optionsToCount - 1
+                go!: /ChooseStationOptionTo/nomatch
+                
+            if: $session.from
+                if: $session.from.number == $session.loctoNumberOptions[$parseTree._OptionNumber]
+                    a: Выбранная станция назначения совпадает со станцией отправления.
+                    script: $session.samestationto = 1
+                    go!: /ChooseStationOptionTo/nomatch
+
+            script: 
+                $session.to.name = $session.loctoNameOptions[$parseTree._OptionNumber]
+                $session.to.station_suggests = $session.loctoSuggestOptions[$parseTree._OptionNumber]
+                $session.to.number = $session.loctoNumberOptions[$parseTree._OptionNumber]
+            a: Вы выбрали станцию {{ $session.to.name }}, {{ $session.to.number }}
+            go!: /FillSlots 
+            
+        state: nomatch
+            event: noMatch
+            
+            if: !$session.samestationto
+                a: Не могу найти подходящую станцию.
+            
+            if: $session.retry > 0
+                go!: /ChooseStationOptionTo
+            else:
+                go!: /nomatch
+                
+    state: EqualFromTo
+        a: Станция отправления и станция назначения совпадают.
+        script:
+            $session.from = (function () { return; })();
+            $session.to = (function () { return; })();
+            
+        go!: /FillSlots
+            
+    
+    state: FillSlots
+        if: !$session.from
+            script: $session.retry = $session.retryParam
+            go!: /GetFrom
+        
+        if: !$session.to
+            script: $session.retry = $session.retryParam
+            go!: /GetTo
+            
+        if: $session.roundTrip == 1
+            if: !$session.datereturn
+                go!: /RoundTrip
+            
+        if: !$session.date
+            script: $session.retry = $session.retryParam
+            go!: /GetDate
+        
+        go!: /Result
+    
+    state: GetFrom
+        script: $session.retry = $session.retry - 1
+        random:
+            a: Откуда поедете?
+            a: Укажите, пожалуйста, пункт отправления
+        
+        state: get
+            q: * @LocationNewDictionary *
+            
+            script:
+                var newQuery = 0;
+                
+                // проверка на новый запрос в переспросе 
+                newQuery = check_new_query($entities);
+                $session.newQuery = newQuery;
+                
+            if: $session.newQuery
+                a: Кажется, вы хотите подобрать билеты по другому направлению. Уточните, пожалуйста, ваш запрос.
+                go!: /GetTrainSchedule
+                
+            if: $session.to
+                if: $session.to.all_stations_from_same_city
+                    if: $parseTree._LocationNewDictionary.all_stations_from_same_city
+                        if: $parseTree._LocationNewDictionary.stations_codes == $session.to.stations_codes
+                            a: Введенная станция отправления совпадает со станцией назначения.
+                            if: $session.retry > 0
+                                go!: /GetFrom
+                            else: 
+                                go!: /nomatch
+
+            script: $session.from = $parseTree._LocationNewDictionary
+
+            go!: /ChooseStationOptions
+            
+        state: newQuery
+            q: * @Date *
+            q: * @NewQueryWords *
+            a: Кажется, вы хотите подобрать другие билеты. Уточните, пожалуйста, ваш запрос.
+            go!: /GetTrainSchedule
+            
+        state:
+            event: noMatch
+            a: Не могу распознать город
+
+            if: $session.retry > 0
+                go!: /GetFrom
+            else: 
+                go!: /nomatch
+        
+    state: GetTo
+        script: $session.retry = $session.retry - 1
+        random:
+            a: Куда собираетесь поехать?
+            a: Введите, пожалуйста, пункт назначения
+        
+        state: get
+            q: * @LocationNewDictionary *
+            
+            script:
+                var newQuery = 0;
+                
+                // проверка на новый запрос в переспросе 
+                newQuery = check_new_query($entities);
+                $session.newQuery = newQuery;
+                
+            if: $session.newQuery
+                a: Кажется, вы хотите подобрать билеты по другому направлению. Уточните, пожалуйста, ваш запрос.
+                go!: /GetTrainSchedule
+                
+            if: $session.from
+                if: $session.from.all_stations_from_same_city
+                    if: $parseTree._LocationNewDictionary.all_stations_from_same_city
+                        if: $parseTree._LocationNewDictionary.stations_codes == $session.from.stations_codes
+                            a: Введенная станция назначения совпадает со станцией отправления.
+                            if: $session.retry > 0
+                                go!: /GetTo
+                            else: 
+                                go!: /nomatch
+
+            script: $session.to = $parseTree._LocationNewDictionary
+
+            go!: /ChooseStationOptions
+            
+        state: newQuery
+            q: * @Date *
+            q: * @NewQueryWords *
+            a: Кажется, вы хотите подобрать другие билеты. Уточните, пожалуйста, ваш запрос.
+            go!: /GetTrainSchedule
+            
+        state:
+            event: noMatch
+            a: Не могу распознать город прибытия
+
+            if: $session.retry > 0
+                go!: /GetTo
+            else: 
+                go!: /nomatch
+            
+    state: GetDate
+        script: $session.retry = $session.retry - 1
+        random:
+            a: Укажите дату поездки
+            a: На какой день нужны билеты?
+        
+        state: get
+            q: * @Date *
+            script: 
+                var date_result = handle_request(toPrettyString($parseTree._Date));
+                $session.date_relevant = date_result["relevant"];
+                $session.date_old = date_result["old"];
+                $session.date_list = date_result["dates"];
+                
+            if: !$session.date_relevant
+                a: Указана некорректная дата. 
+                go!: /GetDate/nomatch
+
+            elseif: $session.date_old
+                a: Указанная дата уже прошла. 
+                go!: /GetDate/nomatch
+
+            elseif: $session.date_list
+                script: $session.date = $session.date_list
+
+            go!: /FillSlots
+            
+        state: newQuery
+            q: * @LocationNewDictionary *
+            q: * @NewQueryWords *
+            
+            a: Кажется, вы хотите подобрать билеты по другому направлению. Уточните, пожалуйста, ваш запрос.
+            go!: /GetTrainSchedule
+        
+        state: nomatch
+            event: noMatch
+            
+            if: !$session.date_list
+                a: Не могу распознать дату
+
+            if: $session.retry > 0
+                go!: /GetDate
+            else: 
+                go!: /nomatch
+            
+    state: MultiDirection
+        if: $session.multiDate
+            a: В запросе задано несколько дат, перевожу на оператора.^multiDate
+        else:
+            a: В запросе задано несколько направлений, перевожу на оператора.^multiDirection
+        
+    state: RoundTrip
+        a: Запрос билетов туда-обратно.
+
+        if: !$session.datereturn
+            script: $session.retry = $session.retryParam
+            go!: /RoundTrip/GetDate
+        go!: /ChooseStationOptions
+            
+        state: GetDate
+            script: $session.retry = $session.retry - 1
+            a: Уточните, пожалуйста, дату поездки туда 
+            
+            state: get
+                q: * @Date *
+                script: 
+                    var date_result = handle_request(toPrettyString($parseTree._Date));
+                    $session.date_relevant = date_result["relevant"];
+                    $session.date_old = date_result["old"];
+                    $session.date_list = date_result["dates"];
+                    
+                if: !$session.date_relevant
+                    a: Указана некорректная дата. 
+                    go!: /RoundTrip/GetDate/nomatch
+    
+                elseif: $session.date_old
+                    a: Указанная дата уже прошла. 
+                    go!: /RoundTrip/GetDate/nomatch
+    
+                elseif: $session.date_list
+                    script: $session.date = $session.date_list
+                
+                
+                script: $session.retry = $session.retryParam
+                go!: /RoundTrip/GetDateReturn
+                
+            state: nomatch
+                event: noMatch
+                if: !$session.date_list
+                    a: Не могу распознать дату
+    
+                if: $session.retry > 0
+                    go!: /RoundTrip/GetDate
+                else: 
+                    go!: /nomatch
+                    
+        state: GetDateReturn
+            script: $session.retry = $session.retry - 1
+            a: Уточните, пожалуйста, дату поездки обратно 
+            
+            state: get
+                q: * @Date *
+                script: 
+                    var datereturn_result = handle_request(toPrettyString($parseTree._Date));
+                    $session.datereturn_relevant = datereturn_result["relevant"];
+                    $session.datereturn_old = datereturn_result["old"];
+                    $session.datereturn_list = datereturn_result["dates"];
+                    
+                if: !$session.datereturn_relevant
+                    a: Указана некорректная дата. 
+                    go!: /RoundTrip/GetDateReturn/nomatch
+    
+                elseif: $session.datereturn_old
+                    a: Указанная дата уже прошла. 
+                    go!: /RoundTrip/GetDateReturn/nomatch
+    
+                elseif: $session.datereturn_list
+                    script: $session.datereturn = $session.datereturn_list
+                    
+                go!: /ChooseStationOptions
+                
+            state: nomatch
+                event: noMatch
+                if: !$session.datereturn_list
+                    a: Не могу распознать дату
+    
+                if: $session.retry > 0
+                    go!: /RoundTrip/GetDateReturn
+                else: 
+                    go!: /nomatch
+                    
+        state: newQuery
+            q: * @LocationNewDictionary *
+            q: * @NewQueryWords *
+            
+            a: Кажется, вы хотите подобрать билеты по другому направлению. Уточните, пожалуйста, ваш запрос.
+            go!: /GetTrainSchedule
+
+        a: Date: {{ $session.date }} 
+        a: DateReturn: {{ $session.datereturn }}
+        
+
+    state: OtherTransport
+        q!: * (на чём|как) [можно] [было бы] (добраться|уехать|доехать) *
+        q!: * (автобус*|автомоб*) *
+        q!: * (самолет*|авиа)* *
+        q!: * (электричк*|электричек*) *
+        q!: * метро* *
+        q!: * (машина|машины|машину|машине) *
+        a: У меня есть информация только о поездах, посмотреть билеты по этому запросу?^otherTransport
+
+        state: Exit
+            q: * @No *
+            a: До встречи!
+                
+        state: NewQuery
+            q: * @Yes *
+            go!: /GetTrainSchedule
+
+
+    state: Troubles
+        q!: * не (могу|можем|смог|смогла|смогли) *
+        q!: * не (получилось|получается|вышло|выходит) *
+        q!: * не (ясно|понятно|понимаю|очевидно) *
+        q!: * (непонятно|неясно|объясните|поясните|разъясните|объяснить|пояснить|разъяснить) *
+        q!: * не (ищет|находит|нахожу|вижу|наблюдаю|видел|находил) *
+        q!: * (скидки|скидка|льгот|льгота|льготы|скидос|скидок) *
+        q!: * (написано|написали|позвонили|звоню|позвонить|позвоните|созвонимся|созвониться|дозвониться) *
+        q!: * (услуг*|сервис*) *
+        a: Проблемные вопросы обсудите с оператором.^troubles
+
+
+    state: OtherQuestions
+        q!: * [по] (права*|удостоверен*|паспорт*|свидетельств*|документ*)
+        q!: * (задержка|задерживается|задержался|задержится|задержите) *
+        q!: * стыковк *
+        q!: * (по всем дням|как ходит|по каким дням|в какие дни) * [поезд] * 
+        q!: * сколько (часов|времени) [будет ехать|будет идти|ехать|идет|едет] *
+        q!: * (во сколько|воскольк*) * (прибудет|прибывает|прибыл|приедет|приезжает|приехал|доезжает|доехал|доедет) *
+        q!: * (в какое время|когда) * (прибудет|прибывает|прибыл|приедет|приезжает|приехал|доезжает|доехал|доедет) *
+        q!: * (ко скольки|в каком часу) * (прибудет|прибывает|прибыл|приедет|приезжает|приехал|доезжает|доехал|доедет) *
+        q!: * когда (начнется|начинается|старт) продаж* [билетов] *
+        q!: * [точное] время (прибытия|отправления) *
+        q!: * сколько [времени|по времени] [длится|идет] (пересадк*|остановк*) *
+        q!: * с [какими|какой] (пересадками|пересадкой) *
+        q!: * (есть|где|будет) пересадка *
+        q!: * (прицепн*|дополнительн*) вагон* *
+        q!: * на (какой|какие) (путь|пути) *
+        q!: * (нумерация|нумерацией|нумерации) *
+        q!: * маршрут поезда *
+        q!: * какие (города|станции|остановки) (проезжает поезд|на маршруте) *
+        q!: * (где|сколько) (стоит|останавливается) поезд *
+        q!: * (почему|зачем|по какой причине|по какому праву|для чего|это что|что это такое|что такое) *
+        q!: * в (январе|феврале|марте|апреле|мае|июне|июле|августе|сентябре|октябре|ноябре|декабре) *
+        q!: * на (январь|февраль|март|апрель|май|июнь|июль|август|сентябрь|октябрь|ноябрь|декабрь) *
+        q!: * на (следующий месяц|следующий год|следуюущую неделю|следущий месяц|следущий год|следуущую неделю) *
+        q!: * (собак|собака|собаки|собаку|пёс|пса) *
+        q!: * (кот|кота|коты|коту|кошка|кошки|кошку|кошек) *
+        q!: * (животное|животные|животных|живность|живности) *
+        q!: * (требования|правила|провоз|провозки|перевоз|перевозки|пронос|перевозить|проносить) *
+        # ToDo(mel-lain): ближайшие нужно обрабатывать отдельно при наличии нормального парсера дат и диапазонов дат
+        #q!: * ближайший (поезд|рейс) *
+        #q!: * ближайш(ее|ие|ую|ий) (время|час|часы|дни|недели|месяцы|месяц|год|годы|лето|зиму|весну|осень|вариант) *
+        q!: * ближайш(ее|ие|ую|ий) (недели|месяцы|месяц|год|годы|лето|зиму|весну|осень) *
+        q!: * (как можно быстрее|срочно|горит) *
+        q!: * (на [вашем] сайте|на [ваш] сайт|у [вас] [на] сайте) *
+        q!: * (не ищет|не нахожу|не могу найти|не получается найти) *
+        q!: * (каждый|каждые|каждую|каждой) (день|выходные|понедельник|вторник|среда|среду) *
+        q!: * (каждый|каждые|каждую|каждой) (четверг|пятница|пятницу|суббота|субботу|воскресенье) *
+        q!: * по (понедельникам|вторникам|средам|четвергам|пятницам|субботам) *
+        q!: * по (воскресеньям|воскресениям) *
+        q!: * по (четным|нечетным|не четным) дням *
+        q!: * (нужно ли|надо ли|должен ли|стоит ли|обязан ли|требуется ли|положено ли|необходимо ли) *
+        q!: * (бронь|броня|брони|бронирование|бронировать|бронировал|бронирирую|бронируйте|бронируй|бронил) *
+        q!: * (забронь|заброни|забронирование|забронировать|забронировал|забронирирую|забронируйте|забронируй|забронил) *
+        q!: * (по каким числам|по каким дням|в какие дни|с какой периодичностью|как часто|насколько часто) *
+        q!: * (в какие числа|в каких числах|по каким дням|с какой регулярность|регулярно|регулярный) *
+        q!: * (окна|против движения|спиной|лицом|туалет*|боковое|боковушка|боковушку|боковушки|боковые) *
+        a: Не могу подсказать, перевожу на оператора^otherQuestions
+
+    state: Result
+        a: Откуда: {{ $session.from.name }}, {{ $session.from.number }}
+        a: Куда: {{ $session.to.name }}, {{ $session.to.number }}
+        a: Когда: {{ toPrettyString($session.date) }}
+        
+        if: $session.roundTrip
+            a: Обратная поездка
+            a: Откуда: {{ $session.to.name }}, {{ $session.to.number }}
+            a: Куда: {{ $session.from.name }}, {{ $session.from.number }}
+            a: Когда: {{ toPrettyString($session.datereturn) }}
+            
+        if: $session.class
+            a: Класс билетов: {{ $session.class }}
+            
+        a: Все правильно?
+        
+        state: Yes
+            q: (@Yes [спасибо] [верно|правильно|ок] | верно | правильно | ок)
+            a: Хорошо! Сейчас посмотрю билеты.
+            a: Запрос в api.
+            go!: /Result/Yes/Query
+            
+            state: Query
+                script:
+                    var response;
+                    var result;
+                    
+                    var filters = {};
+                    
+                    // фильтры класс билетов
+                    var class_list = []; 
+                    
+                    if ($session.reserved_ticket) class_list.push("plazcard");
+                    if ($session.regular_ticket) class_list.push("coupe");
+                    if ($session.lux_ticket) class_list.push("lux");
+                    
+                    if (class_list.length > 0) filters["class"] = class_list;
+                    
+                    // фильтры время
+                    var min_time;
+                    var max_time;
+                    
+                    if ($session.morning_time) {
+                        min_time = "05:00";
+                        max_time = "11:00";
+                        }
+                    if ($session.day_time) {
+                        if (!min_time) min_time = "11:00";
+                        max_time = "17:00";
+                        }
+                    if ($session.evening_time) {
+                        if (!min_time) min_time = "17:00";
+                        max_time = "22:00";
+                        }
+                    if ($session.night_time) {
+                        min_time = "22:00";
+                        if (!max_time) max_time = "05:00";
+                        }
+                    if (min_time && max_time) {
+                        filters["min_time"] = min_time;
+                        filters["max_time"] = max_time;
+                    }
+                    
+                    
+                    response = getTicketsResult($session.from.number, $session.to.number, $session.date);
+                    if (response) result = process_results(response, filters);
+                    
+                    $session.result = result;
+                    $session.response = response;
+                    
+                    if ($session.roundTrip) {
+                        var response_return = getTicketsResult($session.to.number, $session.from.number, $session.datereturn);
+                        var result_return = process_results(response_return, filters);
+                        $session.result_return = result_return;
+                        $session.response_return = response_return;
+                    }
+                    
+                    $session.filters = filters;
+                    
+                    // $session.result = "Tickets data";
+                
+                if: $session.result
+                    a: Filters: {{ toPrettyString($session.filters) }} 
+                    # a: Response {{ toPrettyString($session.response) }}
+                    a: Result: {{ toPrettyString($session.result) }} 
+                    
+                    if: $session.result.price
+                        script: 
+                            var params;
+                            var params_list = [];
                             
-                        }
-#                a:  — Нет доступных операторов —
-#                    <ul>
-#                        <li>график работы операторов с 10 до 18 (МСК) ежедневно;</li>
-##                        <li>рекомендуем выбрать время обращения в <a href="https://hoff.ru/contacts/zagruzhennost-koll-tsentra/" target="_blank">период меньшей загруженности колл-центра</a>.</li>
-#                    </ul>
-#                a:  — С вами снова виртуальный помощник —
-#                    <ul>
-#                        <li>напишите другой вопрос или попробуйте позже.</li>
-#                    </ul>
-
-# ---------------- Реакции на системные события (ивенты)  ---------------------
-
-    state:
-        event!: sendFile
-        a: — Ваш файл получен —
-
-# ---------------------- Прощание перед закрытием чата ------------------------
+                            var child_param = 0.6;
+                            
+                            var class_map = {
+                                "coupe": "купе",
+                                "plazcard": "плацкарт",
+                                "lux": "люкс"
+                            }
+                            
+                            if ($session.filters.class) {
+                                $session.printClass = 1;
+                                params_list.push("класс билетов: " + class_map[$session.result.type]);
+                            }
+                            if ($session.filters.min_time) {
+                                $session.printTime = 1;
+                                params_list.push("время отправления: " + $session.result.departureTime);
+                            }
+                            
+                            if (params_list.length > 0) params = " (" + params_list.join(", ") + ")";
+                            
+                            $session.additional_params = params;
+                            
+                            if ($session.child_ticket) $session.additional_price = " (стоимость детского билета от " + Math.ceil(child_param * $session.result.price) + " рублей)"; 
+                            
+                        a: Билеты есть в наличии{{ $session.additional_params }}, стоимость от {{ $session.result.price }} рублей{{$session.additional_price}}. Посмотреть билеты можно по ссылке: {{ $session.result.url }}
+                        
+                        if: $session.result_return
+                            a: Обратная поездка
+                            a: Result return: {{ toPrettyString($session.result_return) }} 
+                            
+                            if: $session.result_return.price
+                                a: Билеты есть в наличии, стоимость от {{ $session.result_return.price }} рублей. Посмотреть билеты можно по ссылке: {{ $session.result_return.url }}
+                            else:
+                                a: Для указанных параметров билеты не найдены.
+                        go!: /Result/Yes/moreQueries
+                    else:
+                        a: Для указанных параметров билеты не найдены.
+                        go!: /Result/Yes/moreQueries
+                else:
+                    a: Не могу найти информацию о билетах.
+                
+            state: moreQueries   
+                a: Хотите посмотреть другие билеты?
+            
+                state: Exit
+                    q: * @No *
+                    a: До встречи!
+                    
+                state: NewQuery
+                    q: (@Yes [спасибо | пожалуйста] [хочу] | хочу | давай[те])
+                    a: Укажите, пожалуйста, откуда, куда и на какую дату искать билеты.
+            
+        state: No
+            q: * @No *
+            a: Уточните, пожалуйста, запрос.
+            go!: /GetTrainSchedule
+            
+    state: hello 
+        q!: (привет|приветствую|приветики)
+        q!: (здравствуйте|здраствуйте|здрасьте|здрасте)
+        q!: (здорово|здоров|дарова|даров)
+        q!: (добрый|доброго)
+        q!: (добрый день|доброго дня|день добрый)
+        q!: (добрый вечер|доброго вечера|вечер добрый)
+        q!: (доброе утро|доброго утра|утро доброе)
+        q!: (доброй ночи)
+        a: Привет! Могу помочь купить билет на поезд. Что вас интересует?
+        
+    state: goodbye
+        intent!: /Goodbye
+        a: До встречи!
+        
+    state: newQuery
+        q!: * @NewQueryWords * 
+        a: Кажется, вы хотите подобрать другие билеты. Уточните, пожалуйста, ваш новый запрос.
+        go!: /GetTrainSchedule
     
-    #Прощание с клиентом
-    state: Bye
-        intent!: /Общие/Bye
-        script:
-            sleep();
-        random:
-            a: До свидания! Появятся вопросы — обращайтесь.
-            a: Всего хорошего! Будут вопросы — обращайтесь.
-            a: Я прощаюсь с вами. Будут вопросы — обращайтесь.
-        go!: ../Оценка
-    
-    #Оценка удовлетворенности клиента
-    state: Оценка
-        intent!: /Общие/CloseSession
-        script:
-            sleep();
-        a:  Всё ли вам понравилось?
-            <ul>
-                <li>оцените, пожалуйста, наш диалог от 1 до 5 (5 - отлично). Оставить комментарий можно будет на следующем шаге.</li>
-#                <li>оцените, пожалуйста, наш диалог от 1 до 5 (где 5 — отлично), либо нажмите на одну из кнопок ниже. Оставить комментарий можно будет на следующем шаге.</li>
-            </ul>
-        buttons:   
-            {text:"5 ★★★★★"}
-            {text:"4 ★★★★"}
-#            {text:"3 ★★★"}
-            {text:"2 ★★"}
-            {text:"1 ★"}
-#        inlineButtons:   
-#            {text:"5 Отлично 😁"}
-#            {text:"4 Хорошо 😉"}
-#            {text:"3 Сносно 😐"}
-#            {text:"2 Плохо 😤"}
-#            {text:"1 Ужасно 😡"}
+    state: nomatch
+       event!: noMatch
+       a: {{ toPrettyString($context.entities) }}
+       
+       a: Не понял, перевожу запрос на оператора.^noMatch
 
-    
-        # Создаем две переменных так как клиент может не ответить на этот стейт и тогда вторая переменная не будет создана
-        state: ОценкаКомментарий
-            intent: /Общие/Bye
-            intent: /Общие/Согласие
-            intent: /Общие/Отрицание
-            q: *
-            script:
-                $session.sci = $request.query;
-            a:  Ваша оценка принята.
-                <ul>
-                   <li>при желании, напишите свой комменнтарий к оценке одним сообщением, и мы его обязательно рассмотрим, либо просто закройте чат.</li>
-                </ul>
-
-            state: ОценкаЗакрытие
-                intent: /Общие/Bye
-                intent: /Общие/Согласие
-                intent: /Общие/Отрицание
-                q: *
-                script:
-                    $session.sciComment = $request.query;
-                a:  Спасибо, что помогаете нам стать лучше! Рады видеть вас снова.
-                go!: /CloseSession
-
-# ---------------- Выявление и уточнение вопросов клиента   -------------------
-
-    #Действие, если клиент присылает приветственную фразу, тогда бот пытается сразу вывести его на конкретику.
-    #Действие, если пользователь написал, что у него остались еще вопросы, но не обозначил какие именно.
-    state: ВопросУточните || noContext=true
-#        intent!: /Общие/Hello
-        intent!: /Общие/УМеняЕщеВопросы
-        script:
-            sleep();
-        random:
-            a:  Чем могу помочь?
-            a:  Какой ваш вопрос?
-            a:  Что бы вы хотели обсудить?
-            a:  В чём ваш вопрос?
-
-    #Действие, если требуется переформулировать вопрос клиента (чаще всего, когда он задается в неявной форме, без важных деталей).
-    state: ВопросПереформулируйте || noContext=true
-        intent!: /Общие/УточнитеВопрос
-        script:
-            sleep();
-        random:
-            a:  Уточните, пожалуйста, вопрос.
-            a:  Прошу вас уточнить вопрос.
-            a:  Опишите подробнее ваш вопрос.
-
-    #Действие, если перед закрытием чата необходимо узнать остались ли у клиента еще вопросы.
-    state: ВопросыОстались || noContext=true
-        script:
-            sleep();
-        random:
-            a:  Остались ли у вас вопросы?
-                <ul>
-                    <li>вы можете продолжить диалог, ответив на предыдущее сообщение, или обратиться с другим вопросом;</li>
-                    <li>нажмите "[Завершить диалог]", если вопросов не осталось.</li>
-                </ul>
-            a:  У вас остались вопросы?
-                <ul>
-                    <li>вы можете продолжить диалог, ответив на предыдущее сообщение, или обратиться с другим вопросом;</li>
-                    <li>нажмите "[Завершить диалог]", если вопросов не осталось.</li>
-                </ul>
-        inlineButtons:
-            {text:"Завершить диалог"} -> /Bye
-
-
-# ---------- Дейстивие, если клиент не отвечает (глобальный таймаут) ----------
-
-    #Закрытие сессии по глобальному таймауту при неответе клиента
-    state: CloseSessionByTimeout
-        a: — Время диалога истекло —
-        go!: /Bye
-
-# ----------------------------- Закрытие сессии -------------------------------
-    
-    #Закрытие сессии
-    state: CloseSession
-        a:  — Диалог завершён —
-            </ul>
-                </li>для открытия нового диалога напишите свой вопрос в чат.</li>
-            </ul>
-        script:
-            // Создание переменной с путем на историю переписки по данной сессии:
-            $session.sciLink = "https://zenbot-dev.just-ai.com/hoff_bot_prj02_maste-118482474-dvj/statistic/dialogs/";
-            // Отправка отзыва клиента в гугл таблицу через вебхук на стороне сервиса IFTTT:
-            $session.wsUrl = 'https://maker.ifttt.com/trigger/HoffBot-PRJ02-mainsc-CSI-Log/with/key/iawiiWUbHFs2L2Yf8oGU538Z62W_1kyS3xy252qWHAX';
-            $session.wsMethod = "POST";
-            $session.wsBody = { "value1" : "",
-                                "value2" : $session.sci +" | "+ $session.sciComment +" | "+ $session.sciLink,
-                                "value3" : $session.sciLink };
-            $session.wsTransGood = {value: "/CloseSession", deferred: true};
-            $session.wsTransBad  = {value: "/CloseSession", deferred: true};
-            var $httpResponse = getStatus();
-                $reactions.transition($session.wsTransGood);
-            $jsapi.stopSession();
-
-# ----------------------------- Стейт для тестов  -----------------------------
-
-    #Нужен, когда используется переопределение стейта чтобы в тестах бот не повторял ответы при проверке переходов в один и тот же стейт по синонимичным фразам клиентов
-    state: антиповтор || noContext=true
-        q!: антиповтор
-        a: ....
-
-    #история переписки
-#    state: история
-#        q!: история
-#        script:
-#            //$session.histStat = "/003/ЛКБ-01-01" + "/003/ЛКБ-02-02/003/ЛКБ-01-01";
-#            //$session.histStat2 = strSortNCount($context.session.chatHistorySTAT);
-#            $session.hist = $context.client.chatHistory.map(function(val) {return val.type + "\n" + val.state + "\n" + val.text;}).join("\n\n") + "\n" + "—————————————————" + "\n" + "Тематики обращения:" + "\n" + strSortNCount($context.session.chatHistorySTAT);
-#        a: {{$session.hist}}
-#
-#    state: тест
-#        q!: тест
-#        a:  тест Operator-G01-zrp
-#        go!: /Operator-G01-zrp
-
-# ------------------- Ответы на общие частые вопросы  -------------------------
-
-    #Уточнение положений политики конфиденциальности
-    state: Конфиденциальность || noContext=true
-        intent!: /Общие/Конфиденциальность
-        script:
-            sleep();
-        a: Политика конфиденциальности Hoff была разработана с целью защиты персональных данных клиентов Hoff и соблюдения законодательства Российской Федерации. С ней вы можете ознакомиться по ссылке <a href="https://hoff.ru/services/privacy_policy/" target="_blank">https://hoff.ru/services/privacy_policy/</a>
