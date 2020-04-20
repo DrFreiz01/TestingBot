@@ -1,32 +1,70 @@
-name: tutu_new_entities
+name: hoff-bot-staff
 
-entryPoint:
-  - main.sc
-
-tests:
-  exclude:
-    - test.xml
-
-language: ru
 botEngine: v2
+language: ru
 
 sts:
-    noMatchThreshold: 0.1
-    namedEntitiesRequired: false
-caila:
-    noMatchThreshold: 0.1
-    namedEntitiesRequired: false
-    
-    
-injector:
-    slotfilling:
-        maxSlotRetries: 2
-        stopOnAnyIntent: false
-        stopOnAnyIntentThreshold: 0.2
-    
-messages:
-    onError: 
-        defaultMessage: Ой, кажется, что-то пошло не так. 
-        locales: 
-            ru: Ой, кажется, что-то пошло не так.
+    noMatchThreshold: 0.2
 
+caila:
+    noMatchThreshold: 0.2
+
+
+entryPoint: main.sc
+
+tests:
+    include:
+        - test.xml
+#       - test_S001-01-KOB-faq.xml
+#        - test_S001-02-KDS-faq.xml
+#        - test_S001-03-KME-faq.xml
+#        - test_S001-04-KVY-faq.xml
+#        - test_S001-05-KNA-faq.xml
+#        - test_S001-06-KDE-faq.xml
+#        - test_S001-07-KRA-faq.xml
+#        - test_S001-08-KOT-faq.xml
+
+#injector:
+
+
+messages:
+    onError:
+        defaultMessage: Ошибка.
+        locales:
+            ru: Ошибка.
+            en: Oops! I have a bug in my program.
+
+dependencies:
+  - name: common
+    type: git
+    url: https://bitbucket.org/just-ai/zb-common
+    version: heads/master
+    
+nlp:
+    morphology: pyMorphy
+    tokenizer: myStem
+    lengthLimit:
+        symbols: 1200
+    vocabFile: common-vocabulary.json
+    speller:
+        dictionary: prepared-ruscorpora.txt
+    vocabulary: common-vocabulary.json
+    timeLimit: 
+        timeout: 1500
+
+classifier:
+    enable: true
+    engine: sts
+    noMatchThreshold: 0.2
+    parameters:
+        algorithm: aligner2
+
+scriptsPreLoad:
+  global:
+   - /jslib/moment.min.js
+   - /jslib/underscore.js
+   - /jsapi/common.js
+   - /jsapi/http.js
+  local:
+   - /jsapi/mail.js
+   - /jsapi/reactions.js

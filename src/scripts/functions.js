@@ -318,66 +318,66 @@ function smartSwitch(str) {
             {
                 //G01zrp - Зарплата
                 $session.smartSwitchlastGroup = "G01zrp";
-                $reactions.answer('— Подключаю оператора — <ul><li>группа: зарплата;</li><li>для возврата к виртуальному помощнику введите любую из команд: /close, /bot</li></ul>');
+                $reactions.answer('— Подключаю оператора — <ul><li>группа: зарплата.</li></ul>');
                 $response.replies.push(smartSwitchGroupG01zrp);
             }
     else if (toTransitG02kad.filter(function(n) {return arr.indexOf(n) !== -1;}).length > 0)
             {
                 //G02kad - Кадровое администрирование
                 $session.smartSwitchlastGroup = "G02kad";
-                $reactions.answer('— Подключаю оператора — <ul><li>группа: кадровое администрирование;</li><li>для возврата к виртуальному помощнику введите любую из команд: /close, /bot</li></ul>');
+                $reactions.answer('— Подключаю оператора — <ul><li>группа: кадровое администрирование.</li></ul>');
                 $response.replies.push(smartSwitchGroupG02kad);
             }
     else if (toTransitG03edu.filter(function(n) {return arr.indexOf(n) !== -1;}).length > 0)
             {
                 //G03edu - Обучение и наставничество
                 $session.smartSwitchlastGroup = "G03edu";
-                $reactions.answer('— Подключаю оператора — <ul><li>группа: обучение и наставничество;</li><li>для возврата к виртуальному помощнику введите любую из команд: /close, /bot</li></ul>');
+                $reactions.answer('— Подключаю оператора — <ul><li>группа: обучение и наставничество.</li></ul>');
                 $response.replies.push(smartSwitchGroupG03edu);
             }
     else if (toTransitG04mot.filter(function(n) {return arr.indexOf(n) !== -1;}).length > 0)
             {
                 //G04mot - Отдел мотивации
                 $session.smartSwitchlastGroup = "G04mot";
-                $reactions.answer('— Подключаю оператора — <ul><li>группа: отдел мотивации;</li><li>для возврата к виртуальному помощнику введите любую из команд: /close, /bot</li></ul>');
+                $reactions.answer('— Подключаю оператора — <ul><li>группа: отдел мотивации.</li></ul>');
                 $response.replies.push(smartSwitchGroupG04mot);
             }
     else if (toTransitG05vac.filter(function(n) {return arr.indexOf(n) !== -1;}).length > 0)
             {
                 //G05vac - Подбор и вакансии
                 $session.smartSwitchlastGroup = "G05vac";
-                $reactions.answer('— Подключаю оператора — <ul><li>группа: подбор и вакансии;</li><li>для возврата к виртуальному помощнику введите любую из команд: /close, /bot</li></ul>');
+                $reactions.answer('— Подключаю оператора — <ul><li>группа: подбор и вакансии.</li></ul>');
                 $response.replies.push(smartSwitchGroupG05vac);
             }
     else if (toTransitG06sec.filter(function(n) {return arr.indexOf(n) !== -1;}).length > 0)
             {
                 //G06sec - Секретари
                 $session.smartSwitchlastGroup = "G06sec";
-                $reactions.answer('— Подключаю оператора — <ul><li>группа: секретари;</li><li>для возврата к виртуальному помощнику введите любую из команд: /close, /bot</li></ul>');
+                $reactions.answer('— Подключаю оператора — <ul><li>группа: секретари.</li></ul>');
                 $response.replies.push(smartSwitchGroupG06sec);
             }
 //    else if (toTransitG07hds.filter(function(n) {return arr.indexOf(n) !== -1;}).length > 0)
 //            {
 //                //G07hds - Helpdesk
 //                $session.smartSwitch.lastGroup = "G07hds";
-//                $reactions.answer('— Подключаю оператора — <ul><li>группа: helpdesk (тех. поддержка по общим вопросам)</li><li>для возврата к виртуальному помощнику введите любую из команд: /close, /bot, /закрыть чат, /вернуть бота.</li></ul>Ожидайте, пожалуйста...');
+//                $reactions.answer('— Подключаю оператора — <ul><li>группа: helpdesk (тех. поддержка по общим вопросам).</li></ul>');
 //                //$response.replies.push(smartSwitchGroupG07hds);
 //            }
     else if (toTransitG08hax.filter(function(n) {return arr.indexOf(n) !== -1;}).length > 0)
             {
                 //G08hax - AXHelpdesk
                 $session.smartSwitchlastGroup = "G08hax";
-                $reactions.answer('— Подключаю оператора — <ul><li>группа: axhelpdesk (тех. поддержка по копроративному порталу и биометрии);</li><li>для возврата к виртуальному помощнику введите любую из команд: /close, /bot</li></ul>');
+                $reactions.answer('— Подключаю оператора — <ul><li>группа: axhelpdesk (тех. поддержка по копроративному порталу и биометрии).</li></ul>');
                 $response.replies.push(smartSwitchGroupG08hax);
             }
     else
             {
                 //G20sup - Cупероператоры
                 $session.smartSwitchlastGroup = "G20sup";
-                $reactions.answer('— Подключаю оператора — <ul><li>группа: общие вопросы.</li><li>для возврата к виртуальному помощнику введите любую из команд: /close, /bot</li></ul>');
+                $reactions.answer('— Подключаю оператора — <ul><li>группа: общие вопросы.</li></ul>');
                 $response.replies.push(smartSwitchGroupG20sup);
                 //$session.smartSwitchlastGroup = "all";
-                //$reactions.answer('— Подключаю оператора — <ul><li>группа: All - ОБЩИЕ</li><li>для возврата к виртуальному помощнику введите любую из команд: /close, /bot, /закрыть чат, /вернуть бота.</li></ul>Ожидайте, пожалуйста...');
+                //$reactions.answer('— Подключаю оператора — <ul><li>группа: All - ОБЩИЕ.</li></ul>');
                 //$response.replies.push(smartSwitchGroupAll);
             }
 }
