@@ -3,9 +3,9 @@ require: requirements.sc
 theme: /
     state: Start
         q!: * *start
-        a: Привет! Могу подобрать билеты на поезд. Напишите, откуда, куда и когда вы собираетесь поехать?
+        a: Привет, я помощник туту. Чем могу вам помочь?
         script: $session = {}
-
+        
         state:
             q!: (привет|приветствую|приветики)
             q!: (здравствуйте|здраствуйте|здрасьте|здрасте)
@@ -15,7 +15,7 @@ theme: /
             q!: (добрый вечер|доброго вечера|вечер добрый)
             q!: (доброе утро|доброго утра|утро доброе)
             q!: (доброй ночи)
-            a: Укажите, пожалуйста, город отправления, город прибытия и дату поездки^hello
+            a: Добрый день. Чем могу помочь?^hello
         
     state: GetTrainSchedule
         intent!: /GetRawDirection
@@ -51,10 +51,30 @@ theme: /
             if ($entities) {
                 var entities_count = $entities.length;
                 for (var i=0; i<entities_count; i++) {
-                    if ($entities[i]["pattern"] == "LocationNewDictionary") locations.push($entities[i]["value"]);
-                    if ($entities[i]["pattern"] == "LocationTo") locationsTo.push($entities[i]["value"]);
-                    if ($entities[i]["pattern"] == "LocationFrom") locationsFrom.push($entities[i]["value"]);
-                    if ($entities[i]["pattern"] == "Date") dates.push($entities[i]["value"]);
+                    if ($entities[i]["pattern"] == "LocationNewDictionary") locations.push({
+                                                                                            "value": $entities[i]["value"], 
+                                                                                            "startPos": $entities[i]["startPos"],
+                                                                                            "endPos": $entities[i]["startPos"] + $entities[i]["length"],
+                                                                                            "max": 1
+                                                                                            });
+                    if ($entities[i]["pattern"] == "LocationTo") locationsTo.push({
+                                                                                    "value": $entities[i]["value"], 
+                                                                                    "startPos": $entities[i]["startPos"],
+                                                                                    "endPos": $entities[i]["startPos"] + $entities[i]["length"],
+                                                                                    "max": 1
+                                                                                    });
+                    if ($entities[i]["pattern"] == "LocationFrom") locationsFrom.push({
+                                                                                        "value": $entities[i]["value"], 
+                                                                                        "startPos": $entities[i]["startPos"],
+                                                                                        "endPos": $entities[i]["startPos"] + $entities[i]["length"],
+                                                                                        "max": 1
+                                                                                        });
+                    if ($entities[i]["pattern"] == "Date") dates.push({
+                                                                        "value": $entities[i]["value"], 
+                                                                        "startPos": $entities[i]["startPos"],
+                                                                        "endPos": $entities[i]["startPos"] + $entities[i]["length"],
+                                                                        "max": 1
+                                                                        });
                     
                     if ($entities[i]["pattern"] == "ReservedSeatTicket") $session.reserved_ticket = 1;
                     if ($entities[i]["pattern"] == "RegularSeatTicket") $session.regular_ticket = 1;
@@ -69,12 +89,26 @@ theme: /
                     
                     if ($entities[i]["pattern"] == "RoundTripWords") roundTrip = 1;
                 }
-                    
+                
                 locationsCount = locations.length;
                 loctoCount = locationsTo.length;
                 locfromCount = locationsFrom.length;
                 datesCount = dates.length;
+                
+                // check boundaries
+                var slots = [];
+                var intersect = false;
+                var entity;
+                
+                if (datesCount > 1) {
+                    for (var i=0; i<datesCount; i++) {
+                        entity = dates[i];
+                        intersect = intersects_slots(entity.startPos, entity.endPos, slots);
+                        if (intersect) entity.max = 0;
+                    }
+                }
             }
+            
             
             // check directions count    
             var multiDirection = 0;
@@ -95,7 +129,7 @@ theme: /
                 else  multiDirection = 1;
             }
             
-            if ((loctoCount + locationsCount > 2 || locfromCount + locationsCount > 2) && (roundTrip === 0)) {
+            if ((loctoCount + locationsCount + locfromCount > 2) && (roundTrip === 0)) {
                 multiDirection = 1;
             }
             
@@ -136,7 +170,7 @@ theme: /
             }
             
             // parse dates
-            if (dates) {
+            if (datesCount > 0) {
                 if ($session.roundTrip == 0) {
                     if (datesCount == 1) {
                         date_result = handle_request(toPrettyString(dates[0]));
@@ -165,17 +199,20 @@ theme: /
             }
             
             log($session);
+
+            $session.typefrom = typeof($session.from)
+            $session.typeto = typeof($session.to)
+            
             
         a: locations: {{ toPrettyString($session.locations) }}
+        a: locationsFrom: {{ toPrettyString($session.locationsFrom) }}
         a: locationsTo: {{ toPrettyString($session.locationsTo) }}
-        a: locationsFrom: {{  toPrettyString($session.locationsFrom) }}
-        a: dates: {{ $session.dates }}
-        
-        a: multiDate: {{ $session.multiDate }}
-        a: multiDirection: {{ $session.multiDirection }}
-        a: roundTrip: {{ $session.roundTrip }}
-        a: From: {{ toPrettyString($session.from) }}
-        a: To: {{ toPrettyString($session.to) }}
+        a: dates: {{ toPrettyString($session.dates) }}
+            
+        if: $session.typefrom == "string"
+            script: $session.from = JSON.parse($session.from)
+        if: $session.typeto == "string"
+            script: $session.to = JSON.parse($session.to)
 
                     
         if: $session.multiDate
@@ -199,10 +236,13 @@ theme: /
                 a: Указанная дата для поездки обратно уже прошла. Уточните, пожалуйста, свой запрос.
             elseif: $session.datereturn_list
                 script: $session.datereturn = $session.datereturn_list
+                
+        a: Сейчас посмотрю билеты на поезд.
 
-        go!: /ChooseStationOptions
+        # go!: /ChooseStationOptions
         
     state: ChooseStationOptions
+        
         script:  
             var locFromDict = {};
             var locToDict = {};
@@ -234,7 +274,7 @@ theme: /
             script: 
                 $session.retry = $session.retryParam
             go!: /ChooseStationOptionTo
-            
+        
         if: $session.from
             if: $session.to
                 if: $session.from.number == $session.to.number
@@ -253,7 +293,7 @@ theme: /
             $session.optionsFromCount = $session.locfromSuggestOptions.length;
             
             for (var i=0;i<$session.optionsFromCount;i++) {
-                $session.optionsFrom += i + " - " + $session.locfromSuggestOptions[i] + "\n";
+                $session.optionsFrom += (i+1) + " - " + $session.locfromSuggestOptions[i] + "\n";
             }
             
         a: {{ $session.optionsFrom }}
@@ -261,20 +301,20 @@ theme: /
         state: GetStation
             q: @OptionNumber
             
-            if: $parseTree._OptionNumber > $session.optionsFromCount - 1
+            if: $parseTree._OptionNumber > $session.optionsFromCount
                 go!: /ChooseStationOptionFrom/nomatch
                 
             if: $session.to
-                if: $session.to.number == $session.locfromNumberOptions[$parseTree._OptionNumber]
+                if: $session.to.number == $session.locfromNumberOptions[$parseTree._OptionNumber - 1]
                     a: Выбранная станция отправления совпадает со станцией назначения.
                     script: $session.samestationfrom = 1
                     go!: /ChooseStationOptionFrom/nomatch
             
             script: 
-                $session.from.name = $session.locfromNameOptions[$parseTree._OptionNumber]
-                $session.from.station_suggests = $session.locfromSuggestOptions[$parseTree._OptionNumber]
-                $session.from.number = $session.locfromNumberOptions[$parseTree._OptionNumber]
-            a: Вы выбрали станцию {{ $session.from.name }}, {{ $session.from.number }}
+                $session.from.name = $session.locfromNameOptions[$parseTree._OptionNumber - 1]
+                $session.from.station_suggests = $session.locfromSuggestOptions[$parseTree._OptionNumber - 1]
+                $session.from.number = $session.locfromNumberOptions[$parseTree._OptionNumber - 1]
+            ##a: Вы выбрали станцию {{ $session.from.name }}, {{ $session.from.number }}
             
             if: $session.to
                 if:  $session.to.number == ""
@@ -285,8 +325,8 @@ theme: /
         state: nomatch
             event: noMatch
             
-            if: !$session.samestationfrom
-                a: Не могу найти подходящую станцию.
+            ##if: !$session.samestationfrom
+            ##    a: Не могу найти подходящую станцию.
             
             if: $session.retry > 0
                 go!: /ChooseStationOptionFrom
@@ -303,7 +343,7 @@ theme: /
             $session.optionsToCount = $session.loctoSuggestOptions.length;
             
             for (var i=0;i<$session.optionsToCount;i++) {
-                $session.optionsTo += i + " - " + $session.loctoSuggestOptions[i] + "\n";
+                $session.optionsTo += (i+1) + " - " + $session.loctoSuggestOptions[i] + "\n";
             }
             
         a: {{ $session.optionsTo }}
@@ -311,27 +351,27 @@ theme: /
         state: GetStation
             q: @OptionNumber
             
-            if: $parseTree._OptionNumber > $session.optionsToCount - 1
+            if: $parseTree._OptionNumber > $session.optionsToCount
                 go!: /ChooseStationOptionTo/nomatch
                 
             if: $session.from
-                if: $session.from.number == $session.loctoNumberOptions[$parseTree._OptionNumber]
+                if: $session.from.number == $session.loctoNumberOptions[$parseTree._OptionNumber - 1]
                     a: Выбранная станция назначения совпадает со станцией отправления.
                     script: $session.samestationto = 1
                     go!: /ChooseStationOptionTo/nomatch
 
             script: 
-                $session.to.name = $session.loctoNameOptions[$parseTree._OptionNumber]
-                $session.to.station_suggests = $session.loctoSuggestOptions[$parseTree._OptionNumber]
-                $session.to.number = $session.loctoNumberOptions[$parseTree._OptionNumber]
-            a: Вы выбрали станцию {{ $session.to.name }}, {{ $session.to.number }}
+                $session.to.name = $session.loctoNameOptions[$parseTree._OptionNumber - 1]
+                $session.to.station_suggests = $session.loctoSuggestOptions[$parseTree._OptionNumber - 1]
+                $session.to.number = $session.loctoNumberOptions[$parseTree._OptionNumber - 1]
+            ##a: Вы выбрали станцию {{ $session.to.name }}, {{ $session.to.number }}
             go!: /FillSlots 
             
         state: nomatch
             event: noMatch
             
-            if: !$session.samestationto
-                a: Не могу найти подходящую станцию.
+            ##if: !$session.samestationto
+            ##    a: Не могу найти подходящую станцию.
             
             if: $session.retry > 0
                 go!: /ChooseStationOptionTo
@@ -375,6 +415,9 @@ theme: /
         state: get
             q: * @LocationNewDictionary *
             
+            # a: Parsed Tree: {{ toPrettyString($parseTree) }}
+            # a: All entities: {{ toPrettyString($entities) }}
+            
             script:
                 var newQuery = 0;
                 
@@ -383,7 +426,7 @@ theme: /
                 $session.newQuery = newQuery;
                 
             if: $session.newQuery
-                a: Кажется, вы хотите подобрать билеты по другому направлению. Уточните, пожалуйста, ваш запрос.
+                # a: Кажется, вы хотите подобрать билеты по другому направлению. Уточните, пожалуйста, ваш запрос.
                 go!: /GetTrainSchedule
                 
             if: $session.to
@@ -403,7 +446,7 @@ theme: /
         state: newQuery
             q: * @Date *
             q: * @NewQueryWords *
-            a: Кажется, вы хотите подобрать другие билеты. Уточните, пожалуйста, ваш запрос.
+            # a: Кажется, вы хотите подобрать другие билеты. Уточните, пожалуйста, ваш запрос.
             go!: /GetTrainSchedule
             
         state:
@@ -419,10 +462,13 @@ theme: /
         script: $session.retry = $session.retry - 1
         random:
             a: Куда собираетесь поехать?
-            a: Введите, пожалуйста, пункт назначения
+            ##a: Введите, пожалуйста, пункт назначения
         
         state: get
             q: * @LocationNewDictionary *
+            
+            # a: Parsed Tree: {{ toPrettyString($parseTree) }}
+            # a: All entities: {{ toPrettyString($entities) }}
             
             script:
                 var newQuery = 0;
@@ -432,7 +478,7 @@ theme: /
                 $session.newQuery = newQuery;
                 
             if: $session.newQuery
-                a: Кажется, вы хотите подобрать билеты по другому направлению. Уточните, пожалуйста, ваш запрос.
+                # a: Кажется, вы хотите подобрать билеты по другому направлению. Уточните, пожалуйста, ваш запрос.
                 go!: /GetTrainSchedule
                 
             if: $session.from
@@ -452,12 +498,12 @@ theme: /
         state: newQuery
             q: * @Date *
             q: * @NewQueryWords *
-            a: Кажется, вы хотите подобрать другие билеты. Уточните, пожалуйста, ваш запрос.
+            # a: Кажется, вы хотите подобрать другие билеты. Уточните, пожалуйста, ваш запрос.
             go!: /GetTrainSchedule
             
         state:
             event: noMatch
-            a: Не могу распознать город прибытия
+            a: Не могу распознать город
 
             if: $session.retry > 0
                 go!: /GetTo
@@ -467,11 +513,15 @@ theme: /
     state: GetDate
         script: $session.retry = $session.retry - 1
         random:
-            a: Укажите дату поездки
-            a: На какой день нужны билеты?
+            a: На какой день нужны билеты? 
+            ##a: Укажите дату поездки
         
         state: get
             q: * @Date *
+            
+            # a: Parsed Tree: {{ toPrettyString($parseTree._Date) }}
+            # a: All entities: {{ toPrettyString($entities) }}
+            
             script: 
                 var date_result = handle_request(toPrettyString($parseTree._Date));
                 $session.date_relevant = date_result["relevant"];
@@ -479,11 +529,11 @@ theme: /
                 $session.date_list = date_result["dates"];
                 
             if: !$session.date_relevant
-                a: Указана некорректная дата. 
+                a: Некорректная дата. 
                 go!: /GetDate/nomatch
 
             elseif: $session.date_old
-                a: Указанная дата уже прошла. 
+                a: Дата уже прошла. 
                 go!: /GetDate/nomatch
 
             elseif: $session.date_list
@@ -495,7 +545,7 @@ theme: /
             q: * @LocationNewDictionary *
             q: * @NewQueryWords *
             
-            a: Кажется, вы хотите подобрать билеты по другому направлению. Уточните, пожалуйста, ваш запрос.
+            # a: Кажется, вы хотите подобрать билеты по другому направлению. Уточните, пожалуйста, ваш запрос.
             go!: /GetTrainSchedule
         
         state: nomatch
@@ -511,12 +561,12 @@ theme: /
             
     state: MultiDirection
         if: $session.multiDate
-            a: В запросе задано несколько дат, перевожу на оператора.^multiDate
+            a: Подождите, сейчас переведу вас на специалиста^multiDate
         else:
-            a: В запросе задано несколько направлений, перевожу на оператора.^multiDirection
+            a: Подождите, сейчас переведу вас на специалиста^multiDirection
         
     state: RoundTrip
-        a: Запрос билетов туда-обратно.
+        ##a: Запрос билетов туда-обратно.
 
         if: !$session.datereturn
             script: $session.retry = $session.retryParam
@@ -536,11 +586,11 @@ theme: /
                     $session.date_list = date_result["dates"];
                     
                 if: !$session.date_relevant
-                    a: Указана некорректная дата. 
+                    a: Некорректная дата. 
                     go!: /RoundTrip/GetDate/nomatch
     
                 elseif: $session.date_old
-                    a: Указанная дата уже прошла. 
+                    a: Дата уже прошла. 
                     go!: /RoundTrip/GetDate/nomatch
     
                 elseif: $session.date_list
@@ -573,11 +623,11 @@ theme: /
                     $session.datereturn_list = datereturn_result["dates"];
                     
                 if: !$session.datereturn_relevant
-                    a: Указана некорректная дата. 
+                    a: Некорректная дата. 
                     go!: /RoundTrip/GetDateReturn/nomatch
     
                 elseif: $session.datereturn_old
-                    a: Указанная дата уже прошла. 
+                    a: Дата уже прошла. 
                     go!: /RoundTrip/GetDateReturn/nomatch
     
                 elseif: $session.datereturn_list
@@ -599,29 +649,29 @@ theme: /
             q: * @LocationNewDictionary *
             q: * @NewQueryWords *
             
-            a: Кажется, вы хотите подобрать билеты по другому направлению. Уточните, пожалуйста, ваш запрос.
+            # a: Кажется, вы хотите подобрать билеты по другому направлению. Уточните, пожалуйста, ваш запрос.
             go!: /GetTrainSchedule
 
-        a: Date: {{ $session.date }} 
-        a: DateReturn: {{ $session.datereturn }}
+        ##a: Date: {{ $session.date }} 
+        ##a: DateReturn: {{ $session.datereturn }}
         
 
     state: OtherTransport
         q!: * (на чём|как) [можно] [было бы] (добраться|уехать|доехать) *
         q!: * (автобус*|автомоб*) *
-        q!: * (самолет*|авиа)* *
+        q!: * (самолет*|авиа|лететь|долететь|улететь|слетать|вылет|перелёт)* *
         q!: * (электричк*|электричек*) *
         q!: * метро* *
         q!: * (машина|машины|машину|машине) *
-        a: У меня есть информация только о поездах, посмотреть билеты по этому запросу?^otherTransport
+        a: Подождите, сейчас переведу вас на специалиста^otherTransport
 
-        state: Exit
-            q: * @No *
-            a: До встречи!
+        ##state: Exit
+        ##    q: * @No *
+        ##    a: До встречи!
                 
-        state: NewQuery
-            q: * @Yes *
-            go!: /GetTrainSchedule
+        ##state: NewQuery
+        ##    q: * @Yes *
+        ##    go!: /GetTrainSchedule
 
 
     state: Troubles
@@ -633,7 +683,7 @@ theme: /
         q!: * (скидки|скидка|льгот|льгота|льготы|скидос|скидок) *
         q!: * (написано|написали|позвонили|звоню|позвонить|позвоните|созвонимся|созвониться|дозвониться) *
         q!: * (услуг*|сервис*) *
-        a: Проблемные вопросы обсудите с оператором.^troubles
+        a: Подождите, сейчас переведу вас на специалиста^troubles
 
 
     state: OtherQuestions
@@ -657,8 +707,8 @@ theme: /
         q!: * какие (города|станции|остановки) (проезжает поезд|на маршруте) *
         q!: * (где|сколько) (стоит|останавливается) поезд *
         q!: * (почему|зачем|по какой причине|по какому праву|для чего|это что|что это такое|что такое) *
-        q!: * в (январе|феврале|марте|апреле|мае|июне|июле|августе|сентябре|октябре|ноябре|декабре) *
-        q!: * на (январь|февраль|март|апрель|май|июнь|июль|август|сентябрь|октябрь|ноябрь|декабрь) *
+        ##q!: * в (январе|феврале|марте|апреле|мае|июне|июле|августе|сентябре|октябре|ноябре|декабре) *
+        ##q!: * на (январь|февраль|март|апрель|май|июнь|июль|август|сентябрь|октябрь|ноябрь|декабрь) *
         q!: * на (следующий месяц|следующий год|следуюущую неделю|следущий месяц|следущий год|следуущую неделю) *
         q!: * (собак|собака|собаки|собаку|пёс|пса) *
         q!: * (кот|кота|коты|коту|кошка|кошки|кошку|кошек) *
@@ -682,154 +732,143 @@ theme: /
         q!: * (по каким числам|по каким дням|в какие дни|с какой периодичностью|как часто|насколько часто) *
         q!: * (в какие числа|в каких числах|по каким дням|с какой регулярность|регулярно|регулярный) *
         q!: * (окна|против движения|спиной|лицом|туалет*|боковое|боковушка|боковушку|боковушки|боковые) *
-        a: Не могу подсказать, перевожу на оператора^otherQuestions
+        a: Подождите, сейчас переведу вас на специалиста^otherQuestions
 
     state: Result
-        a: Откуда: {{ $session.from.name }}, {{ $session.from.number }}
-        a: Куда: {{ $session.to.name }}, {{ $session.to.number }}
-        a: Когда: {{ toPrettyString($session.date) }}
+        # a: Откуда: {{ $session.from.name }}, {{ $session.from.number }}
+        # a: Куда: {{ $session.to.name }}, {{ $session.to.number }}
+        # a: Когда: {{ toPrettyString($session.date) }}
         
-        if: $session.roundTrip
-            a: Обратная поездка
-            a: Откуда: {{ $session.to.name }}, {{ $session.to.number }}
-            a: Куда: {{ $session.from.name }}, {{ $session.from.number }}
-            a: Когда: {{ toPrettyString($session.datereturn) }}
+        ##if: $session.roundTrip
+        ##    a: Обратная поездка
+        ##    a: Откуда: {{ $session.to.name }}, {{ $session.to.number }}
+        ##    a: Куда: {{ $session.from.name }}, {{ $session.from.number }}
+        ##    a: Когда: {{ toPrettyString($session.datereturn) }}
             
-        if: $session.class
-            a: Класс билетов: {{ $session.class }}
+        ##if: $session.class
+        ##    a: Класс билетов: {{ $session.class }}
             
-        a: Все правильно?
+        ##a: Все правильно?
         
-        state: Yes
-            q: (@Yes [спасибо] [верно|правильно|ок] | верно | правильно | ок)
-            a: Хорошо! Сейчас посмотрю билеты.
-            a: Запрос в api.
-            go!: /Result/Yes/Query
+        ##state: Yes
+            ##q: (@Yes [спасибо] [верно|правильно|ок] | верно | правильно | ок)
+            ##a: Хорошо! Сейчас посмотрю билеты.
+            ##a: Запрос в api.
+            ##go!: /Result/Yes/Query
             
-            state: Query
-                script:
-                    var response;
-                    var result;
-                    
-                    var filters = {};
-                    
-                    // фильтры класс билетов
-                    var class_list = []; 
-                    
-                    if ($session.reserved_ticket) class_list.push("plazcard");
-                    if ($session.regular_ticket) class_list.push("coupe");
-                    if ($session.lux_ticket) class_list.push("lux");
-                    
-                    if (class_list.length > 0) filters["class"] = class_list;
-                    
-                    // фильтры время
-                    var min_time;
-                    var max_time;
-                    
-                    if ($session.morning_time) {
-                        min_time = "05:00";
-                        max_time = "11:00";
-                        }
-                    if ($session.day_time) {
-                        if (!min_time) min_time = "11:00";
-                        max_time = "17:00";
-                        }
-                    if ($session.evening_time) {
-                        if (!min_time) min_time = "17:00";
-                        max_time = "22:00";
-                        }
-                    if ($session.night_time) {
-                        min_time = "22:00";
-                        if (!max_time) max_time = "05:00";
-                        }
-                    if (min_time && max_time) {
-                        filters["min_time"] = min_time;
-                        filters["max_time"] = max_time;
-                    }
-                    
-                    
-                    response = getTicketsResult($session.from.number, $session.to.number, $session.date);
-                    if (response) result = process_results(response, filters);
-                    
-                    $session.result = result;
-                    $session.response = response;
-                    
-                    if ($session.roundTrip) {
-                        var response_return = getTicketsResult($session.to.number, $session.from.number, $session.datereturn);
-                        var result_return = process_results(response_return, filters);
-                        $session.result_return = result_return;
-                        $session.response_return = response_return;
-                    }
-                    
-                    $session.filters = filters;
-                    
-                    // $session.result = "Tickets data";
+            ##state: Query
+        script:
+            var response;
+            var result;
+            
+            var filters = {};
+            
+            // фильтры класс билетов
+            var class_list = []; 
+            
+            if ($session.reserved_ticket) class_list.push("plazcard");
+            if ($session.regular_ticket) class_list.push("coupe");
+            if ($session.lux_ticket) class_list.push("lux");
+            
+            if (class_list.length > 0) filters["class"] = class_list;
+            
+            // фильтры время
+            var min_time;
+            var max_time;
+            
+            if ($session.morning_time) {
+                min_time = "05:00";
+                max_time = "11:00";
+                }
+            if ($session.day_time) {
+                if (!min_time) min_time = "11:00";
+                max_time = "17:00";
+                }
+            if ($session.evening_time) {
+                if (!min_time) min_time = "17:00";
+                max_time = "22:00";
+                }
+            if ($session.night_time) {
+                min_time = "22:00";
+                if (!max_time) max_time = "05:00";
+                }
+            if (min_time && max_time) {
+                filters["min_time"] = min_time;
+                filters["max_time"] = max_time;
+            }
+            
+            
+            response = getTicketsResult($session.from.number, $session.to.number, $session.date);
+            if (response) result = process_results(response, filters);
+            
+            $session.result = result;
+            $session.response = response;
+            
+            if ($session.roundTrip) {
+                var response_return;
+                var result_return;
+                response_return = getTicketsResult($session.to.number, $session.from.number, $session.datereturn);
                 
-                if: $session.result
-                    a: Filters: {{ toPrettyString($session.filters) }} 
-                    # a: Response {{ toPrettyString($session.response) }}
-                    a: Result: {{ toPrettyString($session.result) }} 
+                if (response_return) result_return = process_results(response_return, filters);
+                $session.result_return = result_return;
+                $session.response_return = response_return;
+            }
+            
+            $session.filters = filters;
+
+
+        ##a: All entities: {{ toPrettyString($entities) }}
+        ##a: Parsed Tree: {{ toPrettyString($parseTree) }}
+
+        if: $session.result
+
+            # a: Filters: {{ toPrettyString($session.filters) }} 
+            # a: Response {{ toPrettyString($session.response) }}
+            ##a: Result: {{ toPrettyString($session.result) }} 
+            if: $session.result.price
+                script: 
+                    $session.additional_params = getAdditionalParams($session.filters, $session.result);
                     
-                    if: $session.result.price
-                        script: 
-                            var params;
-                            var params_list = [];
-                            
-                            var child_param = 0.6;
-                            
-                            var class_map = {
-                                "coupe": "купе",
-                                "plazcard": "плацкарт",
-                                "lux": "люкс"
-                            }
-                            
-                            if ($session.filters.class) {
-                                $session.printClass = 1;
-                                params_list.push("класс билетов: " + class_map[$session.result.type]);
-                            }
-                            if ($session.filters.min_time) {
-                                $session.printTime = 1;
-                                params_list.push("время отправления: " + $session.result.departureTime);
-                            }
-                            
-                            if (params_list.length > 0) params = " (" + params_list.join(", ") + ")";
-                            
-                            $session.additional_params = params;
-                            
-                            if ($session.child_ticket) $session.additional_price = " (стоимость детского билета от " + Math.ceil(child_param * $session.result.price) + " рублей)"; 
-                            
-                        a: Билеты есть в наличии{{ $session.additional_params }}, стоимость от {{ $session.result.price }} рублей{{$session.additional_price}}. Посмотреть билеты можно по ссылке: {{ $session.result.url }}
+                    if ($session.child_ticket) $session.additional_price = getChildPrice($session.result);
+
+                a: На {{ $session.result.date }} по маршруту {{ $session.from.name }} - {{ $session.to.name }} есть билеты{{ $session.additional_params }}. Стоимость билета от {{ $session.result.price }} рублей{{$session.additional_price}}. Выберите подходящй вариант по ссылке: {{ $session.result.url }}
+                # a: Билеты есть в наличии{{ $session.additional_params }}. Стоимость от {{ $session.result.price }} рублей{{$session.additional_price}}. Посмотреть билеты можно по ссылке: {{ $session.result.url }}
                         
-                        if: $session.result_return
-                            a: Обратная поездка
-                            a: Result return: {{ toPrettyString($session.result_return) }} 
-                            
-                            if: $session.result_return.price
-                                a: Билеты есть в наличии, стоимость от {{ $session.result_return.price }} рублей. Посмотреть билеты можно по ссылке: {{ $session.result_return.url }}
-                            else:
-                                a: Для указанных параметров билеты не найдены.
-                        go!: /Result/Yes/moreQueries
-                    else:
-                        a: Для указанных параметров билеты не найдены.
-                        go!: /Result/Yes/moreQueries
-                else:
-                    a: Не могу найти информацию о билетах.
+            else:
+                a: К сожалению, на {{ $session.date.join(",") }} по маршруту {{ $session.from.name }} - {{ $session.to.name }} нет билетов на поезда.
                 
-            state: moreQueries   
-                a: Хотите посмотреть другие билеты?
+            ##go!: /Result/Yes/moreQueries
+        else:
+            a: Не могу найти информацию о билетах.
             
-                state: Exit
-                    q: * @No *
-                    a: До встречи!
+        if: $session.roundTrip
+            
+            if: $session.result_return
+                # a: Response {{ toPrettyString($session.response_return) }}
+                # a: Result return: {{ toPrettyString($session.result_return) }}
+                if: $session.result_return.price
+                    a: На {{ $session.result_return.date }} по маршруту {{ $session.to.name }} - {{ $session.from.name }} есть билеты. Стоимость билета от {{ $session.result_return.price }} рублей. Выберите подходящй вариант по ссылке: {{ $session.result_return.url }}
+                    # a: Билеты есть в наличии. Стоимость от {{ $session.result_return.price }} рублей. Посмотреть билеты можно по ссылке: {{ $session.result_return.url }}
+                else:
+                    a: К сожалению, на {{ $session.datereturn.join(",") }} по маршруту {{ $session.to.name }} - {{ $session.from.name }} нет билетов на поезда.
+            else: 
+                a: Не могу найти информацию о билетах на обратную поездку.
+                
+            ##state: moreQueries   
+            ##    a: Хотите посмотреть другие билеты?
+            
+            ##    state: Exit
+            ##        q: * @No *
+            ##        a: До встречи!
                     
-                state: NewQuery
-                    q: (@Yes [спасибо | пожалуйста] [хочу] | хочу | давай[те])
-                    a: Укажите, пожалуйста, откуда, куда и на какую дату искать билеты.
+            ##    state: NewQuery
+            ##        q: (@Yes [спасибо | пожалуйста] [хочу] | хочу | давай[те])
+            ##        a: Укажите, пожалуйста, откуда, куда и на какую дату искать билеты.
             
-        state: No
-            q: * @No *
-            a: Уточните, пожалуйста, запрос.
-            go!: /GetTrainSchedule
+        ##state: No
+        ##    q: * @No *
+        ##    a: Уточните, пожалуйста, запрос.
+        ##    go!: /GetTrainSchedule
             
     state: hello 
         q!: (привет|приветствую|приветики)
@@ -840,11 +879,11 @@ theme: /
         q!: (добрый вечер|доброго вечера|вечер добрый)
         q!: (доброе утро|доброго утра|утро доброе)
         q!: (доброй ночи)
-        a: Привет! Могу помочь купить билет на поезд. Что вас интересует?
+        a: Добрый день. Чем могу помочь?
         
     state: goodbye
         intent!: /Goodbye
-        a: До встречи!
+        a: Рад помочь.
         
     state: newQuery
         q!: * @NewQueryWords * 
@@ -853,7 +892,7 @@ theme: /
     
     state: nomatch
        event!: noMatch
-       a: {{ toPrettyString($context.entities) }}
+       #a: {{ toPrettyString($context.entities) }}
        
-       a: Не понял, перевожу запрос на оператора.^noMatch
+       a: Подождите, сейчас переведу вас на специалиста^noMatch
 

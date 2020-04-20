@@ -180,11 +180,43 @@ function process_results(result, filters) {
             if (count_trains > 1) {
                 filtered_result["url"] = generateTimetableURL(filtered_result["departureStationCode"], filtered_result["arrivalStationCode"], filtered_result["date"]); 
             }
+            else filtered_result["url"] = shortURL(filtered_result["url"]);
             return filtered_result;
         }
     }
 
     return {};
+}
+
+function getAdditionalParams(filters, result) {
+    var params;
+    var params_list = [];
+    
+    var class_map = {
+        "coupe": "купе",
+        "plazcard": "плацкарт",
+        "lux": "люкс"
+    }
+    
+    if (filters.class) {
+        // var printClass = 1;
+        params_list.push("класс билетов: " + class_map[result.type]);
+    }
+    if (filters.min_time) {
+        // var printTime = 1;
+        params_list.push("время отправления: " + result.departureTime);
+    }
+    
+    if (params_list.length > 0) params = " (" + params_list.join(", ") + ")";
+    
+    return params;
+}
+
+function getChildPrice(price) {
+    var child_param = 0.6;
+
+    var additional_price = " (стоимость детского билета от " + Math.ceil(child_param * price) + " рублей)";
+    return additional_price;
 }
 
 function isInArray(value, array) {
