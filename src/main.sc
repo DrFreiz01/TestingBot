@@ -47,10 +47,10 @@ init:
 
 # Запрос переопределение всех ошибок
 
-#    bind("onAnyError", function($context) {
-#        $reactions.answer('К сожалению, по техническим причинам я не смогу сейчас помочь. Попробуйте переключиться на оператора, отправиа фразу "[Переключить на оператора]" в чат или обратитесь позже.');
-#        $reactions.inlineButtons({text: "Переключить на оператора", transition: "/Operator"})
-#    });
+    bind("onAnyError", function($context) {
+        $reactions.answer('К сожалению, по техническим причинам я не смогу сейчас помочь. Попробуйте переключиться на оператора, отправиа фразу "[Переключить на оператора]" в чат или обратитесь позже.');
+        $reactions.inlineButtons({text: "Переключить на оператора", transition: "/Operator"})
+    });
 
         # или <a href="https://hoff.ru/feedback" target="_blank">отправить email в рубрику «Напишите нам» на сайте hoff.ru</a>
         # $reactions.inlineButtons({text: "Форма обращения по Email", url: "https://hoff.ru/feedback"});
@@ -347,7 +347,7 @@ theme: /
         state: Switch || noContext=true
             script:
                 smartSwitch($session.smartSwitchLastState);
-
+            
 #        state: Switch || noContext=true
 #            script:
 #                $context.session.ltxFirstMessage = "—————————————————" + "\n" + "ИСТОРИЯ ДИАЛОГА до переключения на оператора:" + "\n" + $context.client.chatHistory.map(function(val) {return val.type + "\n" + val.state + "\n" + val.text;}).join("\n\n") + "\n" + "—————————————————" + "\n" + "Рекомендации бота (тематики):" + "\n" + strSortNCount($context.session.chatHistorySTAT);
