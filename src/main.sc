@@ -113,9 +113,15 @@ init:
         var currContx = ctx.contextPath;
         var nextState = ctx.temp.classifierTargetState;
         if (currContx != "/Operator"
-        &&  nextState == "/Operator")
+        &&  currContx != "/CatchAll"
+        &&  currContx != "/ВопросыОстались")
             {
-                ctx.session.smartSwitchLastState = currContx;
+                if (nextState == "/Operator"
+                ||  nextState == "/CatchAll"
+                ||  nextState == "/ВопросыОстались")
+                    {
+                        ctx.session.smartSwitchLastState = currContx;
+                    }
             }
         //$reactions.answer("CS: "+currState);
         //$reactions.answer("CC: "+currContx);

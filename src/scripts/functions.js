@@ -82,6 +82,9 @@ function smartSwitch(str) {
     //$reactions.answer(str);
     var arr = str.split("/");
     
+    //Очищаем ctx.session.smartSwitchLastState после срабатывания, чтобы в врамках конкретной сессии не давало ложных срабатываний
+    $session.smartSwitchLastState = undefined;
+    
     // Задаём правила фильтрации, из каких (вопросов/стейтов) необходимо сделать переход на конкретную группу операторов
 
     var toTransitG01zrp = [
