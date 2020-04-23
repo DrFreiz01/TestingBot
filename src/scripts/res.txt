@@ -1,0 +1,6 @@
+q!: * $iataAndRailway $iataAndRailway ($dateDig/$dateLetters/$numberDate) * {$return ([$buyVerbPast] ($ticket/$airplaneTicket))} * $orderNumber *
+q!: * $iataAndRailway $iataAndRailway ($dateDig/$dateLetters/$numberDate) * $orderNumber * {$return ([$buyVerbPast] ($ticket/$airplaneTicket))} *
+q!: * {$return ([$buyVerbPast] ($ticket/$airplaneTicket))} * $iataAndRailway $iataAndRailway ($dateDig/$dateLetters/$numberDate) * $orderNumber *
+q!: * {$return ([$buyVerbPast] ($ticket/$airplaneTicket))} * $orderNumber * $iataAndRailway $iataAndRailway ($dateDig/$dateLetters/$numberDate) *
+q!: * $orderNumber * $iataAndRailway $iataAndRailway ($dateDig/$dateLetters/$numberDate) * {$return ([$buyVerbPast] ($ticket/$airplaneTicket))} *
+q!: * $orderNumber * {$return ([$buyVerbPast] ($ticket/$airplaneTicket))} * $iataAndRailway $iataAndRailway ($dateDig/$dateLetters/$numberDate) *

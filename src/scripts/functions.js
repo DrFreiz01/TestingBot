@@ -1,386 +1,800 @@
-function getcity() {
-    var $parseTree = $jsapi.context().parseTree;
-    var $session = $jsapi.context().session;
-    $session.ptrnCity = $parseTree._ptrnCity.name;
-}
+// ФУНКЦИИ
 
-//Функция для таймаута ответа бота в милисекундах, со значением по умолчанию в 1500 миллисекунд
-function sleep(milliseconds) { 
-    milliseconds = typeof milliseconds !== "undefined" ? milliseconds : "1500";
-    var timeStart = new Date().getTime(); 
-    while (true) { 
-        var elapsedTime = new Date().getTime() - timeStart; 
-        if (elapsedTime > milliseconds) { 
-            break; 
-        } 
-    } 
-}
-
-//Функция универсальная для запроса на веб-сервис, запускается в сценарии по скрипту var $httpResponse = getStatus();
-//перед запуском требует в сценарии определения переменных $session.wsUrl, $session.wsBody, $session.wsTransGood, $session.wsTransBad
-function getStatus() {
-    var $session = $jsapi.context().session;
-    var url = $session.wsUrl;
-    var options = {
-        dataType: "json",
-        method: $session.wsMethod,
-        headers: {},
-        body: $session.wsBody
-    };
-    var result = $http.post(url, options);
-    if (result.isOk && result.status >= 200 && result.status < 300) {
-        return result.data;
-    } else {
-        $reactions.transition($session.wsTransBad);
-    }
-}
-
-//Функция перебора элементов в массиве объектов (myArray) для поиска позиции объекта с известным именем (property) и значением (searchTerm)
-function arrayObjectIndexOf(myArray, property, searchTerm) {
-    for(var i = 0, len = myArray.length; i < len; i++) {
-        if (myArray[i][property] === searchTerm) {
-            return i;
+// авиапоиск: фильтр багаж
+function baggageFilter(httpResponse) {
+    var tariffIndex;
+    for (var i = 0; i < httpResponse.tariffs.length; i++) {
+        if (httpResponse.tariffs[i].shortFeatures.luggage.placesCount > 0) {
+            tariffIndex = i;
+            break;
         }
     }
-    return -1;
+    return tariffIndex;
 }
 
-//Функция подсчета и сортировки повторяющихся элементов в строке "str", разбиваемой в массив символом "/"
-function strSortNCount(str) {
-    str = typeof str !== "undefined" ? str : "/";                   //на случай ошибки (TypeError: Cannot read property "split" from undefined)
-    var arr = str.split("/");                                       //делим строку, содержащую полный путь стейта по разделителю в кавычках
-    for (var len = arr.length, i = len; --i >= 0;) {                //объединяем повторяющиеся элементы массива и считаем их частотность
-      if (arr[arr[i]]) {
-        arr[arr[i]] += 1;
-        arr.splice(i, 1);
-      } else {
-        arr[arr[i]] = 1;
-      }
+
+// авиапоиск: фильтр утро/вечер
+function dayTimeFilter(httpResponse) {
+    var neededTime, tariffIndex, flightIndex, variantIndex, segmentIndex, exit_flag;
+    exit_flag = false;
+    // проходимся по выдаче
+    for (var i = 0; i < httpResponse.tariffs.length; i++) {
+        for (var j = 0; j < httpResponse.tariffs[i].flights.length; j++) {
+            for (var k = 0; k < httpResponse.tariffs[i].flights[j].variants.length; k++) {
+                if (isRightTime (httpResponse.tariffs[i].flights[j].variants[k].segments[0], $session.dayTime) == true) {
+                    tariffIndex = i;
+                    flightIndex = j;
+                    variantIndex = k;
+                    exit_flag = true;
+                }
+                if (exit_flag == true) {
+                    break;
+                }
+            }
+            if (exit_flag == true) {
+                break;
+            }
+        }
+        if (exit_flag == true) {
+            break;
+        }
     }
-    arr.sort(function(a, b) {                                       //сортируем элементы массива по убыванию их частотности
-      return arr[b] - arr[a];
-    });                                                             //задаем массив с элементами, по которым будет фильтрация
-    var toRemove = ["ИОБ","ИКО","ИТО","ИУО","ИУД","ИУС","ИУК","ЛОБ","ЛКБ","ЗОБ","ЗСТ","ЗСГ","ЗИМ","СОБ","СНА","СКО","ПОБ","КОБ","КВЫ","КНА","КНЕ","МОБ","МБО","МНД","МНЦ","МТТ"];
-    arr = arr.filter(function(x) {                                  //оставляем в массиве только те элементы, которые перечислены в массиве toRemove
-        return toRemove.indexOf(x) !== -1;                           
+    return {tariffIndex: tariffIndex, flightIndex: flightIndex, variantIndex: variantIndex};
+}
+
+
+// авиапоиск: фильтр утро/вечер + багаж
+function dayTimeBaggFilter (httpResponse) {
+    var neededTime, tariffIndex, flightIndex, variantIndex, segmentIndex, exit_flag;
+    exit_flag = false;
+    // проходимся по выдаче
+    for (var i = 0; i < httpResponse.tariffs.length; i++) {
+        for (var j = 0; j < httpResponse.tariffs[i].flights.length; j++) {
+            for (var k = 0; k < httpResponse.tariffs[i].flights[j].variants.length; k++) {
+                if (isRightTime (httpResponse.tariffs[i].flights[j].variants[k].segments[0], $session.dayTime) == true && httpResponse.tariffs[i].shortFeatures.luggage.placesCount > 0) {
+                    tariffIndex = i;
+                    flightIndex = j;
+                    variantIndex = k;
+                    exit_flag = true;
+                }
+                if (exit_flag == true) {
+                    break;
+                }
+            }
+            if (exit_flag == true) {
+                break;
+            }
+        }
+        if (exit_flag == true) {
+            break;
+        }
+    }
+    return {tariffIndex: tariffIndex, flightIndex: flightIndex, variantIndex: variantIndex};
+}
+
+
+
+// категория жд билета для юзера
+function getCategory4User (category) {
+    if (category == 'LUXURY') {
+        category =  'в СВ вагоне'
+    }
+    if (category == 'SOFT') {
+        category =  'в вагоне люкс'
+    }
+    if (category == 'COMMON') {
+        category =  'в общем вагоне'
+    }
+    if (category == 'RESERVED') {
+        category =  'в плацкартном вагоне'
+    }
+    if (category == 'COMPARTMENT') {
+        category =  'в купе'
+    }
+    if (category == 'SITTING') {
+        category =  'в сидячем вагоне'
+    }
+    return category;
+}
+
+
+// находим нужный жд билет
+function getRailwayCategory (httpResponse) {
+    // кладем в объект tripOffer index и соответствующие ему цены
+    var idPriceObj = {};
+    for (var a = 0; a < httpResponse.length; a++){
+        for (var b = 0; b < httpResponse[a].tariffs.length;b++) {
+            var price = httpResponse[a].tariffs[b].minPrice;
+            price = price.toString();
+            idPriceObj[price] = [a, b];
+        }
+    }
+    // cортируем
+    var idPriceObjAsc = {};
+    Object.keys(idPriceObj).sort().forEach(function(key) {
+      idPriceObjAsc[key] = idPriceObj[key];
     });
-//    var stringResult = JSON.stringify(arr, function(k, v) {       //выводим названия стейтов и их частотность с переносом на следующую строку
-//      if (k === '') return v;
-//      return `${arr[v]} - ${v}`;
-//    },1);
-    var stringResult = arr.join(", ");                              //выводим названия стейтов в виде строки без переноса на следующую строку
-    return stringResult;
+
+    // идем от дешевых к дорогим и проверяем категорию, время суток, время в пути
+    for (price in idPriceObjAsc) {
+        var depTime = httpResponse[idPriceObjAsc[price][0]].segments[0].departureTime.time;
+        depTime = depTime.split('T');
+        depTime = depTime[1];
+        depTime = depTime.split(':');
+        depTime = depTime[0];
+        if (parseInt(depTime) > 21 && parseInt(depTime) < 5) {
+            var dayTime = 'night';
+        } else {
+            var dayTime = 'day';
+        }
+        if (httpResponse[idPriceObjAsc[price][0]].segments[0].duration < 18000 && dayTime == 'day' && httpResponse[idPriceObjAsc[price][0]].tariffs[idPriceObjAsc[price][1]].category == 'SITTING') {
+            return idPriceObjAsc[price];
+        } else if (httpResponse[idPriceObjAsc[price][0]].tariffs[idPriceObjAsc[price][1]].category != 'SITTING'){
+            return idPriceObjAsc[price];
+        }
+    }
 }
 
 
-//Функция переключения на нужную группу операторов
-function smartSwitch(str) {
-    var $client = $jsapi.context().client;
-    var $session = $jsapi.context().session;
-    var $response = $jsapi.context().response;
-    str = typeof str !== "undefined" ? str : "/";
-    //$reactions.answer(str);
-    var arr = str.split("/");
-    
-    //Очищаем ctx.session.smartSwitchLastState после срабатывания, чтобы в врамках конкретной сессии не давало ложных срабатываний
-    $session.smartSwitchLastState = undefined;
-    
-    // Задаём правила фильтрации, из каких (вопросов/стейтов) необходимо сделать переход на конкретную группу операторов
-
-    var toTransitG01zrp = [
-                            "КВЫ-01", "КВЫ-08", "КВЫ-11"];
-    var toTransitG02kad = [
-                            "КВЫ-02", "КВЫ-03", "КВЫ-04", "КВЫ-05", "КВЫ-06", "КВЫ-07", "КВЫ-09", "КВЫ-10", "КВЫ-12", "КВЫ-13", "КВЫ-14", "КВЫ-15",
-                            "КДЕ-02", "КДЕ-05", "КДЕ-06", "КДЕ-07",
-                            "КМЕ-01", "КМЕ-06", "КМЕ-07",
-                            "КНА-02", "КНА-03",
-                            "КОБ-01", "КОБ-02", "КОБ-06",
-                            "КОТ-01", "КОТ-02"];
-    var toTransitG03edu = [
-                            "КНА-05", "КНА-06", "КНА-07", "КНА-08",
-                            "КОБ-05", "КОБ-10", "КОБ-09", "КОБ-07"];
-    var toTransitG04mot = [];
-    var toTransitG05vac = [
-                            "КНА-01", "КНА-04"];
-    var toTransitG06sec = [
-                            "КДЕ-01", "КДЕ-03", "КДЕ-04",
-                            "КДС-02", "КДС-03",
-                            "КМЕ-02", "КМЕ-03", "КМЕ-04", "КМЕ-05", "КМЕ-08", "КМЕ-09", "КМЕ-10", "КМЕ-11", "КМЕ-12",
-                            "КОБ-03", "КОБ-04", "КОБ-08",
-                            "КРА-01", "КРА-02", "КРА-03", "КРА-04", "КРА-05", "КРА-06", "КРА-07", "КРА-08"];
-    var toTransitG07hds = [
-                            "КДС-01"];
-    var toTransitG08hax = [
-                            "КДС-04", "КДС-05", "КДС-06", "КДС-07", "КДС-08", "КДС-09"];
-
-    // Задаём переменную для передачи истории переписки
-    //$context.session.ltxFirstMessage = "—————————————————" + "\n" + "ИСТОРИЯ ДИАЛОГА до переключения на оператора:" + "\n" + $context.client.chatHistory.map(function(val) {return val.type + "\n" + val.state + "\n" + val.text;}).join("\n\n") + "\n" + "—————————————————" + "\n" + "Рекомендации бота (тематики):" + "\n" + strSortNCount($context.session.chatHistorySTAT);
-
-    $session.ltxFirstMessage = "—————————————————" + "\n" + "ИСТОРИЯ ДИАЛОГА до переключения на оператора:" + "\n" + $client.chatHistory.map(function(val) {return val.type + "\n" + val.state + "\n" + val.text;}).join("\n\n") + "\n" + "—————————————————" + "\n" + "Рекомендации бота (тематики):" + "\n" + strSortNCount($session.chatHistorySTAT);
-
-    // задаем переменную для переключения по умолчанию
-    // (переключает на все группы сразу), т.е. параметр destination не задан
-    var smartSwitchGroupAll = {
-        type:"switch",
-        appendCloseChatButton: false,
-        closeChatPhrases: ["/close", "/сдщыу",
-                            "/bot", "/ище","/бот", "/,jn",
-                            "/закрыть чат", "/pfrhsnm xfn", "/закройте чат", "/pfrhjqnt xfn", "/закрой чат", "/pfrh* xfn",
-                            "/вернуть бота", "/dthyenm ,jnf", "/верните бота", "/dthybnt ,jnf", "/верни бота", "/dthyb ,jnf",
-                            "\close", "\сдщыу",
-                            "\bot", "\ище","\бот", "\,jn",
-                            "\закрыть чат", "\pfrhsnm xfn", "\закройте чат", "\pfrhjqnt xfn", "\закрой чат", "\pfrh* xfn",
-                            "\вернуть бота", "\dthyenm ,jnf", "\верните бота", "\dthybnt ,jnf", "\верни бота", "\dthyb ,jnf",
-                            "закрыть чат", "pfrhsnm xfn", "закройте чат", "pfrhjqnt xfn", "закрой чат", "pfrh* xfn",
-                            "вернуть бота", "dthyenm ,jnf", "верните бота", "dthybnt ,jnf", "верни бота", "dthyb ,jnf"],
-        firstMessage: $session.ltxFirstMessage,
-        lastMessage: "— Диалог завершён —",
-        attributes: {
-            "Рекомендации бота (тематики)": strSortNCount($session.chatHistorySTAT),
+// ищем утро/вечер в авиавыдаче
+function isRightTime (value, mode) {
+    var time = value.departureTime.time.split('T');
+    var hour = time[1].split(':');
+    if (mode == 'утро') {
+        if (parseInt(hour[0],10) >= 4 && parseInt(hour[0],10) <= 12) {
+            return true;
         }
-    };
-
-    // Группа | G20-sup | Суперпользователи
-    var smartSwitchGroupG20sup = {
-        type:"switch",
-        destination: "G20-sup",
-        appendCloseChatButton: false,
-        closeChatPhrases: ["/close", "/сдщыу",
-                            "/bot", "/ище","/бот", "/,jn",
-                            "/закрыть чат", "/pfrhsnm xfn", "/закройте чат", "/pfrhjqnt xfn", "/закрой чат", "/pfrh* xfn",
-                            "/вернуть бота", "/dthyenm ,jnf", "/верните бота", "/dthybnt ,jnf", "/верни бота", "/dthyb ,jnf",
-                            "\close", "\сдщыу",
-                            "\bot", "\ище","\бот", "\,jn",
-                            "\закрыть чат", "\pfrhsnm xfn", "\закройте чат", "\pfrhjqnt xfn", "\закрой чат", "\pfrh* xfn",
-                            "\вернуть бота", "\dthyenm ,jnf", "\верните бота", "\dthybnt ,jnf", "\верни бота", "\dthyb ,jnf",
-                            "закрыть чат", "pfrhsnm xfn", "закройте чат", "pfrhjqnt xfn", "закрой чат", "pfrh* xfn",
-                            "вернуть бота", "dthyenm ,jnf", "верните бота", "dthybnt ,jnf", "верни бота", "dthyb ,jnf"],
-        firstMessage: $session.ltxFirstMessage,
-        lastMessage: "— Диалог завершён —",
-        attributes: {
-            "Рекомендации бота (тематики)": strSortNCount($session.chatHistorySTAT),
+    } else if (mode == 'вечер') {
+        if (parseInt(hour[0],10) >= 17 && parseInt(hour[0],10) <= 24) {
+            return true;
         }
-    };
-    
-    // Группа | G01-zrp | Зарплата
-    var smartSwitchGroupG01zrp = {
-        type:"switch",
-        destination: "G01-zrp",
-        appendCloseChatButton: false,
-        closeChatPhrases: ["/close", "/сдщыу",
-                            "/bot", "/ище","/бот", "/,jn",
-                            "/закрыть чат", "/pfrhsnm xfn", "/закройте чат", "/pfrhjqnt xfn", "/закрой чат", "/pfrh* xfn",
-                            "/вернуть бота", "/dthyenm ,jnf", "/верните бота", "/dthybnt ,jnf", "/верни бота", "/dthyb ,jnf",
-                            "\close", "\сдщыу",
-                            "\bot", "\ище","\бот", "\,jn",
-                            "\закрыть чат", "\pfrhsnm xfn", "\закройте чат", "\pfrhjqnt xfn", "\закрой чат", "\pfrh* xfn",
-                            "\вернуть бота", "\dthyenm ,jnf", "\верните бота", "\dthybnt ,jnf", "\верни бота", "\dthyb ,jnf",
-                            "закрыть чат", "pfrhsnm xfn", "закройте чат", "pfrhjqnt xfn", "закрой чат", "pfrh* xfn",
-                            "вернуть бота", "dthyenm ,jnf", "верните бота", "dthybnt ,jnf", "верни бота", "dthyb ,jnf"],
-        firstMessage: $session.ltxFirstMessage,
-        lastMessage: "— Диалог завершён —",
-        attributes: {
-            "Рекомендации бота (тематики)": strSortNCount($session.chatHistorySTAT),
-        }
-    };
-
-    // Группа | G02-kad | Кадрового администрирования
-    var smartSwitchGroupG02kad = {
-        type:"switch",
-        destination: "G02-kad",
-        appendCloseChatButton: false,
-        closeChatPhrases: ["/close", "/сдщыу",
-                            "/bot", "/ище","/бот", "/,jn",
-                            "/закрыть чат", "/pfrhsnm xfn", "/закройте чат", "/pfrhjqnt xfn", "/закрой чат", "/pfrh* xfn",
-                            "/вернуть бота", "/dthyenm ,jnf", "/верните бота", "/dthybnt ,jnf", "/верни бота", "/dthyb ,jnf",
-                            "\close", "\сдщыу",
-                            "\bot", "\ище","\бот", "\,jn",
-                            "\закрыть чат", "\pfrhsnm xfn", "\закройте чат", "\pfrhjqnt xfn", "\закрой чат", "\pfrh* xfn",
-                            "\вернуть бота", "\dthyenm ,jnf", "\верните бота", "\dthybnt ,jnf", "\верни бота", "\dthyb ,jnf",
-                            "закрыть чат", "pfrhsnm xfn", "закройте чат", "pfrhjqnt xfn", "закрой чат", "pfrh* xfn",
-                            "вернуть бота", "dthyenm ,jnf", "верните бота", "dthybnt ,jnf", "верни бота", "dthyb ,jnf"],
-        firstMessage: $session.ltxFirstMessage,
-        lastMessage: "— Диалог завершён —",
-        attributes: {
-            "Рекомендации бота (тематики)": strSortNCount($session.chatHistorySTAT),
-        } 
-    };
-
-    // Группа | G03-edu | Обучение и наставничество 
-    var smartSwitchGroupG03edu = {
-        type:"switch",
-        destination: "G03-edu",
-        appendCloseChatButton: false,
-        closeChatPhrases: ["/close", "/сдщыу",
-                            "/bot", "/ище","/бот", "/,jn",
-                            "/закрыть чат", "/pfrhsnm xfn", "/закройте чат", "/pfrhjqnt xfn", "/закрой чат", "/pfrh* xfn",
-                            "/вернуть бота", "/dthyenm ,jnf", "/верните бота", "/dthybnt ,jnf", "/верни бота", "/dthyb ,jnf",
-                            "\close", "\сдщыу",
-                            "\bot", "\ище","\бот", "\,jn",
-                            "\закрыть чат", "\pfrhsnm xfn", "\закройте чат", "\pfrhjqnt xfn", "\закрой чат", "\pfrh* xfn",
-                            "\вернуть бота", "\dthyenm ,jnf", "\верните бота", "\dthybnt ,jnf", "\верни бота", "\dthyb ,jnf",
-                            "закрыть чат", "pfrhsnm xfn", "закройте чат", "pfrhjqnt xfn", "закрой чат", "pfrh* xfn",
-                            "вернуть бота", "dthyenm ,jnf", "верните бота", "dthybnt ,jnf", "верни бота", "dthyb ,jnf"],
-        firstMessage: $session.ltxFirstMessage,
-        lastMessage: "— Диалог завершён —",
-        attributes: {
-            "Рекомендации бота (тематики)": strSortNCount($session.chatHistorySTAT),
-        }
-    };
-
-    // Группа | G04-mot | Мотивация 
-    var smartSwitchGroupG04mot = {
-        type:"switch",
-        destination: "G04-mot",
-        appendCloseChatButton: false,
-        closeChatPhrases: ["/close", "/сдщыу",
-                            "/bot", "/ище","/бот", "/,jn",
-                            "/закрыть чат", "/pfrhsnm xfn", "/закройте чат", "/pfrhjqnt xfn", "/закрой чат", "/pfrh* xfn",
-                            "/вернуть бота", "/dthyenm ,jnf", "/верните бота", "/dthybnt ,jnf", "/верни бота", "/dthyb ,jnf",
-                            "\close", "\сдщыу",
-                            "\bot", "\ище","\бот", "\,jn",
-                            "\закрыть чат", "\pfrhsnm xfn", "\закройте чат", "\pfrhjqnt xfn", "\закрой чат", "\pfrh* xfn",
-                            "\вернуть бота", "\dthyenm ,jnf", "\верните бота", "\dthybnt ,jnf", "\верни бота", "\dthyb ,jnf",
-                            "закрыть чат", "pfrhsnm xfn", "закройте чат", "pfrhjqnt xfn", "закрой чат", "pfrh* xfn",
-                            "вернуть бота", "dthyenm ,jnf", "верните бота", "dthybnt ,jnf", "верни бота", "dthyb ,jnf"],
-        firstMessage: $session.ltxFirstMessage,
-        lastMessage: "— Диалог завершён —",
-        attributes: {
-            "Рекомендации бота (тематики)": strSortNCount($session.chatHistorySTAT),
-        }
-    };
-
-    // Группа | G05-vac | Найм и вакансии
-    var smartSwitchGroupG05vac = {
-        type:"switch",
-        destination: "G05-vac",
-        appendCloseChatButton: false,
-        closeChatPhrases: ["/close", "/сдщыу",
-                            "/bot", "/ище","/бот", "/,jn",
-                            "/закрыть чат", "/pfrhsnm xfn", "/закройте чат", "/pfrhjqnt xfn", "/закрой чат", "/pfrh* xfn",
-                            "/вернуть бота", "/dthyenm ,jnf", "/верните бота", "/dthybnt ,jnf", "/верни бота", "/dthyb ,jnf",
-                            "\close", "\сдщыу",
-                            "\bot", "\ище","\бот", "\,jn",
-                            "\закрыть чат", "\pfrhsnm xfn", "\закройте чат", "\pfrhjqnt xfn", "\закрой чат", "\pfrh* xfn",
-                            "\вернуть бота", "\dthyenm ,jnf", "\верните бота", "\dthybnt ,jnf", "\верни бота", "\dthyb ,jnf",
-                            "закрыть чат", "pfrhsnm xfn", "закройте чат", "pfrhjqnt xfn", "закрой чат", "pfrh* xfn",
-                            "вернуть бота", "dthyenm ,jnf", "верните бота", "dthybnt ,jnf", "верни бота", "dthyb ,jnf"],
-        firstMessage: $session.ltxFirstMessage,
-        lastMessage: "— Диалог завершён —",
-        attributes: {
-            "Рекомендации бота (тематики)": strSortNCount($session.chatHistorySTAT),
-        }
-    };
-
-    // Группа | G06-sec | Секретари
-    var smartSwitchGroupG06sec = {
-        type:"switch",
-        destination: "G06-sec",
-        appendCloseChatButton: false,
-        closeChatPhrases: ["/close", "/сдщыу",
-                            "/bot", "/ище","/бот", "/,jn",
-                            "/закрыть чат", "/pfrhsnm xfn", "/закройте чат", "/pfrhjqnt xfn", "/закрой чат", "/pfrh* xfn",
-                            "/вернуть бота", "/dthyenm ,jnf", "/верните бота", "/dthybnt ,jnf", "/верни бота", "/dthyb ,jnf",
-                            "\close", "\сдщыу",
-                            "\bot", "\ище","\бот", "\,jn",
-                            "\закрыть чат", "\pfrhsnm xfn", "\закройте чат", "\pfrhjqnt xfn", "\закрой чат", "\pfrh* xfn",
-                            "\вернуть бота", "\dthyenm ,jnf", "\верните бота", "\dthybnt ,jnf", "\верни бота", "\dthyb ,jnf",
-                            "закрыть чат", "pfrhsnm xfn", "закройте чат", "pfrhjqnt xfn", "закрой чат", "pfrh* xfn",
-                            "вернуть бота", "dthyenm ,jnf", "верните бота", "dthybnt ,jnf", "верни бота", "dthyb ,jnf"],
-        firstMessage: $session.ltxFirstMessage,
-        lastMessage: "— Диалог завершён —",
-        attributes: {
-            "Рекомендации бота (тематики)": strSortNCount($session.chatHistorySTAT),
-        }
-    };
-    
-    // Группа | G08-hax | AXHelpdesk
-    var smartSwitchGroupG08hax = {
-        type:"switch",
-        destination: "G08-hax",
-        appendCloseChatButton: false,
-        closeChatPhrases: ["/close", "/сдщыу",
-                            "/bot", "/ище","/бот", "/,jn",
-                            "/закрыть чат", "/pfrhsnm xfn", "/закройте чат", "/pfrhjqnt xfn", "/закрой чат", "/pfrh* xfn",
-                            "/вернуть бота", "/dthyenm ,jnf", "/верните бота", "/dthybnt ,jnf", "/верни бота", "/dthyb ,jnf",
-                            "\close", "\сдщыу",
-                            "\bot", "\ище","\бот", "\,jn",
-                            "\закрыть чат", "\pfrhsnm xfn", "\закройте чат", "\pfrhjqnt xfn", "\закрой чат", "\pfrh* xfn",
-                            "\вернуть бота", "\dthyenm ,jnf", "\верните бота", "\dthybnt ,jnf", "\верни бота", "\dthyb ,jnf",
-                            "закрыть чат", "pfrhsnm xfn", "закройте чат", "pfrhjqnt xfn", "закрой чат", "pfrh* xfn",
-                            "вернуть бота", "dthyenm ,jnf", "верните бота", "dthybnt ,jnf", "верни бота", "dthyb ,jnf"],
-        firstMessage: $session.ltxFirstMessage,
-        lastMessage: "— Диалог завершён —",
-        attributes: {
-            "Рекомендации бота (тематики)": strSortNCount($session.chatHistorySTAT),
-        }
-    };
-    
-    //Правила переключения на группы операторов
-    if (toTransitG01zrp.filter(function(n) {return arr.indexOf(n) !== -1;}).length > 0)
-            {
-                //G01zrp - Зарплата
-                $session.smartSwitchlastGroup = "G01zrp";
-                $reactions.answer('— Подключаю оператора — <ul><li>группа: зарплата.</li></ul>');
-                $response.replies.push(smartSwitchGroupG01zrp);
-            }
-    else if (toTransitG02kad.filter(function(n) {return arr.indexOf(n) !== -1;}).length > 0)
-            {
-                //G02kad - Кадровое администрирование
-                $session.smartSwitchlastGroup = "G02kad";
-                $reactions.answer('— Подключаю оператора — <ul><li>группа: кадровое администрирование.</li></ul>');
-                $response.replies.push(smartSwitchGroupG02kad);
-            }
-    else if (toTransitG03edu.filter(function(n) {return arr.indexOf(n) !== -1;}).length > 0)
-            {
-                //G03edu - Обучение и наставничество
-                $session.smartSwitchlastGroup = "G03edu";
-                $reactions.answer('— Подключаю оператора — <ul><li>группа: обучение и наставничество.</li></ul>');
-                $response.replies.push(smartSwitchGroupG03edu);
-            }
-    else if (toTransitG04mot.filter(function(n) {return arr.indexOf(n) !== -1;}).length > 0)
-            {
-                //G04mot - Отдел мотивации
-                $session.smartSwitchlastGroup = "G04mot";
-                $reactions.answer('— Подключаю оператора — <ul><li>группа: отдел мотивации.</li></ul>');
-                $response.replies.push(smartSwitchGroupG04mot);
-            }
-    else if (toTransitG05vac.filter(function(n) {return arr.indexOf(n) !== -1;}).length > 0)
-            {
-                //G05vac - Подбор и вакансии
-                $session.smartSwitchlastGroup = "G05vac";
-                $reactions.answer('— Подключаю оператора — <ul><li>группа: подбор и вакансии.</li></ul>');
-                $response.replies.push(smartSwitchGroupG05vac);
-            }
-    else if (toTransitG06sec.filter(function(n) {return arr.indexOf(n) !== -1;}).length > 0)
-            {
-                //G06sec - Секретари
-                $session.smartSwitchlastGroup = "G06sec";
-                $reactions.answer('— Подключаю оператора — <ul><li>группа: секретари.</li></ul>');
-                $response.replies.push(smartSwitchGroupG06sec);
-            }
-//    else if (toTransitG07hds.filter(function(n) {return arr.indexOf(n) !== -1;}).length > 0)
-//            {
-//                //G07hds - Helpdesk
-//                $session.smartSwitch.lastGroup = "G07hds";
-//                $reactions.answer('— Подключаю оператора — <ul><li>группа: helpdesk (тех. поддержка по общим вопросам).</li></ul>');
-//                //$response.replies.push(smartSwitchGroupG07hds);
-//            }
-    else if (toTransitG08hax.filter(function(n) {return arr.indexOf(n) !== -1;}).length > 0)
-            {
-                //G08hax - AXHelpdesk
-                $session.smartSwitchlastGroup = "G08hax";
-                $reactions.answer('— Подключаю оператора — <ul><li>группа: axhelpdesk (тех. поддержка по копроративному порталу и биометрии).</li></ul>');
-                $response.replies.push(smartSwitchGroupG08hax);
-            }
-    else
-            {
-                //G20sup - Cупероператоры
-                $session.smartSwitchlastGroup = "G20sup";
-                $reactions.answer('— Подключаю оператора — <ul><li>группа: общие вопросы.</li></ul>');
-                $response.replies.push(smartSwitchGroupG20sup);
-                //$session.smartSwitchlastGroup = "all";
-                //$reactions.answer('— Подключаю оператора — <ul><li>группа: All - ОБЩИЕ.</li></ul>');
-                //$response.replies.push(smartSwitchGroupAll);
-            }
+    } else {
+        return null;
+    }
+    return false;
 }
+
+
+// внутренний календарь цен
+function calendarSearchPost (obj) {
+    if (!obj.passengers) {
+        obj.passengers = 1;
+    }
+    var result = $http.query('https://uniapi.ozon.travel/flightcalendar/getprices/', {
+        method: "POST",     // http-метод запроса - GET, POST, PUT и т.д.
+        body: {
+          "adults": obj.passengers,
+          "arrivalCode": obj.dest,
+          "children": 0,
+          "departCode": obj.from,
+          "infants": 0,
+          "isRoundTrip": false
+        },                        // тело запроса
+        headers: {"x-o3-app-name": "chatBot-api"},     // http-заголовки
+        dataType: "json",     // тип возвращаемых данных - json, xml или text. По умолчанию используется тип, соответствующий заголовку content-type в ответе
+        timeout: 15000        // таймаут выполнения запроса в мс
+    });
+    return result;
+}
+
+
+// поиск цен для ЖД
+function getRailwayPrices (httpResponse) {
+    var arrPrices = [];
+    for (var i = 0; i < httpResponse.length; i++) {
+        var everyTrip = httpResponse[i];
+        for (var k = 0; k < everyTrip.tariffs.length; k++) {
+            var everyTariff = everyTrip.tariffs[k];
+            for (var tariff in everyTariff) {
+                if (tariff === 'minPrice') {
+                    arrPrices.push(everyTariff[tariff]);
+                }
+            }
+        }
+    }
+    //получаем мин цену
+    return getMinValue(arrPrices);
+}
+
+
+// новое авиа апи
+function aviaSearchPost (obj,direct) {
+    if (!obj.passengers) {
+        obj.passengers = 1;
+    }
+    if (direct) {
+        if (obj.date) {
+            var result = $http.query('https://uniapi.ozon.travel/flight/search', {
+                method: "POST",     // http-метод запроса - GET, POST, PUT и т.д.
+                body: {
+                  "routes": [
+                    {
+                      "from": obj.from,
+                      "to": obj.dest,
+                      "date": obj.date
+                    }
+                  ],
+                  "adults": obj.passengers,
+                  "serviceClass": "ECONOMY",
+                  "onlyDirect": true,
+                  "platform": "ANDROID"
+                },                        // тело запроса
+                headers: {"x-o3-app-name": "chatBot-api"},     // http-заголовки
+                dataType: "json",     // тип возвращаемых данных - json, xml или text. По умолчанию используется тип, соответствующий заголовку content-type в ответе
+                timeout: 15000        // таймаут выполнения запроса в мс
+            });
+        }
+        if (obj.dates1 && obj.dates2) {
+            var result = $http.query('https://uniapi.ozon.travel/flight/search', {
+                method: "POST",     // http-метод запроса - GET, POST, PUT и т.д.
+                body: {
+                  "routes": [
+                    {
+                      "from": obj.from,
+                      "to": obj.dest,
+                      "date": obj.dates1
+                    },
+                    {
+                        "from": obj.dest,
+                        "to": obj.from,
+                        "date": obj.dates2
+                    }
+                  ],
+                  "adults": obj.passengers,
+                  "serviceClass": "ECONOMY",
+                  "onlyDirect": true,
+                  "platform": "ANDROID"
+                },                        // тело запроса
+                headers: {"x-o3-app-name": "chatBot-api"},     // http-заголовки
+                dataType: "json",     // тип возвращаемых данных - json, xml или text. По умолчанию используется тип, соответствующий заголовку content-type в ответе
+                timeout: 15000        // таймаут выполнения запроса в мс
+            });
+        }
+    } else {
+        if (obj.date) {
+            var result = $http.query('https://uniapi.ozon.travel/flight/search', {
+                method: "POST",     // http-метод запроса - GET, POST, PUT и т.д.
+                body: {
+                  "routes": [
+                    {
+                      "from": obj.from,
+                      "to": obj.dest,
+                      "date": obj.date
+                    }
+                  ],
+                  "adults": obj.passengers,
+                  "serviceClass": "ECONOMY"
+                },                        // тело запроса
+                headers: {"x-o3-app-name": "chatBot-api"},     // http-заголовки
+                dataType: "json",     // тип возвращаемых данных - json, xml или text. По умолчанию используется тип, соответствующий заголовку content-type в ответе
+                timeout: 15000        // таймаут выполнения запроса в мс
+            });
+        }
+        if (obj.dates1 && obj.dates2) {
+            var result = $http.query('https://uniapi.ozon.travel/flight/search', {
+                method: "POST",     // http-метод запроса - GET, POST, PUT и т.д.
+                body: {
+                  "routes": [
+                    {
+                      "from": obj.from,
+                      "to": obj.dest,
+                      "date": obj.dates1
+                    },
+                    {
+                        "from": obj.dest,
+                        "to": obj.from,
+                        "date": obj.dates2
+                    }
+                  ],
+                  "adults": obj.passengers,
+                  "serviceClass": "ECONOMY"
+                },                        // тело запроса
+                headers: {"x-o3-app-name": "chatBot-api"},     // http-заголовки
+                dataType: "json",     // тип возвращаемых данных - json, xml или text. По умолчанию используется тип, соответствующий заголовку content-type в ответе
+                timeout: 30000        // таймаут выполнения запроса в мс
+            });
+        }
+    }
+
+    return result;
+};
+
+
+// жд поиск
+function railwaySearchPost (obj) {
+    if (!obj.passengers) {
+        obj.passengers = 1;
+    }
+    var result = $http.query('https://uniapi.ozon.travel/railway/search', {
+        method: "POST",     // http-метод запроса - GET, POST, PUT и т.д.
+        body: {
+          "adults": obj.passengers,
+          "children": 0,
+          "gds": "string",
+          "infants": 0,
+          "platform": "SITE",
+          "routes": [
+            {
+              "date": obj.date,
+              "from": obj.from,
+              "to": obj.dest
+            }
+          ]
+        },                        // тело запроса
+        headers: {"x-o3-app-name": "chatBot-api"},     // http-заголовки
+        dataType: "json",     // тип возвращаемых данных - json, xml или text. По умолчанию используется тип, соответствующий заголовку content-type в ответе
+        timeout: 15000        // таймаут выполнения запроса в мс
+    });
+    return result;
+};
+
+
+// формирование авиа ссылки озон
+function urlOzonAvia (obj,yandex) {
+    if (obj) {
+        var url = '';
+        var yaTail = '';
+        var directFilter = '';
+        var baggageFilter = '';
+        var search = 'https://www.ozon.travel/flight/search/';
+        if (!obj.passengers) {
+            obj.passengers = 1;
+        }
+        if (yandex) {
+            yaTail = 'utm_source=yandex&utm_medium=chatbot&utm_content=link&utm_campaign=bot&';
+        }
+        if (obj.direct) {
+            directFilter = '&filter.ssn=0';
+        }
+        if (obj.baggage) {
+            baggageFilter = '&filter.lugg=1';
+        }
+        if (obj.date) {
+            url = search + obj.from + obj.dest + '/d' + obj.date + '/?' + yaTail + 'Dlts=' + obj.passengers + '&BotName=Chatbot' + directFilter + baggageFilter;
+        } else if (obj.dates1 && obj.dates2) {
+            url = search + obj.from + obj.dest + obj.dest + obj.from + '/d' + obj.dates1 + 'd' + obj.dates2 + '/?' + yaTail + 'Dlts=' + obj.passengers + '&BotName=Chatbot' + directFilter + baggageFilter;
+        }
+    }
+    return url;
+};
+
+
+// формирование жд ссылки озон
+function urlOzonRailway (obj) {
+    if (obj) {
+        if (obj.passengers) {
+            return "https://www.ozon.travel/railway/search/" + obj.from + obj.dest + '/d' + obj.date + '/?Dlts=' + obj.passengers + '&BotName=Chatbot';
+        } else {
+            return "https://www.ozon.travel/railway/search/" + obj.from + obj.dest + '/d' + obj.date + '?BotName=Chatbot';
+        }
+    }
+};
+
+
+// сравнение даты, введенной пользователем и сегодняшнего числа
+function datesComparison (date) {
+    var today = operatingOnToday(0).split('-');
+    today = today.join('');
+    date = date.split('-');
+    date = date.join('');
+    if (date < today) {
+        return false;
+    } else {
+        return true;
+    }
+};
+
+
+// обертка даты для юзера
+function getDate4User (date) {
+    date = date.replace(/(\d{4})-[0]?(\d+)-[0]?(\d+)/, "$3 $2 $1");
+    date = date.split(' ');
+    var monthDig = date[1]-1;
+    var monthsLang = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
+    date[1] = monthsLang[monthDig];
+    return date.join(' ');
+};
+
+
+// обертка времени для юзера
+function getTime4User (time) {
+    if (time.match(/[0-9-]+T.+/)) {
+        time = time.replace(/.+T(\d{2}:\d{2}).*/, "$1");
+    } else {
+        time = time.replace(/(\d{2}:\d{2}):\d{2}/, "$1");
+    }
+    return time;
+};
+
+
+// обертка количества билетов для юзера
+function getTicketNumb4User (numb, age) {
+    if (numb > 9) {
+        return 'groupTicket';
+    } else if (numb == 1) {
+        return 'билета';
+    } else {
+        return numb + ' билетов';
+    }
+};
+
+
+// отлов даты с буквами
+function dateLetters (date, month) {
+    if (date.match(/^числ. \d{1,2}$/i) || date.match(/^\d{1,2} +числ.$/i)) {
+        // числа 16
+        if (date.match(/^числ. \d{1,2}$/i)) {
+            date = date.split(' ');
+            var day = addZero(date[1]);
+        }
+        // 16 числа
+        if (date.match(/^\d{1,2} +числ.$/i)) {
+            var re = (/ +/);
+            date = date.split(re);
+            var day = addZero(date[0]);
+        }
+        var currentDate = new Date();
+        currentDate.setDate(currentDate.getDate());
+        var year = currentDate.getFullYear();
+        if (month) {
+            month = month.toString();
+            month = addZero(month);
+            date = year + '-' + month + '-' + day;
+            if (datesComparison(date) == false) {
+                year = addYear(year);
+                var date = year + '-' + month + '-' + day;
+            }
+        } else {
+            var month = currentDate.getMonth() + 1;
+            month = month.toString();
+            month = addZero(month);
+            date = year + '-' + month + '-' + day;
+            if (datesComparison(date) == false) {
+                month = currentDate.getMonth() + 2;
+                month = month.toString();
+                month = addZero(month);
+                var date = year + '-' + month + '-' + day;
+            }
+        }
+    } else {
+        if (date.match(/^\d{1,2}( |-)?(ого|го|uj|juj)? [а-яё]+ ?(20)?(\d{2})?г?$/i)) {
+            var day = date.replace(/^(\d{1,2})( |-)?(ого|го|uj|juj)? [а-яё]+ ?(20)?(\d{2})?г?$/i, '$1');
+            var year = date.replace(/^\d{1,2}( |-)?(ого|го|uj|juj)? [а-яё]+ ?(20)?(\d{2})?г?$/i, '$4');
+        } else if (date.match(/^[а-яё]+ ?\d{1,2}( |-)?(ого|го|uj|juj)? ?(20)?(\d{2})?г?$/i)) {
+            var day = date.replace(/^[а-яё]+ ?(\d{1,2})( |-)?(ого|го|uj|juj)? ?(20)?(\d{2})?г?$/i, '$1');
+            var year = date.replace(/^[а-яё]+ ?\d{1,2}( |-)?(ого|го|uj|juj)? ?(20)?(\d{2})?г?$/i, '$4');
+        }
+        var day = addZero(day);
+        if (year) {
+            year = '20' + year;
+        } else {
+            var currentDate = new Date();
+            var year = currentDate.getFullYear();
+            var currentMonth = currentDate.getMonth() + 1;
+            if (month < currentMonth) {
+                year = year + 1;
+            }
+        }
+        date = year + '-' + month + '-' + day;
+    }
+    return date;
+};
+
+
+// отлов даты с цифрами
+function catchDate (date) {
+    var currentDate = new Date();
+    var year = currentDate.getFullYear();
+
+    // 13.12.2019, 13 5 2019, 1.12.2019, 1 5 2019
+    if (date.match(/^[0-3]?\d[   /,.-]+\d{1,2}[   /,.-]+20\d{2}г?$/)) {
+        date = date.replace(/([0-3]?\d)[   /,.-]+(\d{1,2})[   /,.-]+(20\d{2})г?/, "$3-$2-$1");
+        date = date.split(/-/);
+        date[1] = addZero(date[1]);
+        date[2] = addZero(date[2]);
+        date = date.join('-');
+        return date;
+    }
+    // 13.12.19, 13 5 19, 1.12.19, 1 5 19
+    if (date.match(/^[0-3]?\d[   /,.-]+\d{1,2}[   /,.-]+\d{2}г?$/)) {
+        date = date.replace(/([0-3]?\d)[   /,.-]+(\d{1,2})[   /,.-]+(\d{2})г?/, "20$3-$2-$1");
+        date = date.split(/-/);
+        date[1] = addZero(date[1]);
+        date[2] = addZero(date[2]);
+        date = date.join('-');
+        return date;
+    }
+    // 2019.12.13, 2019.12.1, 2019 5 13, 2019 5 6
+    if (date.match(/^20\d{2}[   /,.-]\d{1,2}[   /,.-]+[0-3]?\d$/)) {
+        date = date.replace(/(20\d{2})[   /,.-](\d{1,2})[   /,.-]+([0-3]?\d)/, "$1-$2-$3");
+        date = date.split(/-/);
+        date[1] = addZero(date[1]);
+        date[2] = addZero(date[2]);
+        date = date.join('-');
+        return date;
+    }
+    // 1.12, 01.12, 01 4, 1.4
+    if (date.match(/^\d{1,2}[   /,.-]{1,3}\d{1,2}$/)) {
+        date = date.split(/[   /,.-]{1,3}/);
+        var day = addZero(date[0]);
+        var month = addZero(date[1]);
+        date = year + '-' + month + '-' + day;
+        if (datesComparison(date) == false) {
+            year = addYear(year);
+            date = year + '-' + month + '-' + day;
+        }
+        return date;
+    }
+    // 1 декабря, 12 декабря
+    if (date.match(/^\d{1,2} ?(январ[а-яА-Я]*|феврал[а-яА-Я]*|март[а-яА-Я]*|апрел[а-яА-Я]*|мая|июн[а-яА-Я]*|июл[а-яА-Я]*|август[а-яА-Я]*|сентябр[а-яА-Я]*|октябр[а-яА-Я]*|ноябр[а-яА-Я]*|декабр[а-яА-Я]*)$/i)) {
+
+        var month = date.replace(/^\d{1,2} ?(январ[а-яА-Я]*|феврал[а-яА-Я]*|март[а-яА-Я]*|апрел[а-яА-Я]*|мая|июн[а-яА-Я]*|июл[а-яА-Я]*|август[а-яА-Я]*|сентябр[а-яА-Я]*|октябр[а-яА-Я]*|ноябр[а-яА-Я]*|декабр[а-яА-Я]*)$/i, "$1");
+
+        month = month.toLowerCase();
+        var months = [
+            'январ',
+            'феврал',
+            'март',
+            'апрел',
+            'мая',
+            'июн',
+            'июл',
+            'август',
+            'сентябр',
+            'октябр',
+            'ноябр',
+            'декабр'
+        ];
+        for (var k = 0; k < months.length; ++k) {
+            var everyMonth = months[k];
+            if (month.indexOf(everyMonth) != -1) {
+                var monthDig = k + 1;
+                monthDig < 10 ? monthDig = '0' + monthDig : monthDig = '' + monthDig;
+            }
+        }
+        var day = date.replace(/(\d{1,2}) ?(январ[а-яА-Я]*|феврал[а-яА-Я]*|март[а-яА-Я]*|апрел[а-яА-Я]*|мая|июн[а-яА-Я]*|июл[а-яА-Я]*|август[а-яА-Я]*|сентябр[а-яА-Я]*|октябр[а-яА-Я]*|ноябр[а-яА-Я]*|декабр[а-яА-Я]*)/i, "$1");
+        day = addZero(date);
+        date = year + '-' + monthDig + '-' + day;
+        if (datesComparison(date) == false) {
+            year = addYear(year);
+            date = year + '-' + monthDig + '-' + day;
+        }
+        return date;
+    }
+    // декабрь 1, декабрь 12
+    if (date.match(/^(январ[а-яА-Я]*|феврал[а-яА-Я]*|март[а-яА-Я]*|апрел[а-яА-Я]*|мая|июн[а-яА-Я]*|июл[а-яА-Я]*|август[а-яА-Я]*|сентябр[а-яА-Я]*|октябр[а-яА-Я]*|ноябр[а-яА-Я]*|декабр[а-яА-Я]*) ?\d{1,2}$/i)) {
+        var month = date.replace(/(январ[а-яА-Я]*|феврал[а-яА-Я]*|март[а-яА-Я]*|апрел[а-яА-Я]*|мая|июн[а-яА-Я]*|июл[а-яА-Я]*|август[а-яА-Я]*|сентябр[а-яА-Я]*|октябр[а-яА-Я]*|ноябр[а-яА-Я]*|декабр[а-яА-Я]*) ?\d{1,2}/i, "$1");
+        month = month.toLowerCase();
+        var months = [
+            'январ',
+            'феврал',
+            'март',
+            'апрел',
+            'мая',
+            'июн',
+            'июл',
+            'август',
+            'сентябр',
+            'октябр',
+            'ноябр',
+            'декабр'
+        ];
+        for (var k = 0; k < months.length; ++k) {
+            var everyMonth = months[k];
+            if (month.indexOf(everyMonth) != -1) {
+                var monthDig = k + 1;
+                monthDig < 10 ? monthDig = '0' + monthDig : monthDig = '' + monthDig;
+            }
+        }
+        var day = date.replace(/(январ[а-яА-Я]*|феврал[а-яА-Я]*|март[а-яА-Я]*|апрел[а-яА-Я]*|мая|июн[а-яА-Я]*|июл[а-яА-Я]*|август[а-яА-Я]*|сентябр[а-яА-Я]*|октябр[а-яА-Я]*|ноябр[а-яА-Я]*|декабр[а-яА-Я]*) ?(\d{1,2})/i, "$2");
+        day = addZero(date);
+        date = year + '-' + monthDig + '-' + day;
+        if (datesComparison(date) == false) {
+            year = addYear(year);
+            date = year + '-' + monthDig + '-' + day;
+        }
+        return date;
+    }
+    // 21 июня 2019
+    if (date.match(/^(\d{1,2}) ?(январ[а-яА-Я]*|феврал[а-яА-Я]*|март[а-яА-Я]*|апрел[а-яА-Я]*|мая|июн[а-яА-Я]*|июл[а-яА-Я]*|август[а-яА-Я]*|сентябр[а-яА-Я]*|октябр[а-яА-Я]*|ноябр[а-яА-Я]*|декабр[а-яА-Я]*) ((20)?\d{2})г?$/)) {
+        var month = date.replace(/(\d{1,2}) ?(январ[а-яА-Я]*|феврал[а-яА-Я]*|март[а-яА-Я]*|апрел[а-яА-Я]*|мая|июн[а-яА-Я]*|июл[а-яА-Я]*|август[а-яА-Я]*|сентябр[а-яА-Я]*|октябр[а-яА-Я]*|ноябр[а-яА-Я]*|декабр[а-яА-Я]*) ((20)?\d{2})г?/i, "$2");
+        month = month.toLowerCase();
+        var months = [
+            'январ',
+            'феврал',
+            'март',
+            'апрел',
+            'мая',
+            'июн',
+            'июл',
+            'август',
+            'сентябр',
+            'октябр',
+            'ноябр',
+            'декабр'
+        ];
+        for (var k = 0; k < months.length; ++k) {
+            var everyMonth = months[k];
+            if (month.indexOf(everyMonth) != -1) {
+                var monthDig = k + 1;
+                monthDig < 10 ? monthDig = '0' + monthDig : monthDig = '' + monthDig;
+            }
+        }
+        date = date.replace(/(\d{1,2}) ?(январ[а-яА-Я]*|феврал[а-яА-Я]*|март[а-яА-Я]*|апрел[а-яА-Я]*|мая|июн[а-яА-Я]*|июл[а-яА-Я]*|август[а-яА-Я]*|сентябр[а-яА-Я]*|октябр[а-яА-Я]*|ноябр[а-яА-Я]*|декабр[а-яА-Я]*) ?((20)?\d{2})г?/, "$3-"+ monthDig +"-$1");
+        date = date.split('-');
+        date[0].length == 2 ? date[0] = '20' + date[0] : date[0] = '' + date[0];
+        date[2].length == 1 ? date[2] = '0' + date[2] : date[2] = '' + date[2];
+        date = date.join('-');
+        return date;
+    }
+    // 13.03.-17.03, 01.04-05.04
+    if (date.match(/^(\d{1,2}[   /.-]{1,3}(01|02|03|04|05|06|07|08|09|10|11|12))([ /.,-]{1,3})(\d{1,2}[   /.-]{1,3}(01|02|03|04|05|06|07|08|09|10|11|12))$/)) {
+        date = date.replace(/^(\d{1,2}[   /.-]{1,3}(01|02|03|04|05|06|07|08|09|10|11|12))([ /.,-]{1,3})(\d{1,2}[   /.-]{1,3}(01|02|03|04|05|06|07|08|09|10|11|12))$/, "$1#$4");
+        date = date.split('#');
+
+        if (date[0].match(/^\d{1,2}[   /.-]{1,3}\d{2}$/)) {
+            var date1 = date[0].split(/[   /.-]{1,3}/);
+            var month = date1[1];
+            var day = addZero(date1[0]);
+            date1 = year + '-' + month + '-' + day;
+            if (datesComparison(date1) == false) {
+                year = addYear(year);
+                date1 = year + '-' + month + '-' + day;
+            }
+        }
+        if (date[1].match(/^\d{1,2}[   /.-]{1,3}\d{2}$/)) {
+            var date2 = date[1].split(/[   /.-]{1,3}/);
+            var month = date2[1];
+            var day = addZero(date2[0]);
+            date2 = year + '-' + month + '-' + day;
+            if (datesComparison(date2) == false) {
+                year = addYear(year);
+                date2 = year + '-' + month + '-' + day;
+            }
+        }
+        return [date1, date2];
+    }
+    //10-11 мая
+    if (date.match(/^\d{1,2}-\d{1,2} ?(январ[а-яА-Я]*|феврал[а-яА-Я]*|март[а-яА-Я]*|апрел[а-яА-Я]*|мая|июн[а-яА-Я]*|июл[а-яА-Я]*|август[а-яА-Я]*|сентябр[а-яА-Я]*|октябр[а-яА-Я]*|ноябр[а-яА-Я]*|декабр[а-яА-Я]*)$/))
+        date = date.replace(/(\d{1,2})-(\d{1,2}) ?(январ[а-яА-Я]*|феврал[а-яА-Я]*|март[а-яА-Я]*|апрел[а-яА-Я]*|мая|июн[а-яА-Я]*|июл[а-яА-Я]*|август[а-яА-Я]*|сентябр[а-яА-Я]*|октябр[а-яА-Я]*|ноябр[а-яА-Я]*|декабр[а-яА-Я]*)/, "$1#$2#$3");
+        date = date.split('#');
+        date[0] = addZero(date[0]);
+        date[1] = addZero(date[1]);
+        var month = date[2].toLowerCase();
+        var months = [
+            'январ',
+            'феврал',
+            'март',
+            'апрел',
+            'мая',
+            'июн',
+            'июл',
+            'август',
+            'сентябр',
+            'октябр',
+            'ноябр',
+            'декабр'
+        ];
+        for (var k = 0; k < months.length; ++k) {
+            var everyMonth = months[k];
+            if (month.indexOf(everyMonth) != -1) {
+                var monthDig = k + 1;
+                monthDig < 10 ? monthDig = '0' + monthDig : monthDig = '' + monthDig;
+            }
+        }
+        var date1 = year + '-' + monthDig + '-' + date[0];
+        if (datesComparison(date1) == false) {
+            year = addYear(year);
+            var date1 = year + '-' + monthDig + '-' + date[0];
+        }
+        var date2 = year + '-' + monthDig + '-' + date[1];
+        if (datesComparison(date2) == false) {
+            year = addYear(year);
+            var date2 = year + '-' + monthDig + '-' + date[1];
+        }
+        if (date[1] - date[0] == 1 || date[1] - date[0] == 2) {
+            return [date1, false];
+        } else {
+            return [date1, date2];
+        }
+};
+
+
+// операции с сегодняшим числом
+function operatingOnToday (numb) {
+    var currentDate = new Date();
+    currentDate.setDate(currentDate.getDate() + numb);
+    var day = currentDate.getDate();
+    day = day.toString();
+    day = addZero(day);
+    var month = currentDate.getMonth() + 1;
+    month = month.toString();
+    month = addZero(month);
+    var year = currentDate.getFullYear();
+    return year + '-' + month + '-' + day;
+};
+
+
+// обработка голого числа
+function operatingOnNumberDate (numb) {
+    numb = addZero(numb);
+    var currentDate = new Date();
+    var year = currentDate.getFullYear();
+    var month = currentDate.getMonth() + 1;
+        month = month.toString();
+    month = addZero(month);
+    var year = currentDate.getFullYear();
+    return year + '-' + month + '-' + numb;
+};
+
+
+// проверка, прямой ли рейс
+function ifFlightIsDirect (object) {
+    var a = object.data[0].segments[0].flights;
+    var b = object.data;
+    for (var indexA in a) {
+        if (a[indexA].stops.length === 0) {
+            return [a[indexA],0]
+        } else {
+            for (var indexB in b) {
+                if (b[indexB].segments[0].flights[0].stops.length === 0) {
+                    var c = b[indexB].segments[0].flights;
+                    for (var indexC in c) {
+                        if (c[indexC].stops.length === 0) {
+                            return [c[indexC],indexB]
+                        }
+                    }
+                }
+            }
+        }
+    }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
