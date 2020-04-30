@@ -4,8 +4,147 @@ patterns:
     $morphVerbPast = $morph<Г прш>
 
 
-
 theme: /test
+
+
+
+    state: testRegex
+        q!: testRegex ($depCode/$arrCode)
+        a: {{toPrettyString($parseTree)}}
+
+
+
+    state: getClientUrl
+        q!: getClientUrl * $iataAndRailway::fromCode * [$to] [$cityPreName] $iataAndRailway::destCode * [на] {($dateDig/$dateLetters/$thatDay) [$morning/$evening]} * $depCode * $arrCode *
+        q!: getClientUrl * [на] {($dateDig/$dateLetters/$thatDay) [$morning/$evening]} * $iataAndRailway::fromCode [$to] [$cityPreName] $iataAndRailway::destCode * $depCode * $arrCode *
+        q!: getClientUrl * [на] {($dateDig/$dateLetters/$thatDay) [$morning/$evening]} * $depCode * $arrCode *
+        # чистим переменные
+        if: $temp.begin0 == undefined
+            script:
+                $temp.begin0 = true;
+                $client.executeState0 = $context.currentState;
+            go!: /aviaSearchFunc/varsCleaning_DYN
+        else:
+            script:
+                $temp.begin0 = undefined;
+            # собираем переменные
+            if: $temp.begin2 == undefined
+                script:
+                    $temp.begin2 = true;
+                    $temp.begin0 = true;
+                    $client.executeState = $context.currentState;
+                go!: /aviaSearchFunc/parsing4AviaSearch_DYN
+            else:
+                script:
+                    $temp.begin2 = undefined;
+                    $temp.begin0 = undefined;
+                    // DEBUG
+                    $reactions.answer(toPrettyString($parseTree));
+                    /*
+                    $reactions.answer('ДО: from: ' + $session.from + ', dest: ' + $session.dest + ', dates: ' + $session.dates + ', passengers: ' + $session.adults + ', direct: ' + $session.direct);
+                    // проверяем, что дата не в прошлом
+                    if ($session.dates && (datesComparison($session.dates) == false)) {
+                        $reactions.answer("https://www.ozon.travel/");
+                    } else {
+                        // проверяем, что данных хватает
+                        if (!$session.dates || !$session.from) {
+                            if (!$session.from && $parseTree._depCode.match(/dep_code=[A-Z]{3}/)) {
+                                $session.from = $parseTree._depCode.replace(/dep_code=([A-Z]{3})/, "$1");
+                            }
+                            if (!$session.dest && $parseTree._arrCode.match(/arr_code=[A-Z]{3}/)) {
+                                $session.dest = $parseTree._arrCode.replace(/arr_code=([A-Z]{3})/, "$1");
+                            }
+                        }
+                        if ($session.dates && $session.from && $session.dest && $session.from != $session.dest) {
+                            var result = aviaSearchPost({from: $session.from, dest: $session.dest, date: $session.dates, passengers: $session.adults}, $session.direct);
+                            $session.httpResponse = result.data;
+                            $session.httpStatus = result.status;
+                            $session.urlOzon = urlOzonAvia({from: $session.from, dest: $session.dest, date: $session.dates, passengers: $session.adults, direct: $session.direct, baggage: $session.baggage}, $session.yandex);
+                        } else {
+                            $reactions.answer("https://www.ozon.travel/");
+                        }
+                        // DEBUG
+                        $reactions.answer('ПОСЛЕ: from: ' + $session.from + ', dest: ' + $session.dest + ', dates: ' + $session.dates + ', passengers: ' + $session.adults + ', direct: ' + $session.direct);
+                        // проверяем, что есть ответ
+                        if (result.isOk && (!isArrayEmpty($session.httpResponse.tariffs)) && result.status >= 200 && result.status < 300) {
+
+                            var filterRes, tariffIndex, flightIndex, variantIndex;
+                            // БАГАЖ и УТРО/ВЕЧЕР
+                            if ($session.baggage && $session.dayTime) {
+                                filterRes = dayTimeBaggFilter($session.httpResponse);
+                                tariffIndex = filterRes.tariffIndex;
+                                flightIndex = filterRes.flightIndex;
+                                variantIndex = filterRes.variantIndex;
+                                if (tariffIndex == undefined || flightIndex == undefined || variantIndex == undefined) {
+                                    $reactions.answer("https://www.ozon.travel/");
+                                }
+                            }
+                            // БАГАЖ
+                            else if ($session.baggage) {
+                                tariffIndex = baggageFilter($session.httpResponse);
+                                flightIndex = 0;
+                                variantIndex = 0;
+                                if (tariffIndex == undefined) {
+                                    $reactions.answer("https://www.ozon.travel/");
+                                }
+                            }
+                            // УТРО ВЕЧЕР
+                            else if ($session.dayTime) {
+                                filterRes = dayTimeFilter($session.httpResponse);
+                                tariffIndex = filterRes.tariffIndex;
+                                flightIndex = filterRes.flightIndex;
+                                variantIndex = filterRes.variantIndex;
+                                if (tariffIndex == undefined || flightIndex == undefined || variantIndex == undefined) {
+                                    $reactions.answer("https://www.ozon.travel/");
+                                }
+
+                            } else {
+                                tariffIndex = 0;
+                                flightIndex = 0;
+                                variantIndex = 0;
+                            }
+
+                            if ($session.httpResponse.tariffs && $session.httpResponse.tariffs[tariffIndex] && $session.httpResponse.tariffs[tariffIndex].flights && $session.httpResponse.tariffs[tariffIndex].flights[flightIndex] && $session.httpResponse.tariffs[tariffIndex].flights[flightIndex].variants && $session.httpResponse.tariffs[tariffIndex].flights[flightIndex].variants[variantIndex]) {
+                                // ОТВЕТ
+                                if ($session.direct == true) {
+                                    $reactions.transition("/aviaSearchAns/aviaDirectResults");
+                                } else {
+                                    $reactions.answer($session.urlOzon);
+                                }
+                            } else {
+                                $reactions.answer("https://www.ozon.travel/");
+                            }
+                        } else {
+                            $reactions.answer("https://www.ozon.travel/");
+                        }
+                    }
+                    */
+
+
+
+    state: call_external_callback
+        event!: call_external_callback
+        script:
+            var call_external_callback = $request;
+            if (call_external_callback && call_external_callback.data && call_external_callback.data.eventData) {
+                $session.call_external_callback = call_external_callback.data.eventData;
+            }
+
+
+
+    state: testCallbackFunc
+        q!: testCallbackFunc
+        script:
+            if ($session.call_external_callback) {
+                $response.actions = [{
+                   type:"call_external_callback",
+                   callbackName:"testHandler",
+                   args: [{argName1: "это успех"}]
+                }];
+            } else {
+                $reactions.answer('у нас нет $session.call_external_callback');
+            }
+
 
 
     state: testApiQuery

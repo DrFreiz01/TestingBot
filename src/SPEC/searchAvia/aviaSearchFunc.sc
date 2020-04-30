@@ -297,8 +297,8 @@ theme: /aviaSearchFunc
                 $session.dayTime = 'вечер';
             }
             if ($parseTree._forAdults) {
-                if ($parseTree._NumberDigLett) {
-                    $session.adults = $parseTree._NumberDigLett;
+                if ($parseTree._NumberDigWithLett) {
+                    $session.adults = $parseTree._NumberDigWithLett;
                 } else if ($parseTree._NumberDig) {
                     $session.adults = $parseTree._NumberDig;
                 } else if ($parseTree._NumberLett) {

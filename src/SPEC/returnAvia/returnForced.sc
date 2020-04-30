@@ -15,30 +15,30 @@ theme: /returnForced
         q!: * ($flight/~рейс) * ($cancelPast/$ne состоит*) * $whatShouldIDo *
         q!: * ($cancelPast/$ne состоит*) * ($flight/~рейс) * $whatShouldIDo *
         # 4EX: Добрый вечер! Просим аннулировать обратный вылет, так как рейс Хельсинки-Спб отменили. Визы шенген у нас нет, и из Хельсинки не выбраться. Поэтому обратный билет не нужен. Напишите условия аннуляции и что для этого необходимо сделать.
-        q!: * {($cancelInf/$returnInf/здать/сдать) * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ/~поездка/~рейс)} * ($flight/~рейс) * ($cancelPast/$ne состоит*) *
-        q!: * {($cancelInf/$returnInf/здать/сдать) * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ/~поездка/~рейс)} * ($cancelPast/$ne состоит*) * ($flight/~рейс) *
-        q!: * ($flight/~рейс) * ($cancelPast/$ne состоит*) * {($cancelInf/$returnInf/здать/сдать) * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ/~поездка/~рейс)} *
-        q!: * ($cancelPast/$ne состоит*) * ($flight/~рейс) * {($cancelInf/$returnInf/здать/сдать) * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ/~поездка/~рейс)} *
-        q!: * {($cancelInf/$returnInf/здать/сдать) * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ/~поездка/~рейс)} * ($flight/~рейс) * $iataAndRailway * $iataAndRailway * ($cancelPast/$ne состоит*) *
-        q!: * {($cancelInf/$returnInf/здать/сдать) * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ/~поездка/~рейс)} * ($cancelPast/$ne состоит*) * ($flight/~рейс) * $iataAndRailway * $iataAndRailway *
-        q!: * ($flight/~рейс) * $iataAndRailway * $iataAndRailway * ($cancelPast/$ne состоит*) * {($cancelInf/$returnInf/здать/сдать) * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ/~поездка/~рейс)} *
-        q!: * ($cancelPast/$ne состоит*) * ($flight/~рейс) * $iataAndRailway * $iataAndRailway * {($cancelInf/$returnInf/здать/сдать) * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ/~поездка/~рейс)} *
+        q!: * {($cancelInf/$returnInf/здать/сдать) * ($ticket/$airplaneTicket/$flight/$order/~поездка/~рейс)} * ($flight/~рейс) * ($cancelPast/$ne состоит*) *
+        q!: * {($cancelInf/$returnInf/здать/сдать) * ($ticket/$airplaneTicket/$flight/$order/~поездка/~рейс)} * ($cancelPast/$ne состоит*) * ($flight/~рейс) *
+        q!: * ($flight/~рейс) * ($cancelPast/$ne состоит*) * {($cancelInf/$returnInf/здать/сдать) * ($ticket/$airplaneTicket/$flight/$order/~поездка/~рейс)} *
+        q!: * ($cancelPast/$ne состоит*) * ($flight/~рейс) * {($cancelInf/$returnInf/здать/сдать) * ($ticket/$airplaneTicket/$flight/$order/~поездка/~рейс)} *
+        q!: * {($cancelInf/$returnInf/здать/сдать) * ($ticket/$airplaneTicket/$flight/$order/~поездка/~рейс)} * ($flight/~рейс) * $iataAndRailway * $iataAndRailway * ($cancelPast/$ne состоит*) *
+        q!: * {($cancelInf/$returnInf/здать/сдать) * ($ticket/$airplaneTicket/$flight/$order/~поездка/~рейс)} * ($cancelPast/$ne состоит*) * ($flight/~рейс) * $iataAndRailway * $iataAndRailway *
+        q!: * ($flight/~рейс) * $iataAndRailway * $iataAndRailway * ($cancelPast/$ne состоит*) * {($cancelInf/$returnInf/здать/сдать) * ($ticket/$airplaneTicket/$flight/$order/~поездка/~рейс)} *
+        q!: * ($cancelPast/$ne состоит*) * ($flight/~рейс) * $iataAndRailway * $iataAndRailway * {($cancelInf/$returnInf/здать/сдать) * ($ticket/$airplaneTicket/$flight/$order/~поездка/~рейс)} *
         # 4EX: Как мне оформить возврат в связи с тем что авиакомпания отменила рейс?
         # 4EX: Здравствуйте, в связи с отменой рейса S7 5869, хочу оформить возврат билетов.
-        q!: * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $returnNoun * ($cancelPast/$ne состоит*/~отмена) * ($flight/~рейс/~заказ/~зоказ) *
-        q!: * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $returnNoun * ($flight/~рейс/~заказ/~зоказ) * ($cancelPast/$ne состоит*/~отмена) *
-        q!: * ($cancelPast/$ne состоит*/~отмена) * ($flight/~рейс/~заказ/~зоказ) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $returnNoun *
-        q!: * ($flight/~рейс/~заказ/~зоказ) * ($cancelPast/$ne состоит*/~отмена) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $returnNoun *
+        q!: * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $returnNoun * ($cancelPast/$ne состоит*/~отмена) * ($flight/~рейс/$order) *
+        q!: * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $returnNoun * ($flight/~рейс/$order) * ($cancelPast/$ne состоит*/~отмена) *
+        q!: * ($cancelPast/$ne состоит*/~отмена) * ($flight/~рейс/$order) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $returnNoun *
+        q!: * ($flight/~рейс/$order) * ($cancelPast/$ne состоит*/~отмена) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $returnNoun *
         a: Если ваш рейс был отменен, вам необходимо оформить вынужденный возврат. Заполните электронное заявление, нажав на кнопку «‎Возврат и обмен» на странице заказа в личном кабинете: https://www.ozon.travel/my
 
 
 
     state: flightCanceledOrderNumb
         # 4EX: Добрый день! Подскажите, пожалуйста, как оформить возврат стоимости билетов по заказу 14578312-0002, отменённого авиакомпанией S7?
-        q!: * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $returnNoun * ($cancelPast/$ne состоит*) * ($flight/~рейс/~заказ/~зоказ) * $orderNumber *
-        q!: * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $returnNoun * ($flight/~рейс/~заказ/~зоказ) * $orderNumber * ($cancelPast/$ne состоит*) *
-        q!: * ($cancelPast/$ne состоит*) * ($flight/~рейс/~заказ/~зоказ) * $orderNumber * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $returnNoun *
-        q!: * ($flight/~рейс/~заказ/~зоказ) * $orderNumber * ($cancelPast/$ne состоит*) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $returnNoun *
+        q!: * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $returnNoun * ($cancelPast/$ne состоит*) * ($flight/~рейс/$order) * $orderNumber *
+        q!: * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $returnNoun * ($flight/~рейс/$order) * $orderNumber * ($cancelPast/$ne состоит*) *
+        q!: * ($cancelPast/$ne состоит*) * ($flight/~рейс/$order) * $orderNumber * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $returnNoun *
+        q!: * ($flight/~рейс/$order) * $orderNumber * ($cancelPast/$ne состоит*) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $returnNoun *
         if: $temp.begin == undefined
             script:
                 $temp.begin = true;
@@ -85,10 +85,10 @@ theme: /returnForced
     state: ticketReturnIllDead
         # 4EX: Хочу вернуть невозвратный билет, в связи с болезнью
         # 4EX: какой алгоритм возврата билетов, если супруга заболела?
-        q!: * ($cancelInf/$returnInf/$returnNoun/здать/сдать) * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * (~болезнь/~заболевание/~смерть/заболел*/заболева*) *
-        q!: * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * ($cancelInf/$returnInf/$returnNoun/здать/сдать) * (~болезнь/~заболевание/~смерть/заболел*/заболева*) *
-        q!: * (~болезнь/~заболевание/~смерть/заболел*/заболева*) * ($cancelInf/$returnInf/$returnNoun/здать/сдать) * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) *
-        q!: * (~болезнь/~заболевание/~смерть/заболел*/заболева*) * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * ($cancelInf/$returnInf/$returnNoun/здать/сдать) *
+        q!: * ($cancelInf/$returnInf/$returnNoun/здать/сдать) * ($ticket/$airplaneTicket/$flight/$order) * (~болезнь/~заболевание/~смерть/заболел*/заболева*) *
+        q!: * ($ticket/$airplaneTicket/$flight/$order) * ($cancelInf/$returnInf/$returnNoun/здать/сдать) * (~болезнь/~заболевание/~смерть/заболел*/заболева*) *
+        q!: * (~болезнь/~заболевание/~смерть/заболел*/заболева*) * ($cancelInf/$returnInf/$returnNoun/здать/сдать) * ($ticket/$airplaneTicket/$flight/$order) *
+        q!: * (~болезнь/~заболевание/~смерть/заболел*/заболева*) * ($ticket/$airplaneTicket/$flight/$order) * ($cancelInf/$returnInf/$returnNoun/здать/сдать) *
         a: В таком случае вам необходимо оформить вынужденный возврат. Заполните электронное заявление, нажав на кнопку «‎Возврат и обмен» на странице заказа в личном кабинете: https://www.ozon.travel/my
 
 

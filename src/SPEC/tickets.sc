@@ -291,7 +291,7 @@ theme: /tickets
 
     state: findTicketsByOrderNumb
         # 4EX: Здравствуйте! Как мне найти билеты по номеру заказа?
-        q!: {($lookForV/$lookForN) ($ticket/$airplaneTicket/$flight)} * $number ~заказ [$markQuestion]
+        q!: {($lookForV/$lookForN) ($ticket/$airplaneTicket/$flight)} * $number $order [$markQuestion]
         go!: /documentsFaqAns/tellMeYoutOrderNumb
 
 

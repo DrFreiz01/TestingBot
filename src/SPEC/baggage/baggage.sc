@@ -240,10 +240,10 @@ theme: /baggage
 
     state: ticketNoBaggageHowMushWouldBaggageCost
         # 4EX: Здравствуйте! Скажите пожалуйста, если рейс на самолет без багажа, сколько будет стоить багаж ?
-        q!: * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ/~поездка/~рейс) * $without $baggageAll * ($howMuch * $cost/$price) * $baggage *
-        q!: * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ/~поездка/~рейс) * $without $baggageAll * $baggage * ($howMuch * $cost/$price) *
-        q!: * ($howMuch * $cost/$price) * $baggage * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ/~поездка/~рейс) * $without $baggageAll *
-        q!: * $baggage * ($howMuch * $cost/$price) * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ/~поездка/~рейс) * $without $baggageAll *
+        q!: * ($ticket/$airplaneTicket/$flight/$order/~поездка/~рейс) * $without $baggageAll * ($howMuch * $cost/$price) * $baggage *
+        q!: * ($ticket/$airplaneTicket/$flight/$order/~поездка/~рейс) * $without $baggageAll * $baggage * ($howMuch * $cost/$price) *
+        q!: * ($howMuch * $cost/$price) * $baggage * ($ticket/$airplaneTicket/$flight/$order/~поездка/~рейс) * $without $baggageAll *
+        q!: * $baggage * ($howMuch * $cost/$price) * ($ticket/$airplaneTicket/$flight/$order/~поездка/~рейс) * $without $baggageAll *
         go!: /baggage/howMushDoesBaggageCost
 
 

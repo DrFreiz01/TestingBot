@@ -8,7 +8,8 @@
     "language" : "ru",
     "spellingCorrection" : false,
     "classificationAlgorithm" : "sts",
-    "timezone" : "UTC"
+    "timezone" : "UTC",
+    "shared" : false
   },
   "intents" : [ ],
   "entities" : [ ],

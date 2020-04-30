@@ -1,4 +1,6 @@
 patterns:
+    $depCode = $regexp<dep_code=[A-Z]{0,3}>
+    $arrCode = $regexp<arr_code=[A-Z]{0,3}>
     $cityCode = $entity<cityCodeLib> || converter = $converters.cityCodeConv
     $iataAndRailway = $entity<IataRailwayLib> || converter = $converters.cityAllConv
     $railwayCode = $entity<railrayCodeLib> || converter = $converters.railwayCodeConv
@@ -61,15 +63,15 @@ patterns:
         # белеты для троих
         [$ticket/$airplaneTicket/$railwayTicket/$directFlight] (на/для) ($NumberLett) [$adults]/
         # 3 билета
-        ($NumberDigLett/$NumberLett) [$adults] ($ticket/$airplaneTicket/$railwayTicket/$directFlight)/
+        ($NumberDigWithLett/$NumberLett) [$adults] ($ticket/$airplaneTicket/$railwayTicket/$directFlight)/
         # 4 взрослых билета
         $NumberDig $adults ($ticket/$airplaneTicket/$railwayTicket/$directFlight)/
         # три взрослых
-        {($NumberDig/$NumberLett/$NumberDigLett) $adults}/
+        {($NumberDig/$NumberLett/$NumberDigWithLett) $adults}/
         # два авиаюилета для взрослых
         ($NumberDig/$NumberLett) ($ticket/$airplaneTicket/$railwayTicket/$directFlight) [на/для] [$adults]/
         (на/для/нас) $NumberLett/
-        (на/для/нас) $NumberDigLett/
+        (на/для/нас) $NumberDigWithLett/
         $NumberOfPeople
         )
     $inRestDays = (
@@ -322,7 +324,8 @@ patterns:
     $10to59 = $regexp<^[1-5]\d$>
     $online = ((через/с пом*/в) интернет* / (в/на) сайт* / (в/на) $ozonTravel/ [в] онлайн*/электронно/электроно/ в электрон* вид*)
     $or = (или/иль)
-    $orderNumber = $regexp<^\d{8}[^\d]{0,}\d{4}$>
+    $order = (~заказ/~зоказ/злказ/злказа/злказу/злказе/злказы/злказов/злказам/злказах)
+    $orderNumber = $regexp<\d{8}[^\d]{0,}\d{4}>
     $orderVerbInf = (заказат*/закзат*)
     $orderMoreVerbInf = (дозаказат*/дозакзат*)
     $issuedOrder = {(сделал*/делал*/сделан*/оставил*/оставлял*/оставлен/отправил*/отправлял*/отправлен/отпрвлен/оформил*/оформлял*/оформлен) ~заказ}

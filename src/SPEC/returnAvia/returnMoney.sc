@@ -3,14 +3,14 @@ theme: /returnMoney
 
     state: ticketReturnMoney
         # 4EX: Возврат денежных средств за билет
-        q!: * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) *
+        q!: * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * ($ticket/$airplaneTicket/$flight/$order) *
         # 4EX: Здравствуйте скажите билет можно аннулировать и вернуть деньги.?
         # 4EX: Как вернуть деньги за билет
         # 4EX: Можно вернуть стоимость билетов?
         # 4EX: Здравствуйте, помогите пожалуйста, у нас в семье случилась беда: Умерла Бабушка сегодня, вы можете помочь, чтобы отменить авиабилеты и сделать возврат денежных средств ?
-        q!: * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) *
+        q!: * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * ($ticket/$airplaneTicket/$flight/$order) *
         # 4EX: Мы опаздали на рейс и хотим вернуть деньги
-        q!: * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} *
+        q!: * ($ticket/$airplaneTicket/$flight/$order) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} *
         # 4EX: Как сделать возврат сумму
         # 4EX: Как возвращать сумму
         q!: * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * {($return/$returnInf) [$my2/$ruSvoi] (сумму/суму/сумма/сума/$money/средств*/$price)} *
@@ -23,126 +23,126 @@ theme: /returnMoney
 
     state: returnMoneyCoronaV
         # 4EX: Здравствуйте. Возможно ли вернуть полную стоимость билета, если поездка отменилась из-за введённого карантина по короновирусу?
-        q!: * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $return * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * $coronaV *
-        q!: * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $return * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $coronaV * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) *
-        q!: * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $return * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $coronaV *
-        q!: * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $return * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * $coronaV * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) *
-        q!: * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $return * $coronaV * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) *
-        q!: * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $return * $coronaV * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) *
-        q!: * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $return * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * $coronaV *
-        q!: * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $return * $coronaV * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) *
-        q!: * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * $return * $coronaV *
-        q!: * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * $coronaV * $return *
-        q!: * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $coronaV * $return * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) *
-        q!: * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $coronaV * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * $return *
-        q!: * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * $return * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $coronaV *
-        q!: * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * $return * $coronaV * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) *
-        q!: * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $return * $coronaV *
-        q!: * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $coronaV * $return *
-        q!: * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * $coronaV * $return * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) *
-        q!: * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * $coronaV * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $return *
-        q!: * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $coronaV * $return * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) *
-        q!: * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $coronaV * $return * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) *
-        q!: * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $coronaV * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $return * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) *
-        q!: * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $coronaV * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * $return *
-        q!: * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $coronaV * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * $return * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) *
-        q!: * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $coronaV * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $return *
-        q!: * $return * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * $coronaV *
-        q!: * $return * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $coronaV * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) *
-        q!: * $return * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $coronaV *
-        q!: * $return * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * $coronaV * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) *
-        q!: * $return * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $coronaV * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) *
-        q!: * $return * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $coronaV * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) *
-        q!: * $return * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * $coronaV *
-        q!: * $return * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $coronaV * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) *
-        q!: * $return * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $coronaV *
-        q!: * $return * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * $coronaV * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) *
-        q!: * $return * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $coronaV * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) *
-        q!: * $return * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $coronaV * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) *
-        q!: * $return * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $coronaV *
-        q!: * $return * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $coronaV * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) *
-        q!: * $return * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $coronaV *
-        q!: * $return * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $coronaV * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) *
-        q!: * $return * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * $coronaV * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) *
-        q!: * $return * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * $coronaV * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) *
-        q!: * $return * $coronaV * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) *
-        q!: * $return * $coronaV * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) *
-        q!: * $return * $coronaV * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) *
-        q!: * $return * $coronaV * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) *
-        q!: * $return * $coronaV * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) *
-        q!: * $return * $coronaV * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) *
-        q!: * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $return * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * $coronaV *
-        q!: * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $return * $coronaV * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) *
-        q!: * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * $return * $coronaV *
-        q!: * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * $coronaV * $return *
-        q!: * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $coronaV * $return * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) *
-        q!: * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $coronaV * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * $return *
-        q!: * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $return * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * $coronaV *
-        q!: * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $return * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $coronaV * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) *
-        q!: * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $return * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $coronaV *
-        q!: * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $return * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * $coronaV * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) *
-        q!: * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $return * $coronaV * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) *
-        q!: * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $return * $coronaV * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) *
-        q!: * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $return * $coronaV *
-        q!: * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $coronaV * $return *
-        q!: * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * $return * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $coronaV *
-        q!: * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * $return * $coronaV * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) *
-        q!: * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * $coronaV * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $return *
-        q!: * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * $coronaV * $return * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) *
-        q!: * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $coronaV * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $return * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) *
-        q!: * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $coronaV * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * $return *
-        q!: * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $coronaV * $return * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) *
-        q!: * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $coronaV * $return * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) *
-        q!: * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $coronaV * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $return *
-        q!: * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $coronaV * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * $return * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) *
-        q!: * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $return * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $coronaV *
-        q!: * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $return * $coronaV * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) *
-        q!: * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $return * $coronaV *
-        q!: * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $coronaV * $return *
-        q!: * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $coronaV * $return * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) *
-        q!: * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $coronaV * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $return *
-        q!: * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * $return * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $coronaV *
-        q!: * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * $return * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $coronaV * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) *
-        q!: * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * $return * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $coronaV *
-        q!: * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * $return * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $coronaV * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) *
-        q!: * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * $return * $coronaV * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) *
-        q!: * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * $return * $coronaV * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) *
-        q!: * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $return * $coronaV *
-        q!: * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $coronaV * $return *
-        q!: * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $return * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $coronaV *
-        q!: * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $return * $coronaV * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) *
-        q!: * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $coronaV * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $return *
-        q!: * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $coronaV * $return * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) *
-        q!: * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * $coronaV * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $return * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) *
-        q!: * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * $coronaV * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $return *
-        q!: * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * $coronaV * $return * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) *
-        q!: * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * $coronaV * $return * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) *
-        q!: * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * $coronaV * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $return *
-        q!: * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * $coronaV * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $return * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) *
-        q!: * $coronaV * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $return * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) *
-        q!: * $coronaV * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $return * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) *
-        q!: * $coronaV * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $return * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) *
-        q!: * $coronaV * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * $return *
-        q!: * $coronaV * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * $return * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) *
-        q!: * $coronaV * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $return *
-        q!: * $coronaV * $return * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) *
-        q!: * $coronaV * $return * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) *
-        q!: * $coronaV * $return * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) *
-        q!: * $coronaV * $return * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) *
-        q!: * $coronaV * $return * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) *
-        q!: * $coronaV * $return * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) *
-        q!: * $coronaV * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $return * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) *
-        q!: * $coronaV * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * $return *
-        q!: * $coronaV * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $return * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) *
-        q!: * $coronaV * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $return * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) *
-        q!: * $coronaV * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $return *
-        q!: * $coronaV * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * $return * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) *
-        q!: * $coronaV * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $return * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) *
-        q!: * $coronaV * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $return *
-        q!: * $coronaV * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * $return * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) *
-        q!: * $coronaV * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * $return * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) *
-        q!: * $coronaV * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $return *
-        q!: * $coronaV * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $return * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) *
+        q!: * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $return * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($ticket/$airplaneTicket/$flight/$order) * $coronaV *
+        q!: * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $return * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $coronaV * ($ticket/$airplaneTicket/$flight/$order) *
+        q!: * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $return * ($ticket/$airplaneTicket/$flight/$order) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $coronaV *
+        q!: * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $return * ($ticket/$airplaneTicket/$flight/$order) * $coronaV * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) *
+        q!: * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $return * $coronaV * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($ticket/$airplaneTicket/$flight/$order) *
+        q!: * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $return * $coronaV * ($ticket/$airplaneTicket/$flight/$order) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) *
+        q!: * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $return * ($ticket/$airplaneTicket/$flight/$order) * $coronaV *
+        q!: * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $return * $coronaV * ($ticket/$airplaneTicket/$flight/$order) *
+        q!: * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($ticket/$airplaneTicket/$flight/$order) * $return * $coronaV *
+        q!: * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($ticket/$airplaneTicket/$flight/$order) * $coronaV * $return *
+        q!: * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $coronaV * $return * ($ticket/$airplaneTicket/$flight/$order) *
+        q!: * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $coronaV * ($ticket/$airplaneTicket/$flight/$order) * $return *
+        q!: * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * ($ticket/$airplaneTicket/$flight/$order) * $return * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $coronaV *
+        q!: * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * ($ticket/$airplaneTicket/$flight/$order) * $return * $coronaV * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) *
+        q!: * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * ($ticket/$airplaneTicket/$flight/$order) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $return * $coronaV *
+        q!: * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * ($ticket/$airplaneTicket/$flight/$order) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $coronaV * $return *
+        q!: * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * ($ticket/$airplaneTicket/$flight/$order) * $coronaV * $return * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) *
+        q!: * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * ($ticket/$airplaneTicket/$flight/$order) * $coronaV * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $return *
+        q!: * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $coronaV * $return * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($ticket/$airplaneTicket/$flight/$order) *
+        q!: * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $coronaV * $return * ($ticket/$airplaneTicket/$flight/$order) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) *
+        q!: * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $coronaV * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $return * ($ticket/$airplaneTicket/$flight/$order) *
+        q!: * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $coronaV * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($ticket/$airplaneTicket/$flight/$order) * $return *
+        q!: * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $coronaV * ($ticket/$airplaneTicket/$flight/$order) * $return * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) *
+        q!: * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $coronaV * ($ticket/$airplaneTicket/$flight/$order) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $return *
+        q!: * $return * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($ticket/$airplaneTicket/$flight/$order) * $coronaV *
+        q!: * $return * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $coronaV * ($ticket/$airplaneTicket/$flight/$order) *
+        q!: * $return * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * ($ticket/$airplaneTicket/$flight/$order) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $coronaV *
+        q!: * $return * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * ($ticket/$airplaneTicket/$flight/$order) * $coronaV * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) *
+        q!: * $return * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $coronaV * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($ticket/$airplaneTicket/$flight/$order) *
+        q!: * $return * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $coronaV * ($ticket/$airplaneTicket/$flight/$order) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) *
+        q!: * $return * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * ($ticket/$airplaneTicket/$flight/$order) * $coronaV *
+        q!: * $return * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $coronaV * ($ticket/$airplaneTicket/$flight/$order) *
+        q!: * $return * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($ticket/$airplaneTicket/$flight/$order) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $coronaV *
+        q!: * $return * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($ticket/$airplaneTicket/$flight/$order) * $coronaV * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) *
+        q!: * $return * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $coronaV * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * ($ticket/$airplaneTicket/$flight/$order) *
+        q!: * $return * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $coronaV * ($ticket/$airplaneTicket/$flight/$order) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) *
+        q!: * $return * ($ticket/$airplaneTicket/$flight/$order) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $coronaV *
+        q!: * $return * ($ticket/$airplaneTicket/$flight/$order) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $coronaV * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) *
+        q!: * $return * ($ticket/$airplaneTicket/$flight/$order) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $coronaV *
+        q!: * $return * ($ticket/$airplaneTicket/$flight/$order) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $coronaV * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) *
+        q!: * $return * ($ticket/$airplaneTicket/$flight/$order) * $coronaV * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) *
+        q!: * $return * ($ticket/$airplaneTicket/$flight/$order) * $coronaV * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) *
+        q!: * $return * $coronaV * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($ticket/$airplaneTicket/$flight/$order) *
+        q!: * $return * $coronaV * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * ($ticket/$airplaneTicket/$flight/$order) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) *
+        q!: * $return * $coronaV * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * ($ticket/$airplaneTicket/$flight/$order) *
+        q!: * $return * $coronaV * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($ticket/$airplaneTicket/$flight/$order) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) *
+        q!: * $return * $coronaV * ($ticket/$airplaneTicket/$flight/$order) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) *
+        q!: * $return * $coronaV * ($ticket/$airplaneTicket/$flight/$order) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) *
+        q!: * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $return * ($ticket/$airplaneTicket/$flight/$order) * $coronaV *
+        q!: * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $return * $coronaV * ($ticket/$airplaneTicket/$flight/$order) *
+        q!: * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * ($ticket/$airplaneTicket/$flight/$order) * $return * $coronaV *
+        q!: * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * ($ticket/$airplaneTicket/$flight/$order) * $coronaV * $return *
+        q!: * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $coronaV * $return * ($ticket/$airplaneTicket/$flight/$order) *
+        q!: * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $coronaV * ($ticket/$airplaneTicket/$flight/$order) * $return *
+        q!: * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $return * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * ($ticket/$airplaneTicket/$flight/$order) * $coronaV *
+        q!: * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $return * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $coronaV * ($ticket/$airplaneTicket/$flight/$order) *
+        q!: * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $return * ($ticket/$airplaneTicket/$flight/$order) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $coronaV *
+        q!: * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $return * ($ticket/$airplaneTicket/$flight/$order) * $coronaV * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) *
+        q!: * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $return * $coronaV * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * ($ticket/$airplaneTicket/$flight/$order) *
+        q!: * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $return * $coronaV * ($ticket/$airplaneTicket/$flight/$order) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) *
+        q!: * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($ticket/$airplaneTicket/$flight/$order) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $return * $coronaV *
+        q!: * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($ticket/$airplaneTicket/$flight/$order) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $coronaV * $return *
+        q!: * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($ticket/$airplaneTicket/$flight/$order) * $return * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $coronaV *
+        q!: * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($ticket/$airplaneTicket/$flight/$order) * $return * $coronaV * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) *
+        q!: * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($ticket/$airplaneTicket/$flight/$order) * $coronaV * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $return *
+        q!: * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($ticket/$airplaneTicket/$flight/$order) * $coronaV * $return * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) *
+        q!: * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $coronaV * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $return * ($ticket/$airplaneTicket/$flight/$order) *
+        q!: * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $coronaV * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * ($ticket/$airplaneTicket/$flight/$order) * $return *
+        q!: * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $coronaV * $return * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * ($ticket/$airplaneTicket/$flight/$order) *
+        q!: * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $coronaV * $return * ($ticket/$airplaneTicket/$flight/$order) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) *
+        q!: * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $coronaV * ($ticket/$airplaneTicket/$flight/$order) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $return *
+        q!: * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $coronaV * ($ticket/$airplaneTicket/$flight/$order) * $return * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) *
+        q!: * ($ticket/$airplaneTicket/$flight/$order) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $return * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $coronaV *
+        q!: * ($ticket/$airplaneTicket/$flight/$order) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $return * $coronaV * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) *
+        q!: * ($ticket/$airplaneTicket/$flight/$order) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $return * $coronaV *
+        q!: * ($ticket/$airplaneTicket/$flight/$order) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $coronaV * $return *
+        q!: * ($ticket/$airplaneTicket/$flight/$order) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $coronaV * $return * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) *
+        q!: * ($ticket/$airplaneTicket/$flight/$order) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $coronaV * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $return *
+        q!: * ($ticket/$airplaneTicket/$flight/$order) * $return * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $coronaV *
+        q!: * ($ticket/$airplaneTicket/$flight/$order) * $return * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $coronaV * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) *
+        q!: * ($ticket/$airplaneTicket/$flight/$order) * $return * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $coronaV *
+        q!: * ($ticket/$airplaneTicket/$flight/$order) * $return * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $coronaV * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) *
+        q!: * ($ticket/$airplaneTicket/$flight/$order) * $return * $coronaV * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) *
+        q!: * ($ticket/$airplaneTicket/$flight/$order) * $return * $coronaV * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) *
+        q!: * ($ticket/$airplaneTicket/$flight/$order) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $return * $coronaV *
+        q!: * ($ticket/$airplaneTicket/$flight/$order) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $coronaV * $return *
+        q!: * ($ticket/$airplaneTicket/$flight/$order) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $return * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $coronaV *
+        q!: * ($ticket/$airplaneTicket/$flight/$order) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $return * $coronaV * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) *
+        q!: * ($ticket/$airplaneTicket/$flight/$order) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $coronaV * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $return *
+        q!: * ($ticket/$airplaneTicket/$flight/$order) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $coronaV * $return * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) *
+        q!: * ($ticket/$airplaneTicket/$flight/$order) * $coronaV * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $return * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) *
+        q!: * ($ticket/$airplaneTicket/$flight/$order) * $coronaV * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $return *
+        q!: * ($ticket/$airplaneTicket/$flight/$order) * $coronaV * $return * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) *
+        q!: * ($ticket/$airplaneTicket/$flight/$order) * $coronaV * $return * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) *
+        q!: * ($ticket/$airplaneTicket/$flight/$order) * $coronaV * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $return *
+        q!: * ($ticket/$airplaneTicket/$flight/$order) * $coronaV * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $return * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) *
+        q!: * $coronaV * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $return * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($ticket/$airplaneTicket/$flight/$order) *
+        q!: * $coronaV * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $return * ($ticket/$airplaneTicket/$flight/$order) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) *
+        q!: * $coronaV * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $return * ($ticket/$airplaneTicket/$flight/$order) *
+        q!: * $coronaV * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($ticket/$airplaneTicket/$flight/$order) * $return *
+        q!: * $coronaV * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * ($ticket/$airplaneTicket/$flight/$order) * $return * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) *
+        q!: * $coronaV * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * ($ticket/$airplaneTicket/$flight/$order) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $return *
+        q!: * $coronaV * $return * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($ticket/$airplaneTicket/$flight/$order) *
+        q!: * $coronaV * $return * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * ($ticket/$airplaneTicket/$flight/$order) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) *
+        q!: * $coronaV * $return * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * ($ticket/$airplaneTicket/$flight/$order) *
+        q!: * $coronaV * $return * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($ticket/$airplaneTicket/$flight/$order) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) *
+        q!: * $coronaV * $return * ($ticket/$airplaneTicket/$flight/$order) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) *
+        q!: * $coronaV * $return * ($ticket/$airplaneTicket/$flight/$order) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) *
+        q!: * $coronaV * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $return * ($ticket/$airplaneTicket/$flight/$order) *
+        q!: * $coronaV * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * ($ticket/$airplaneTicket/$flight/$order) * $return *
+        q!: * $coronaV * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $return * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * ($ticket/$airplaneTicket/$flight/$order) *
+        q!: * $coronaV * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $return * ($ticket/$airplaneTicket/$flight/$order) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) *
+        q!: * $coronaV * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($ticket/$airplaneTicket/$flight/$order) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $return *
+        q!: * $coronaV * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($ticket/$airplaneTicket/$flight/$order) * $return * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) *
+        q!: * $coronaV * ($ticket/$airplaneTicket/$flight/$order) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $return * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) *
+        q!: * $coronaV * ($ticket/$airplaneTicket/$flight/$order) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $return *
+        q!: * $coronaV * ($ticket/$airplaneTicket/$flight/$order) * $return * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) *
+        q!: * $coronaV * ($ticket/$airplaneTicket/$flight/$order) * $return * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) *
+        q!: * $coronaV * ($ticket/$airplaneTicket/$flight/$order) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $return *
+        q!: * $coronaV * ($ticket/$airplaneTicket/$flight/$order) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $return * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) *
         go!: /ticketReturn/ticketReturnCoronaV
 
 
@@ -202,8 +202,8 @@ theme: /returnMoney
         q!: * ({(рассчитай*/посчитатй*/расчитай*/рассчитат*/расчитат*) ([$price/~сумма/~сума] $return)} / {($howMuch $cost/почем/почём) ($annulNoun/$cancelInf/$return/$returnInf/сдать/сдачу/сдачи/отмены)}) * $orderNumber *
         q!: * $orderNumber * ({(рассчитай*/посчитатй*/расчитай*/рассчитат*/расчитат*) ([$price/~сумма/~сума] $return)} / {($howMuch $cost/почем/почём) ($annulNoun/$cancelInf/$return/$returnInf/сдать/сдачу/сдачи/отмены)}) *
         # 4EX: Какой штраф взымается за отмену билета по брони 14312289-0014? Хотим сдать билет
-        q!: * ($which/$howMuch) * (штраф*/удержани*) * {($annulNoun/$return/отмена/отмены/сдача) ([$my2/$ruSvoi] ($ticket/$airplaneTicket/$flight/~заказ/~зоказ/~поездка/~рейс))} * $orderNumber *
-        q!: * $orderNumber * ($which/$howMuch) * (штраф*/удержани*) * {($annulNoun/$return/отмена/отмены/сдача) ([$my2/$ruSvoi] ($ticket/$airplaneTicket/$flight/~заказ/~зоказ/~поездка/~рейс))} *
+        q!: * ($which/$howMuch) * (штраф*/удержани*) * {($annulNoun/$return/отмена/отмены/сдача) ([$my2/$ruSvoi] ($ticket/$airplaneTicket/$flight/$order/~поездка/~рейс))} * $orderNumber *
+        q!: * $orderNumber * ($which/$howMuch) * (штраф*/удержани*) * {($annulNoun/$return/отмена/отмены/сдача) ([$my2/$ruSvoi] ($ticket/$airplaneTicket/$flight/$order/~поездка/~рейс))} *
         if: $temp.begin == undefined
             script:
                 $temp.begin = true;
@@ -223,8 +223,8 @@ theme: /returnMoney
 
     state: returnCostCalculation
         # 4EX: Добрый день, Уточните, пжл, как узнать сколько будет штраф за возврат авиабилета? И как узнать возвратный билет или нет?
-        q!: * ($which/$howMuch) * (штраф*/удержани*) * {($annulNoun/$return/отмена/отмены/сдача) ([$my2/$ruSvoi] ($ticket/$airplaneTicket/$flight/~заказ/~зоказ/~поездка/~рейс))} *
-        q!: * {($annulNoun/$return/отмена/отмены/сдача) ([$my2/$ruSvoi] ($ticket/$airplaneTicket/$flight/~заказ/~зоказ/~поездка/~рейс))} * ($which/$howMuch) * (штраф*/удержани*) *
+        q!: * ($which/$howMuch) * (штраф*/удержани*) * {($annulNoun/$return/отмена/отмены/сдача) ([$my2/$ruSvoi] ($ticket/$airplaneTicket/$flight/$order/~поездка/~рейс))} *
+        q!: * {($annulNoun/$return/отмена/отмены/сдача) ([$my2/$ruSvoi] ($ticket/$airplaneTicket/$flight/$order/~поездка/~рейс))} * ($which/$howMuch) * (штраф*/удержани*) *
         go!: /returnMoney/returnCostCalculationFullInfo
 
 
@@ -266,48 +266,48 @@ theme: /returnMoney
 
     state: wouldMoneyReturnFully
         # 4EX: Хочу вернуть билеты из за переноса времени вылета. Вернут ли мне полную стоимость?
-        q!: * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * ($annulInf/$returnInf/$return/сдать/отменить) * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ/~поездка/~рейс) * ($returnFut/возаврт/возврат) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) *
-        q!: * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * ($annulInf/$returnInf/$return/сдать/отменить) * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ/~поездка/~рейс) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($returnFut/возаврт/возврат) *
+        q!: * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * ($annulInf/$returnInf/$return/сдать/отменить) * ($ticket/$airplaneTicket/$flight/$order/~поездка/~рейс) * ($returnFut/возаврт/возврат) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) *
+        q!: * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * ($annulInf/$returnInf/$return/сдать/отменить) * ($ticket/$airplaneTicket/$flight/$order/~поездка/~рейс) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($returnFut/возаврт/возврат) *
         go!: /documentsFaqAns/tellMeYoutOrderNumb
 
 
 
     state: wouldMoneyReturnIfFlightCanceled
         # 4EX: Если отменят полеты в страны Евросоюза смогу ли рассчитывать на возврат стоимости билета
-        q!: * если * $cancelFut * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ/~поездка/~рейс) * ($returnFut/возаврт/возврат) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) *
-        q!: * если * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ/~поездка/~рейс) * $cancelFut * ($returnFut/возаврт/возврат) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) *
-        q!: * если * $cancelFut * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ/~поездка/~рейс) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($returnFut/возаврт/возврат) *
-        q!: * если * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ/~поездка/~рейс) * $cancelFut * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($returnFut/возаврт/возврат) *
+        q!: * если * $cancelFut * ($ticket/$airplaneTicket/$flight/$order/~поездка/~рейс) * ($returnFut/возаврт/возврат) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) *
+        q!: * если * ($ticket/$airplaneTicket/$flight/$order/~поездка/~рейс) * $cancelFut * ($returnFut/возаврт/возврат) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) *
+        q!: * если * $cancelFut * ($ticket/$airplaneTicket/$flight/$order/~поездка/~рейс) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($returnFut/возаврт/возврат) *
+        q!: * если * ($ticket/$airplaneTicket/$flight/$order/~поездка/~рейс) * $cancelFut * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($returnFut/возаврт/возврат) *
         go!: /faq/flightStatus
 
 
 
     state: wouldMoneyReturnIfFlightCanceledFullInfo
         # 4EX: Если отменят полеты в страны Евросоюза смогу ли рассчитывать на возврат стоимости билета. Москва-Лиссабон 17.02.20 заказ № 178234440
-        q!: * если * $cancelFut * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ/~поездка/~рейс) * ($returnFut/возаврт/возврат) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $iataAndRailway * $iataAndRailway * ($dateDig/$dateLetters/$numberDate) *
-        q!: * если * $cancelFut * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ/~поездка/~рейс) * $iataAndRailway * $iataAndRailway * ($dateDig/$dateLetters/$numberDate) * ($returnFut/возаврт/возврат) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) *
-        q!: * если * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ/~поездка/~рейс) * $cancelFut * ($returnFut/возаврт/возврат) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $iataAndRailway * $iataAndRailway * ($dateDig/$dateLetters/$numberDate) *
-        q!: * если * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ/~поездка/~рейс) * $cancelFut * $iataAndRailway * $iataAndRailway * ($dateDig/$dateLetters/$numberDate) * ($returnFut/возаврт/возврат) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) *
-        q!: * если * $cancelFut * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ/~поездка/~рейс) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($returnFut/возаврт/возврат) * $iataAndRailway * $iataAndRailway * ($dateDig/$dateLetters/$numberDate) *
-        q!: * если * $cancelFut * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ/~поездка/~рейс) * $iataAndRailway * $iataAndRailway * ($dateDig/$dateLetters/$numberDate) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($returnFut/возаврт/возврат) *
-        q!: * если * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ/~поездка/~рейс) * $cancelFut * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($returnFut/возаврт/возврат) * $iataAndRailway * $iataAndRailway * ($dateDig/$dateLetters/$numberDate) *
-        q!: * если * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ/~поездка/~рейс) * $cancelFut * $iataAndRailway * $iataAndRailway * ($dateDig/$dateLetters/$numberDate) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($returnFut/возаврт/возврат) *
+        q!: * если * $cancelFut * ($ticket/$airplaneTicket/$flight/$order/~поездка/~рейс) * ($returnFut/возаврт/возврат) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $iataAndRailway * $iataAndRailway * ($dateDig/$dateLetters/$numberDate) *
+        q!: * если * $cancelFut * ($ticket/$airplaneTicket/$flight/$order/~поездка/~рейс) * $iataAndRailway * $iataAndRailway * ($dateDig/$dateLetters/$numberDate) * ($returnFut/возаврт/возврат) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) *
+        q!: * если * ($ticket/$airplaneTicket/$flight/$order/~поездка/~рейс) * $cancelFut * ($returnFut/возаврт/возврат) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $iataAndRailway * $iataAndRailway * ($dateDig/$dateLetters/$numberDate) *
+        q!: * если * ($ticket/$airplaneTicket/$flight/$order/~поездка/~рейс) * $cancelFut * $iataAndRailway * $iataAndRailway * ($dateDig/$dateLetters/$numberDate) * ($returnFut/возаврт/возврат) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) *
+        q!: * если * $cancelFut * ($ticket/$airplaneTicket/$flight/$order/~поездка/~рейс) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($returnFut/возаврт/возврат) * $iataAndRailway * $iataAndRailway * ($dateDig/$dateLetters/$numberDate) *
+        q!: * если * $cancelFut * ($ticket/$airplaneTicket/$flight/$order/~поездка/~рейс) * $iataAndRailway * $iataAndRailway * ($dateDig/$dateLetters/$numberDate) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($returnFut/возаврт/возврат) *
+        q!: * если * ($ticket/$airplaneTicket/$flight/$order/~поездка/~рейс) * $cancelFut * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($returnFut/возаврт/возврат) * $iataAndRailway * $iataAndRailway * ($dateDig/$dateLetters/$numberDate) *
+        q!: * если * ($ticket/$airplaneTicket/$flight/$order/~поездка/~рейс) * $cancelFut * $iataAndRailway * $iataAndRailway * ($dateDig/$dateLetters/$numberDate) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($returnFut/возаврт/возврат) *
         go!: /faq/flightStatus
 
 
 
     state: ticketReturnWhenWillIGetMyMoney
         # 4EX: Добрый день. Хотела бы узнать, когда будут перечислены денежные средства в сумме 5106 руб., за возврат билета заказ №18056808-0005.
-        q!: * $whenAll * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * {($annulNoun/$cancelPast/$return/отмен*/сдач*) [$my2/$ruSvoi] ($ticket/$airplaneTicket/$flight/~заказ/~зоказ)} *
-        q!: * $whenAll * {(сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) ((за/по) [$my2/$ruSvoi] ($ticket/$airplaneTicket/$flight/~заказ/~зоказ))} *
+        q!: * $whenAll * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * {($annulNoun/$cancelPast/$return/отмен*/сдач*) [$my2/$ruSvoi] ($ticket/$airplaneTicket/$flight/$order)} *
+        q!: * $whenAll * {(сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) ((за/по) [$my2/$ruSvoi] ($ticket/$airplaneTicket/$flight/$order))} *
         # 4EX: Уточните, когда ждать возврат денежных средств по заказу 17808997-0028
-        q!: * $whenAll * $return * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) *
-        q!: * $whenAll * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $return * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) *
-        q!: * $whenAll * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * $return * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) *
-        q!: * $whenAll * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $return *
+        q!: * $whenAll * $return * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($ticket/$airplaneTicket/$flight/$order) *
+        q!: * $whenAll * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $return * ($ticket/$airplaneTicket/$flight/$order) *
+        q!: * $whenAll * ($ticket/$airplaneTicket/$flight/$order) * $return * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) *
+        q!: * $whenAll * ($ticket/$airplaneTicket/$flight/$order) * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $return *
         # 4EX: Добрый день. Заказ №17338393-0002 уточните пожалуйста, поступила ли информация от авиалинии о возврате денежных средств за билет, ввиду отмены рейса по инициативе авиакомпании
-        q!: * $orderNumber * информац* * $return * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) *
-        q!: * информац* * $return * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * $orderNumber *
+        q!: * $orderNumber * информац* * $return * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($ticket/$airplaneTicket/$flight/$order) *
+        q!: * информац* * $return * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * ($ticket/$airplaneTicket/$flight/$order) * $orderNumber *
         # 4EX: Когда я узнаю о решении о возврате стоимости оплаты за отмененный рейс? Заказ №16938242-0004
         q!: * $whenAll * $return * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $orderNumber *
         q!: * $whenAll * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * $return * $orderNumber *
@@ -327,8 +327,8 @@ theme: /returnMoney
         # 4EX: Здравствуйте, прошу дать ответ по возврату денежных средств
         q!: * прошу (дать (ответ/атвет) / ответить) * $return * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) *
         # 4EX: Я отменила билеты в Прагу (компания Аэрофлот) в связи с короновирусом. Когда мне вернутся деньги ?
-        q!: * {($cancelPast/$returnPast) [$my2/$ruSvoi] ($ticket/$airplaneTicket/$flight/~заказ/~зоказ/~поездка/~рейс)} * $whenAll * $return * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) *
-        q!: * $whenAll * $return * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * {($cancelPast/$returnPast) [$my2/$ruSvoi] ($ticket/$airplaneTicket/$flight/~заказ/~зоказ/~поездка/~рейс)} *
+        q!: * {($cancelPast/$returnPast) [$my2/$ruSvoi] ($ticket/$airplaneTicket/$flight/$order/~поездка/~рейс)} * $whenAll * $return * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) *
+        q!: * $whenAll * $return * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * {($cancelPast/$returnPast) [$my2/$ruSvoi] ($ticket/$airplaneTicket/$flight/$order/~поездка/~рейс)} *
         # 4EX: когда будет решение по возврату денежных средств !?
         q!: * $whenAll * (статус*/решение) * $return * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) *
         q!: * $whenAll * $return * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) * (статус*/решение) *
@@ -495,66 +495,66 @@ theme: /returnMoney
 
     state: ticketReturnMoneyFullInfo
         # 4EX: добрый день. подскажите как сделать возврат денежных средств? 28 декабря были куплены билеты омск-москва(домодедово), с 1.01-3.01.
-        q!: * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * $iataAndRailway * $iataAndRailway *
-        q!: * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * $iataAndRailway * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * $iataAndRailway *
-        q!: * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * $iataAndRailway * $iataAndRailway * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) *
-        q!: * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * $iataAndRailway * $iataAndRailway *
-        q!: * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * $iataAndRailway * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * $iataAndRailway *
-        q!: * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * $iataAndRailway * $iataAndRailway * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) *
-        q!: * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * $iataAndRailway * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * $iataAndRailway *
-        q!: * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * $iataAndRailway * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * $iataAndRailway * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) *
-        q!: * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * $iataAndRailway * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * $iataAndRailway *
-        q!: * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * $iataAndRailway * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * $iataAndRailway * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) *
-        q!: * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * $iataAndRailway * $iataAndRailway * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) *
-        q!: * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * $iataAndRailway * $iataAndRailway * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) *
-        q!: * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * $iataAndRailway * $iataAndRailway *
-        q!: * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * $iataAndRailway * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * $iataAndRailway *
-        q!: * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * $iataAndRailway * $iataAndRailway * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) *
-        q!: * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * $iataAndRailway * $iataAndRailway *
-        q!: * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * $iataAndRailway * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * $iataAndRailway *
-        q!: * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * $iataAndRailway * $iataAndRailway * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} *
-        q!: * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * $iataAndRailway * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * $iataAndRailway *
-        q!: * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * $iataAndRailway * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * $iataAndRailway * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) *
-        q!: * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * $iataAndRailway * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * $iataAndRailway *
-        q!: * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * $iataAndRailway * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * $iataAndRailway * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} *
-        q!: * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * $iataAndRailway * $iataAndRailway * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) *
-        q!: * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * $iataAndRailway * $iataAndRailway * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} *
-        q!: * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * $iataAndRailway * $iataAndRailway *
-        q!: * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * $iataAndRailway * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * $iataAndRailway *
-        q!: * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * $iataAndRailway * $iataAndRailway * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) *
-        q!: * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * $iataAndRailway * $iataAndRailway *
-        q!: * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * $iataAndRailway * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * $iataAndRailway *
-        q!: * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * $iataAndRailway * $iataAndRailway * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} *
-        q!: * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * $iataAndRailway * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * $iataAndRailway *
-        q!: * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * $iataAndRailway * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * $iataAndRailway * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) *
-        q!: * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * $iataAndRailway * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * $iataAndRailway *
-        q!: * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * $iataAndRailway * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * $iataAndRailway * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} *
-        q!: * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * $iataAndRailway * $iataAndRailway * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) *
-        q!: * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * $iataAndRailway * $iataAndRailway * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} *
-        q!: * $iataAndRailway * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * $iataAndRailway *
-        q!: * $iataAndRailway * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * $iataAndRailway * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) *
-        q!: * $iataAndRailway * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * $iataAndRailway *
-        q!: * $iataAndRailway * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * $iataAndRailway * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) *
-        q!: * $iataAndRailway * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * $iataAndRailway * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) *
-        q!: * $iataAndRailway * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * $iataAndRailway * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) *
-        q!: * $iataAndRailway * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * $iataAndRailway *
-        q!: * $iataAndRailway * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * $iataAndRailway * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) *
-        q!: * $iataAndRailway * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * $iataAndRailway *
-        q!: * $iataAndRailway * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * $iataAndRailway * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} *
-        q!: * $iataAndRailway * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * $iataAndRailway * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) *
-        q!: * $iataAndRailway * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * $iataAndRailway * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} *
-        q!: * $iataAndRailway * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * $iataAndRailway *
-        q!: * $iataAndRailway * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * $iataAndRailway * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) *
-        q!: * $iataAndRailway * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * $iataAndRailway *
-        q!: * $iataAndRailway * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * $iataAndRailway * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} *
-        q!: * $iataAndRailway * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * $iataAndRailway * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) *
-        q!: * $iataAndRailway * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * $iataAndRailway * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} *
-        q!: * $iataAndRailway * $iataAndRailway * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) *
-        q!: * $iataAndRailway * $iataAndRailway * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) *
-        q!: * $iataAndRailway * $iataAndRailway * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) *
-        q!: * $iataAndRailway * $iataAndRailway * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} *
-        q!: * $iataAndRailway * $iataAndRailway * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) *
-        q!: * $iataAndRailway * $iataAndRailway * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * ($ticket/$airplaneTicket/$flight/~заказ/~зоказ) * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} *
+        q!: * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * ($ticket/$airplaneTicket/$flight/$order) * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * $iataAndRailway * $iataAndRailway *
+        q!: * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * ($ticket/$airplaneTicket/$flight/$order) * $iataAndRailway * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * $iataAndRailway *
+        q!: * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * ($ticket/$airplaneTicket/$flight/$order) * $iataAndRailway * $iataAndRailway * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) *
+        q!: * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * ($ticket/$airplaneTicket/$flight/$order) * $iataAndRailway * $iataAndRailway *
+        q!: * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * $iataAndRailway * ($ticket/$airplaneTicket/$flight/$order) * $iataAndRailway *
+        q!: * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * $iataAndRailway * $iataAndRailway * ($ticket/$airplaneTicket/$flight/$order) *
+        q!: * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * $iataAndRailway * ($ticket/$airplaneTicket/$flight/$order) * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * $iataAndRailway *
+        q!: * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * $iataAndRailway * ($ticket/$airplaneTicket/$flight/$order) * $iataAndRailway * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) *
+        q!: * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * $iataAndRailway * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * ($ticket/$airplaneTicket/$flight/$order) * $iataAndRailway *
+        q!: * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * $iataAndRailway * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * $iataAndRailway * ($ticket/$airplaneTicket/$flight/$order) *
+        q!: * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * $iataAndRailway * $iataAndRailway * ($ticket/$airplaneTicket/$flight/$order) * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) *
+        q!: * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * $iataAndRailway * $iataAndRailway * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * ($ticket/$airplaneTicket/$flight/$order) *
+        q!: * ($ticket/$airplaneTicket/$flight/$order) * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * $iataAndRailway * $iataAndRailway *
+        q!: * ($ticket/$airplaneTicket/$flight/$order) * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * $iataAndRailway * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * $iataAndRailway *
+        q!: * ($ticket/$airplaneTicket/$flight/$order) * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * $iataAndRailway * $iataAndRailway * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) *
+        q!: * ($ticket/$airplaneTicket/$flight/$order) * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * $iataAndRailway * $iataAndRailway *
+        q!: * ($ticket/$airplaneTicket/$flight/$order) * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * $iataAndRailway * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * $iataAndRailway *
+        q!: * ($ticket/$airplaneTicket/$flight/$order) * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * $iataAndRailway * $iataAndRailway * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} *
+        q!: * ($ticket/$airplaneTicket/$flight/$order) * $iataAndRailway * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * $iataAndRailway *
+        q!: * ($ticket/$airplaneTicket/$flight/$order) * $iataAndRailway * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * $iataAndRailway * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) *
+        q!: * ($ticket/$airplaneTicket/$flight/$order) * $iataAndRailway * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * $iataAndRailway *
+        q!: * ($ticket/$airplaneTicket/$flight/$order) * $iataAndRailway * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * $iataAndRailway * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} *
+        q!: * ($ticket/$airplaneTicket/$flight/$order) * $iataAndRailway * $iataAndRailway * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) *
+        q!: * ($ticket/$airplaneTicket/$flight/$order) * $iataAndRailway * $iataAndRailway * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} *
+        q!: * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * ($ticket/$airplaneTicket/$flight/$order) * $iataAndRailway * $iataAndRailway *
+        q!: * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * $iataAndRailway * ($ticket/$airplaneTicket/$flight/$order) * $iataAndRailway *
+        q!: * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * $iataAndRailway * $iataAndRailway * ($ticket/$airplaneTicket/$flight/$order) *
+        q!: * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * ($ticket/$airplaneTicket/$flight/$order) * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * $iataAndRailway * $iataAndRailway *
+        q!: * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * ($ticket/$airplaneTicket/$flight/$order) * $iataAndRailway * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * $iataAndRailway *
+        q!: * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * ($ticket/$airplaneTicket/$flight/$order) * $iataAndRailway * $iataAndRailway * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} *
+        q!: * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * $iataAndRailway * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * ($ticket/$airplaneTicket/$flight/$order) * $iataAndRailway *
+        q!: * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * $iataAndRailway * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * $iataAndRailway * ($ticket/$airplaneTicket/$flight/$order) *
+        q!: * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * $iataAndRailway * ($ticket/$airplaneTicket/$flight/$order) * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * $iataAndRailway *
+        q!: * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * $iataAndRailway * ($ticket/$airplaneTicket/$flight/$order) * $iataAndRailway * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} *
+        q!: * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * $iataAndRailway * $iataAndRailway * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * ($ticket/$airplaneTicket/$flight/$order) *
+        q!: * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * $iataAndRailway * $iataAndRailway * ($ticket/$airplaneTicket/$flight/$order) * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} *
+        q!: * $iataAndRailway * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * ($ticket/$airplaneTicket/$flight/$order) * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * $iataAndRailway *
+        q!: * $iataAndRailway * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * ($ticket/$airplaneTicket/$flight/$order) * $iataAndRailway * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) *
+        q!: * $iataAndRailway * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * ($ticket/$airplaneTicket/$flight/$order) * $iataAndRailway *
+        q!: * $iataAndRailway * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * $iataAndRailway * ($ticket/$airplaneTicket/$flight/$order) *
+        q!: * $iataAndRailway * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * $iataAndRailway * ($ticket/$airplaneTicket/$flight/$order) * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) *
+        q!: * $iataAndRailway * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * $iataAndRailway * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * ($ticket/$airplaneTicket/$flight/$order) *
+        q!: * $iataAndRailway * ($ticket/$airplaneTicket/$flight/$order) * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * $iataAndRailway *
+        q!: * $iataAndRailway * ($ticket/$airplaneTicket/$flight/$order) * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * $iataAndRailway * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) *
+        q!: * $iataAndRailway * ($ticket/$airplaneTicket/$flight/$order) * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * $iataAndRailway *
+        q!: * $iataAndRailway * ($ticket/$airplaneTicket/$flight/$order) * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * $iataAndRailway * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} *
+        q!: * $iataAndRailway * ($ticket/$airplaneTicket/$flight/$order) * $iataAndRailway * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) *
+        q!: * $iataAndRailway * ($ticket/$airplaneTicket/$flight/$order) * $iataAndRailway * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} *
+        q!: * $iataAndRailway * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * ($ticket/$airplaneTicket/$flight/$order) * $iataAndRailway *
+        q!: * $iataAndRailway * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * $iataAndRailway * ($ticket/$airplaneTicket/$flight/$order) *
+        q!: * $iataAndRailway * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * ($ticket/$airplaneTicket/$flight/$order) * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * $iataAndRailway *
+        q!: * $iataAndRailway * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * ($ticket/$airplaneTicket/$flight/$order) * $iataAndRailway * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} *
+        q!: * $iataAndRailway * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * $iataAndRailway * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * ($ticket/$airplaneTicket/$flight/$order) *
+        q!: * $iataAndRailway * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * $iataAndRailway * ($ticket/$airplaneTicket/$flight/$order) * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} *
+        q!: * $iataAndRailway * $iataAndRailway * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * ($ticket/$airplaneTicket/$flight/$order) * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) *
+        q!: * $iataAndRailway * $iataAndRailway * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * ($ticket/$airplaneTicket/$flight/$order) *
+        q!: * $iataAndRailway * $iataAndRailway * ($ticket/$airplaneTicket/$flight/$order) * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) *
+        q!: * $iataAndRailway * $iataAndRailway * ($ticket/$airplaneTicket/$flight/$order) * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} *
+        q!: * $iataAndRailway * $iataAndRailway * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} * ($ticket/$airplaneTicket/$flight/$order) *
+        q!: * $iataAndRailway * $iataAndRailway * ($dateDig/$dateLetters/$thatDay/$numberDate/$doubleDate) * ($ticket/$airplaneTicket/$flight/$order) * {$return (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price)} *
         # 4EX: Как можно получить возврат денежных средст по брони L949SF  авиркомпания победа отменила рейс и написали, что возврат сделали и деньги нужнополучить через вас
         q!: * ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) * $return * (сумму/суму/сумма/сума/$money/[денеж*] средств*/$price) по ~бронь *
         go!: /ticketReturn/ticketReturnHow
