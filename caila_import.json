@@ -1,52 +1,16 @@
 {
   "project" : {
-    "id" : "oprosnyj_bot_major_a-118494870-JyJ",
-    "name" : "oprosnyj_bot_major_a-118494870-JyJ",
+    "id" : "oprosnyj_bot_major_a-248759731-Cwf",
+    "name" : "oprosnyj_bot_major_a-248759731-Cwf",
     "folder" : "/"
   },
   "settings" : {
     "language" : "ru",
-    "spellingCorrection" : true,
+    "spellingCorrection" : false,
     "classificationAlgorithm" : "deeplearning",
-    "timezone" : "UTC+03:00",
-    "shared" : false
+    "timezone" : "UTC+03:00"
   },
-  "intents" : [
-    {
-      "id" : 9513,
-      "path" : "/CallLaterTime",
-      "description" : "Время которое будет удобно клиенту для повторного звонка",
-      "enabled" : true,
-      "shared" : false,
-      "phrases" : [ ],
-      "patterns" : [ ],
-      "slots" : [
-        {
-          "name" : "duckling.time",
-          "entity" : "duckling.time",
-          "required" : true,
-          "prompts" : [ ]
-        }
-      ]
-    },
-    {
-      "id" : 9514,
-      "path" : "/Rating",
-      "description" : "Оценка качества сервиса клиентом",
-      "enabled" : true,
-      "shared" : false,
-      "phrases" : [ ],
-      "patterns" : [ ],
-      "slots" : [
-        {
-          "name" : "duckling.number",
-          "entity" : "duckling.number",
-          "required" : true,
-          "prompts" : [ ]
-        }
-      ]
-    }
-  ],
+  "intents" : [ ],
   "entities" : [ ],
   "enabledSystemEntities" : [
     "duckling.number",

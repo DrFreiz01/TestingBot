@@ -5,18 +5,11 @@ language: ru
 
 entryPoint:
   - main.sc
-  
-tests:
-  include:
-    - tests.xml
     
 exampleGroups:
 - src/dictionaries/examples.json
 
 sts:
-    noMatchThreshold: 0.2
-
-caila:
     noMatchThreshold: 0.2
     
 ner:
@@ -24,18 +17,11 @@ ner:
   - $Number
 
 nlp:
+  morphology: myStem
+  tokenizer: myStem
+  vocabulary: common-vocabulary.json
   timeLimit:
     enabled: false
-  vocabulary: common-vocabulary.json
-  costStrategy: weighted
-  tokenizer: myStem // токенизатор, задает правила для разбиения текста на слова
-  morphology: pyMorphy // библиотека для морфологического анализа слов
-
-classifier:
-  engine: sts
-  noMatchThreshold: 0.2
-  parameters:
-    algorithm: aligner2 // Также вы можете использовать aligner и match-aligner
 
 dependencies:
   - name: common
