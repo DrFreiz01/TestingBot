@@ -1,17 +1,52 @@
 {
   "project" : {
-    "id" : "ozontravelproject-118460027-Zxl",
-    "name" : "ozontravelproject-118460027-Zxl",
+    "id" : "oprosnyj_bot_major_a-118494870-JyJ",
+    "name" : "oprosnyj_bot_major_a-118494870-JyJ",
     "folder" : "/"
   },
   "settings" : {
     "language" : "ru",
-    "spellingCorrection" : false,
-    "classificationAlgorithm" : "sts",
-    "timezone" : "UTC",
+    "spellingCorrection" : true,
+    "classificationAlgorithm" : "deeplearning",
+    "timezone" : "UTC+03:00",
     "shared" : false
   },
-  "intents" : [ ],
+  "intents" : [
+    {
+      "id" : 9513,
+      "path" : "/CallLaterTime",
+      "description" : "Время которое будет удобно клиенту для повторного звонка",
+      "enabled" : true,
+      "shared" : false,
+      "phrases" : [ ],
+      "patterns" : [ ],
+      "slots" : [
+        {
+          "name" : "duckling.time",
+          "entity" : "duckling.time",
+          "required" : true,
+          "prompts" : [ ]
+        }
+      ]
+    },
+    {
+      "id" : 9514,
+      "path" : "/Rating",
+      "description" : "Оценка качества сервиса клиентом",
+      "enabled" : true,
+      "shared" : false,
+      "phrases" : [ ],
+      "patterns" : [ ],
+      "slots" : [
+        {
+          "name" : "duckling.number",
+          "entity" : "duckling.number",
+          "required" : true,
+          "prompts" : [ ]
+        }
+      ]
+    }
+  ],
   "entities" : [ ],
   "enabledSystemEntities" : [
     "duckling.number",

@@ -1,67 +1,7 @@
 {
   "positions" : [ {
-    "id" : "/catchAll",
+    "id" : "/CatchAll",
     "name" : "1",
-    "actionTitles" : [ null ],
-    "x" : 200,
-    "y" : 1930
-  }, {
-    "id" : "/NewSession",
-    "name" : "2",
-    "actionTitles" : [ null ],
-    "x" : 200,
-    "y" : 1732
-  }, {
-    "id" : "/restartAns",
-    "name" : "3",
-    "actionTitles" : [ null ],
-    "x" : 200,
-    "y" : 1534
-  }, {
-    "id" : "/lengthLimit",
-    "name" : "4",
-    "actionTitles" : [ null ],
-    "x" : 200,
-    "y" : 942
-  }, {
-    "id" : "/timeLimit",
-    "name" : "5",
-    "actionTitles" : [ null ],
-    "x" : 200,
-    "y" : 1090
-  }, {
-    "id" : "/clientSentImg",
-    "name" : "6",
-    "actionTitles" : [ null ],
-    "x" : 200,
-    "y" : 1238
-  }, {
-    "id" : "/userInfoNewChat",
-    "name" : "7",
-    "actionTitles" : [ null ],
-    "x" : 200,
-    "y" : 794
-  }, {
-    "id" : "/operatorChoseAnswer",
-    "name" : "8",
-    "actionTitles" : [ null ],
-    "x" : 200,
-    "y" : 646
-  }, {
-    "id" : "/sessionDataHardLimitExceeded",
-    "name" : "9",
-    "actionTitles" : [ null ],
-    "x" : 200,
-    "y" : 1386
-  }, {
-    "id" : "/yandexData",
-    "name" : "10",
-    "actionTitles" : [ null ],
-    "x" : 200,
-    "y" : 348
-  }, {
-    "id" : "/chatClosingWithTopic",
-    "name" : "11",
     "actionTitles" : [ null ],
     "x" : 200,
     "y" : 200

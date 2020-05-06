@@ -1,36 +1,44 @@
-name: echo-template
+name: poll-bot
+
+botEngine: v2
+language: ru
 
 entryPoint:
   - main.sc
-
+  
 tests:
   include:
-   - test.xml
+    - tests.xml
+    
+exampleGroups:
+- src/dictionaries/examples.json
+
+sts:
+    noMatchThreshold: 0.2
+
+caila:
+    noMatchThreshold: 0.2
+    
+ner:
+ allowedPatterns: 
+  - $Number
 
 nlp:
-  tokenizer: myStem
-  speller:
-    dictionary: dict/ruscorpora-main.dict
-  modifyRequestInPreMatch: true
-  morphology: aot
-  lengthLimit:
-    enabled: true
-    symbols: 500
-    words: 100000
   timeLimit:
-    enabled: true
-    timeout: 30000
+    enabled: false
+  vocabulary: common-vocabulary.json
+  costStrategy: weighted
+  tokenizer: myStem // токенизатор, задает правила для разбиения текста на слова
+  morphology: pyMorphy // библиотека для морфологического анализа слов
+
+classifier:
+  engine: sts
+  noMatchThreshold: 0.2
+  parameters:
+    algorithm: aligner2 // Также вы можете использовать aligner и match-aligner
 
 dependencies:
-- name: common
-  type: git
-  url: https://bitbucket.org/just-ai/zb-common
-  version: heads/master
-
-#language: ru
-#botEngine: v2
-#sts:
-#  noMatchThreshold: 0.2
-#caila:
-# noMatchThreshold: 0.2
-
+  - name: common
+    type: git
+    url: https://bitbucket.org/just-ai/zb-common
+    version: heads/master
