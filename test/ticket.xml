@@ -1,0 +1,225 @@
+<test>
+
+
+	<test-case id="/Ticket/CheckTicket">
+        <q>Как проверить лотерейный билет?</q>
+        <a state='/Ticket/CheckTicket'/>
+        <q>Как посмотреть сколько выиграл</q>
+        <a state='/Ticket/CheckTicket'/>
+        <q>Мне нужно узнать сумму выигрыша</q>
+        <a state='/Ticket/CheckTicket'/>
+    </test-case>
+
+    <test-case id="/Ticket/CheckTicketByQrCode">
+        <q>Добрый день, как узнать выигрыш билетов по штрих коду</q>
+        <a state='/Ticket/CheckTicketByQrCode'/>
+        <q>Как проверить по qr коду? Добрый вечер</q>
+        <a state='/Ticket/CheckTicketByQrCode'/>
+        <q>Как проверить билет по штрих - коду?</q>
+        <a state='/Ticket/CheckTicketByQrCode'/>
+        <q>Как отсканировать билет?</q>
+        <a state='/Ticket/CheckTicketByQrCode'/>
+    </test-case>
+
+    <test-case id="/Ticket/IReceivedSMSWithWinCodeButTheySayThatTicketDidntWin">
+        <q>Здравствуйте пришло сообщение о выигрыше  номер билета 50004310.проверяю на сайте пишет что без выиграша</q>
+        <a state='/Ticket/IReceivedSMSWithWinCodeButTheySayThatTicketDidntWin'/>
+        <q>Пришло смс о выигрыше. Ввожу номер билета! Выдаёт, что без выигрыша,но код не запоашивает</q>
+        <a state='/Ticket/IReceivedSMSWithWinCodeButTheySayThatTicketDidntWin'/>
+        <q>Пришла смс о выиграше а при проверке билета выиграша нет</q>
+        <a state='/Ticket/IReceivedSMSWithWinCodeButTheySayThatTicketDidntWin'/>
+    </test-case>
+
+    <test-case id="/Ticket/HowToExchangeAWinningTicketForANewOne">
+        <q>у меня есть выигрыш 201р. Как мне на них купить билеты</q>
+        <a state='/Ticket/HowToExchangeAWinningTicketForANewOne'/>
+        <q>Здравствуйте, почему я не могу покупать билеты на выигранные деньги ?</q>
+        <a state='/Ticket/HowToExchangeAWinningTicketForANewOne'/>
+        <q>здравствуйте, можно ли в приложении выигрыш использовать для покупки нового билета?</q>
+        <a state='/Ticket/HowToExchangeAWinningTicketForANewOne'/>
+        <q>Как оплатить билет выгрышными деньгами</q>
+        <a state='/Ticket/HowToExchangeAWinningTicketForANewOne'/>
+    </test-case>
+
+    <test-case id="/Ticket/GaveTicketHowToCheck">
+        <q>Здравствуйте. Мне подарили билет на годовщину свадьбы. Как его проверить и когда был или будет розыгрыш. Спасибо</q>
+        <a state='/Ticket/GaveTicketHowToCheck'/>
+        <q>Здравствуйте, подскажите пожалуйста, как проверить билеты которые нам подарили и нет чека</q>
+        <a state='/Ticket/GaveTicketHowToCheck'/>
+        <q>Мне подарили два билета на бумажном носителе, я не понимаю, как можно проверить выигрышные они или нет</q>
+        <a state='/Ticket/GaveTicketHowToCheck'/>
+        <q>Вопрос такой если При покупки указали номер мамы,а она собственно мне подарила билеты как я могу проверить?</q>
+        <a state='/Ticket/GaveTicketHowToCheck'/>
+    </test-case>
+
+    <test-case id="/Ticket/IBoughtATicketInPyaterochkaWhatIsNext">
+        <q>Здравствуйте, мне на почте предложили билет русское лото (сто лото) я , первый раз приобрела такой билет. Что я должна делать?</q>
+        <a state='/Ticket/IBoughtATicketInPyaterochkaWhatIsNext'/>
+        <q>Билет  русское лото приобрел на кассе в пятёрочка, что дальше!?</q>
+        <a state='/Ticket/IBoughtATicketInPyaterochkaWhatIsNext'/>
+        <q>Купил билет гослото в пятёрочка, а что теперь делать с ним не спросил</q>
+        <a state='/Ticket/IBoughtATicketInPyaterochkaWhatIsNext'/>
+        <q>Здравствуйте, купила билет в пятёрочке.какие дальнейшие действия?</q>
+        <a state='/Ticket/IBoughtATicketInPyaterochkaWhatIsNext'/>
+    </test-case>
+
+    <test-case id="/Ticket/StarterTicket">
+        <q>что такое стартовый тираж?</q>
+        <a state='/Ticket/StarterTicket'/>
+        <q>что означает поле стартовый тираж и что в нем заполняется</q>
+        <a state='/Ticket/StarterTicket'/>
+        <q>Что значит стартовый тираж</q>
+        <a state='/Ticket/StarterTicket'/>
+    </test-case>
+
+    <test-case id="/Ticket/ThereAreNoTicketRunNumberAndTicketNumber">
+        <q>Где написан номер стартового тиража？</q>
+        <a state='/Ticket/ThereAreNoTicketRunNumberAndTicketNumber'/>
+        <q>не могу найти стартовый тираж</q>
+        <a state='/Ticket/ThereAreNoTicketRunNumberAndTicketNumber'/>
+        <q>Где смотреть номер стартового тиража?</q>
+        <a state='/Ticket/ThereAreNoTicketRunNumberAndTicketNumber'/>
+        <q>добрый день! не могу найти на билете номер тиража</q>
+        <a state='/Ticket/ThereAreNoTicketRunNumberAndTicketNumber'/>
+        <q>Добрый вечер, где указанно в билетах номер тиража</q>
+        <a state='/Ticket/ThereAreNoTicketRunNumberAndTicketNumber'/>
+        <q>Скажите как узнать номер теража  точнее когда он будет играть ???</q>
+        <a state='/Ticket/ThereAreNoTicketRunNumberAndTicketNumber'/>
+        <q>Если не помнишь номер билета,что делать</q>
+        <a state='/Ticket/ThereAreNoTicketRunNumberAndTicketNumber'/>
+        <q>Здравствуйте,купила билет,а не знаю его номер,как узнать?</q>
+        <a state='/Ticket/ThereAreNoTicketRunNumberAndTicketNumber'/>
+        <q>я забыла номер билета как быть</q>
+        <a state='/Ticket/ThereAreNoTicketRunNumberAndTicketNumber'/>
+        <q>Добрый вечер! Подскажите, пожалуйста, где на билете указан номер тиража и номер билета? Хочу проверить купленный билет.</q>
+        <a state='/Ticket/ThereAreNoTicketRunNumberAndTicketNumber'/>
+        <q>Здравствуйте, номер белета где посмотреть? И номер тиража?</q>
+        <a state='/Ticket/ThereAreNoTicketRunNumberAndTicketNumber'/>
+        <q>Я не помню свой тираж и номер билета?как я узнаю?</q>
+        <a state='/Ticket/ThereAreNoTicketRunNumberAndTicketNumber'/>
+    </test-case>
+
+    <test-case id="/Ticket/IsItNecessaryToRegisterTicket">
+        <q>Билеты которые куплины с чеком их надо регестрировать или они уже зарегистрированы</q>
+        <a state='/Ticket/IsItNecessaryToRegisterTicket'/>
+        <q>Добрый вечер, подскажите нужно ли регистрировать билеты, купленные на почте?</q>
+        <a state='/Ticket/IsItNecessaryToRegisterTicket'/>
+    </test-case>
+
+    <test-case id="/Ticket/NoRegistrationTicket">
+        <q>Здравствуйте! Я купил билет без регистрации. Где его можно посмотреть?</q>
+        <a state='/Ticket/NoRegistrationTicket'/>
+        <q>можно ли занести бумажный билет в приложение?</q>
+        <a state='/Ticket/NoRegistrationTicket'/>
+        <q>Добрый день купил билет онлайн, без регистрации, где найти этот билет</q>
+        <a state='/Ticket/NoRegistrationTicket'/>
+    </test-case>
+
+    <test-case id="/Ticket/IBoughtTwoTimesTheSameTicket">
+        <q>Дважды оплатил один и тот же билет</q>
+        <a state='/Ticket/IBoughtTwoTimesTheSameTicket'/>
+        <q>здравствуйте! у меня дважды сняли оплату за билеты как вернуть деньги?</q>
+        <a state='/Ticket/IBoughtTwoTimesTheSameTicket'/>
+        <q>дважды прошла оплата одного и того же билета</q>
+        <a state='/Ticket/IBoughtTwoTimesTheSameTicket'/>
+    </test-case>
+
+    <test-case id="/Ticket/UnavailableToBuyTicket">
+        <q>почему не могу оплатить билет</q>
+        <a state='/Ticket/UnavailableToBuyTicket'/>
+    </test-case>
+
+    <test-case id="/Ticket/TicketDidntShowupInAccount">
+        <q>Я купил билеты для тиража 1306, но их нет в разделе мои билеты. Так и должно быть ?</q>
+        <a state='/Ticket/TicketDidntShowupInAccount'/>
+        <q>Почему приобретенный через онлайн-ресурс билет "Русское лото" не отображается у меня в личном кабинете?</q>
+        <a state='/Ticket/TicketDidntShowupInAccount'/>
+        <q>Здравствуйте, купил билет в 14.31 рапидо 2.0, но в разделе мои билеты он не появился до розыгрыша и сейчас его там нет, а деньги списали, оплачивал Сбербанк онлайн.</q>
+        <a state='/Ticket/TicketDidntShowupInAccount'/>
+    </test-case>
+
+    <test-case id="/Ticket/HowToGiveATicket">
+        <q>Как подарить билет ?</q>
+        <a state='/Ticket/HowToGiveATicket'/>
+    </test-case>
+
+    <test-case id="/Ticket/HowToGiveAPaidTicket">
+        <q>Как подарить уже купленный (оплаченный) билет?</q>
+        <a state='/Ticket/HowToGiveAPaidTicket'/>
+    </test-case>
+
+    <test-case id="/Ticket/HowToDeleteTickets">
+        <q>как удалить уже сыгравший билет из списка</q>
+        <a state='/Ticket/HowToDeleteTickets'/>
+        <q>из раздела МОИ БИЛЕТЫ можно как-нибудь удалить билеты без выигрыша?</q>
+        <a state='/Ticket/HowToDeleteTickets'/>
+        <q>Можно ли убрать старые билеты?</q>
+        <a state='/Ticket/HowToDeleteTickets'/>
+    </test-case>
+
+    <test-case id="/Ticket/HowToDeleteTicketsFromBasket">
+        <q>здравствуйте, как удалить билет с корзины?</q>
+        <a state='/Ticket/HowToDeleteTicketsFromBasket'/>
+        <q>Как убрать билет из корзины, если появилось другой выбор?</q>
+        <a state='/Ticket/HowToDeleteTicketsFromBasket'/>
+    </test-case>
+
+    <test-case id="/Ticket/HowToCancelATicketPurchase">
+        <q>Как отменить покупку билета?</q>
+        <a state='/Ticket/HowToCancelATicketPurchase'/>
+        <q>Купил лотерею, можно ли отменить?</q>
+        <a state='/Ticket/HowToCancelATicketPurchase'/>
+    </test-case>
+
+    <test-case id="/Ticket/FavoriteNumbers">
+        <q>Как выбрать любимые числа?</q>
+        <a state='/Ticket/FavoriteNumbers'/>
+        <q>Любимые цифры</q>
+        <a state='/Ticket/FavoriteNumbers'/>
+        <q>Добрый день. Можно ли в приложении выбирать любимые числа?</q>
+        <a state='/Ticket/FavoriteNumbers'/>
+    </test-case>
+
+    <test-case id="/Ticket/HowToPutATicketInTheBasket">
+        <q>Как отправить билет в корзину?</q>
+        <a state='/Ticket/HowToPutATicketInTheBasket'/>
+    </test-case>
+
+    <test-case id="/Ticket/IBoughtATicketWhatIsNext">
+        <q>Я оплатила билет, что делать дальше?</q>
+        <a state='/Ticket/IBoughtATicketWhatIsNext'/>
+    </test-case>
+
+    <test-case id="/Ticket/HowToCheckCoupon">
+        <q>Хочу проверить купон ! Как ?</q>
+        <a state='/Ticket/HowToCheckCoupon'/>
+    </test-case>
+
+    <test-case id="/Ticket/ICantBuyBingoLotteries">
+        <q>НЕДОСТУПНОСТЬ БИЛЕТОВ БИНГО ИГР</q>
+        <a state='/Ticket/ICantBuyBingoLotteries'/>
+    </test-case>
+
+    <test-case id="/Ticket/TheTicketIsRegisteredForALongTime">
+        <q>Задержка в регистрации билета</q>
+        <a state='/Ticket/TheTicketIsRegisteredForALongTime'/>
+    </test-case>
+
+    <test-case id='/Ticket/TypesOfTicketsFull'>
+        <q>Нужно ли предъявлять чек при получении выигрыша?</q>
+        <a state='/Ticket/TypesOfTicketsFull'/>
+        <q>А при выигрыше обязательно нужно предъявлять чек на покупку билета?</q>
+        <a state='/Ticket/TypesOfTicketsFull'/>
+        <q>Для получения выигрыша достаточно будет предъявить билет или нужно ещё что-то?</q>
+        <a state='/Ticket/TypesOfTicketsFull'/>
+    </test-case>
+
+
+
+
+
+
+
+
+
+</test>

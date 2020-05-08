@@ -1,30 +1,339 @@
-name: poll-bot
-
-botEngine: v2
-language: ru
+name:
+  - stoloto-content
 
 entryPoint:
   - main.sc
-    
-exampleGroups:
-- src/dictionaries/examples.json
 
-sts:
-    noMatchThreshold: 0.2
-    
-ner:
- allowedPatterns: 
-  - $Number
+# Поля injector переключают ответы на состояние массовой сложности
+injector:
 
-nlp:
-  morphology: myStem
-  tokenizer: myStem
-  vocabulary: common-vocabulary.json
-  timeLimit:
-    enabled: false
+
+  # Не пришло смс с паролем для завершения регистрации
+  # true - все работает в штатном режиме
+  # false - массовая сложность
+  confirmentSmsIsAvailable: true
+
+  # Нет результатов на сайте
+  # true - все работает в штатном режиме
+  # false - массовая сложность
+  # websiteResultsAreAvailable: true
+
+  # Недоступна покупка билетов
+  # true - все работает в штатном режиме
+  # false - массовая сложность
+  byuingTicketIsAvailable: true
+
+  # Недоступна покупка билетов Бинго-игр
+  # true - все работает в штатном режиме
+  # false - массовая сложность
+  byuingBingoLotteriesIsAvailable: true
+
+  # После оплаты билет не отобразился в ЛК
+  # true - все работает в штатном режиме
+  # false - массовая сложность
+  ticketInAccountIsAvailable: true
+
+  # Задержки в регистрации билета
+  # true - все работает в штатном режиме
+  # false - массовая сложность
+  ticketRegistrationIsAvailable: true
+
+  # Недоступен баланс
+  # true - все работает в штатном режиме
+  # false - массовая сложность
+  balanceIsAvailable: true
+
+  # Некорректно отображается баланс
+  # true - все работает в штатном режиме
+  # false - массовая сложность
+  balanceIsCorrect: true
+
+  # Не пришло письмо
+  # Не пришло письмо для восстановления пароля
+  # true - все работает в штатном режиме
+  # false - массовая сложность
+  letterDeliveryIsAvailable: true
+
+  # Не пришло письмо для завершения регистрации
+  # true - все работает в штатном режиме
+  # false - массовая сложность
+  registrationLetterDeliveryIsAvailable: true
+
+  # Не отправляются фискальные чеки
+  # true - все работает в штатном режиме
+  # false - массовая сложность
+  receiptDeliveryIsAvailable: true
+
+  # Недоступна трансляция на сайте
+  # true - все работает в штатном режиме
+  # false - массовая сложность
+  broadcastIsAvailable: true
+
+  # Недоступна публикация на YouTube
+  # true - все работает в штатном режиме
+  # false - массовая сложность
+  youTubePostIsAvailable: true
+
+  # Некорректно отображается бонусный баланс
+  # true - все работает в штатном режиме
+  # false - массовая сложность
+  bonusBalanceIsCorrect: true
+
+  # Некорректно отображается бонусный баланс в мобильном приложении
+  # true - все работает в штатном режиме
+  # false - массовая сложность
+  mobileBonusBalanceIsCorrect: true
+
+  # Некорректная смс-рассылка
+  # true - все работает в штатном режиме
+  # false - массовая сложность
+  smsMailingIsCorrect: true
+
+  # Проблема с проведением тиража (общая)
+  # true - все работает в штатном режиме
+  # false - массовая сложность
+  drawTakesPlaceOnTime: true
+
+  # Не работают автовыплаты (только Русское лото)
+  # true - все работает в штатном режиме
+  # false - массовая сложность
+  autopaymentRLIsWorking: true
+
+  # Не открывается мобильное приложение
+  # true - все работает в штатном режиме
+  # false - массовая сложность
+  applicationIsAvailable: true
+
+  # Задержка в публикации записи розыгрыша на сайте
+  # true - все работает в штатном режиме
+  # false - массовая сложность
+  sitePostIsAvailable: true
+
+  # Не грузится страница НГ миллиард
+  # true - все работает в штатном режиме
+  # false - массовая сложность
+  pageNewYearBillionIsAvailable: true
+
+  # Не отправляются смс с кодами выигрышей
+  # true - все работает в штатном режиме
+  # false - массовая сложность
+  winningCodeIsAvailable: true
+
+  # Проблема с получением выигрыша в Кошелек (кроме Русское лото)
+  # true - все работает в штатном режиме
+  # false - массовая сложность
+  withdrawalToPurseIsAvailable: true
+
+  # Проблема с получением выигрыша в Кошелек (только Русское лото)
+  # true - все работает в штатном режиме
+  # false - массовая сложность
+  withdrawalRLToPurseIsAvailable: true
+
+  # Проблема с выводом выигрыша из Кошелька (только Русское лото)
+  # Сложности с выводом средств из W1 (только Русское лото)
+  # true - все работает в штатном режиме
+  # false - массовая сложность
+  withdrawalFromPurseRLIsAvailable: true
+
+  # Некорректно отображается информация о результатах (выпавших числах, выигрышах)
+  # true - все работает в штатном режиме
+  # false - массовая сложность
+  resultsAreDisplayedCorrectly: true
+
+  # Задержка в публикации результатов розыгрыша Русское Лото в "Мои билеты"
+  # true - все работает в штатном режиме
+  # false - массовая сложность
+  rusLotoResultsInMyTicketsAreAvailable: true
+
+  # Невозможно оплатить банковской картой
+  # true - все работает в штатном режиме
+  # false - массовая сложность
+  cardPaymentIsAvailable: true
+
+  # Невозможно оплатить через W1
+  # true - все работает в штатном режиме
+  # false - массовая сложность
+  paymentFromWalletIsAvailable: true
+
+##############################################################
+
+  # Проблемы с выплатой (лотереи, кроме Русского лото)
+
+  # Предусмотрена возможность отключить все лотереи либо какую-то конкретную.
+  walletPaymentIsAvailable:
+
+    # Установка проблем с выплатой на все лотереи. false - все работают, true - ничего не работает.
+    # В режиме массовых сложностей для всех лотерей будет выводиться ответ: В настоящий момент могут быть проблемы с выплатой выигрышей по лотереям. Не волнуйтесь, все победители смогут получить выигрыши чуть позже. Наши специалисты уже работают над исправлением ситуации.
+    allPaymentsUnavailable: false
+
+    # Установка проблем с выплатой на определенные лотереи.
+    # При установке проблем с выплатами только на определенные лотереи флаг allPaymentsUnavailable (выше) должен быть в положении false.
+    # В режиме массовых сложностей для определенных лотерей нужно поставить флаг isAvailable в положение false (isAvailable: false). После флага unavailableLotteries необходимо прописать список недоступных лотерей (к примеру, unavailableLotteries: 6 из 36). Тогда на запросы про выплаты не про 6 из 36 будет выводиться стандартный ответ, а на запрос "Почему нет выплат по 6 из 36" будет выводиться ответ: В настоящий момент могут быть проблемы с выплатой выигрышей по лотерее 6 из 36. Не волнуйтесь, все победители смогут получить выигрыши чуть позже. Наши специалисты уже работают над исправлением ситуации.
+
+    # Для отключения лотереи Русское лото сделан отдельный флаг (ниже), поэтому здесь ее прописывать не нужно.
+
+    isAvailable: true
+    unavailableLotteries: #6 из 36, золотая подкова
+
+  ########################################################################
+
+  # Проблемы с выплатой (Русское лото)
+  # true - все работает в штатном режиме
+  # false - массовая сложность
+  paymentsRLIsAvailable: true
+
+
+  #########################################################################
+
+  # Нет результатов на сайте, массовая сложность.
+  # Предусмотрена возможность отключить все лотереи либо какую-то конкретную.
+
+  # Возможность отключить все лотереи. false - массовая сложность на всех лотереях. true - стандартный ответ.
+  isLotteriesAvailable: true
+
+  # Возможность отключить определенную лотерею (или лотереи).
+  # Флаг isLotteriesAvailable (выше) должен стоять в положении true.
+  # Чтобы отключить определенную лотерею, поставьте флаг isAvailable у данной лотереи в положение false (isAvailable: false). Список лотерей - ниже.
+
+  # В случае отключения лотерей (или лотереи) будет выводиться ответ: По техническим причинам результаты {{ ticketRun }} тиража лотереи {{ lotteryName }} будут опубликованы с задержкой. Мы работаем над скорейшим устранением проблемы.
+  # Для неотключенных лотерей при этом будет выводиться стандартный ответ.
+
+  # Ответ для Нового года (в случае отключения лотерей или лотереи): Публикация {{ $injector.russianLoto.ticketRun }} тиража лотереи {{ $injector.russianLoto.lotteryName }} задерживается в связи с большим количеством участников. На обработку данных потребовалось больше времени. Результаты будут опубликованы в ближайшее время.
+
+  # Как видно из ответа, в него из списка ниже будет подставляться название лотереи и тираж, поэтому при пользовании данным флагом нужно проверить, чтобы у всех лотерей из списка ниже стояли корректные тиражи.
+
+  # Список лотерей:
+  russianLoto:
+    lotteryName: Русское Лото
+    isAvailable: true
+    ticketRun: 1316
+
+  goldenShoe:
+    lotteryName: Золотая Подкова
+    isAvailable: true
+    ticketRun: 1222
+
+  bingo75:
+    lotteryName: Бинго75
+    isAvailable: true
+    ticketRun: 30
+
+  gosloto:
+    lotteryName: Гослото
+    isAvailable: true
+    ticketRun: 1222
+
+  6of36:
+    lotteryName: 6 из 36
+    isAvailable: true
+    ticketRun: 1222
+
+  housingLottery:
+    lotteryName: Жилищная лотерея
+    isAvailable: true
+    ticketRun: 1222
+
+  zodiak:
+    lotteryName: Зодиак
+    isAvailable: true
+    ticketRun: 1222
+
+  4of20:
+    lotteryName: 4 из 20
+    isAvailable: true
+    ticketRun: 1222
+
+  5of36:
+    lotteryName: 5 из 36
+    isAvailable: true
+    ticketRun: 1222
+
+  6of45:
+    lotteryName: 6 из 45
+    isAvailable: true
+    ticketRun: 1222
+
+  7of49:
+    lotteryName: 7 из 49
+    isAvailable: true
+    ticketRun: 1222
+
+  matchball:
+    lotteryName: Столото Матчбол
+    isAvailable: true
+    ticketRun: 1222
+
+  plusJoker:
+    lotteryName: плюс Джокер
+    isAvailable: true
+    ticketRun: 1222
+
+  rapido:
+    lotteryName: Рапидо
+    isAvailable: true
+    ticketRun: 1222
+
+  12of24:
+    lotteryName: 12/24
+    isAvailable: true
+    ticketRun: 1222
+
+  duel:
+    lotteryName: Дуэль
+    isAvailable: true
+    ticketRun: 1222
+
+  top3:
+    lotteryName: Топ 3
+    isAvailable: true
+    ticketRun: 1222
+
+  keno:
+    lotteryName: Кено
+    isAvailable: true
+    ticketRun: 1222
+
+  #######################################################################
+
+tests:
+  # Тесты: для отключения тестов закомментируйте include и все вложенные тесты.
+  include:
+    - site.xml
+    
+    
 
 dependencies:
   - name: common
     type: git
     url: https://bitbucket.org/just-ai/zb-common
     version: heads/master
+
+messages:
+    onError:
+        defaultMessage: Уточните, пожалуйста, что Вы хотели бы узнать?
+        locales:
+            ru: Уточните, пожалуйста, что Вы хотели бы узнать?
+
+
+exampleGroups:
+    - src/dictionaries/examples.json
+#    
+    
+botEngine: v2
+language: ru
+
+caila:
+  noMatchThreshold: 0.42 
+sts:
+  noMatchThreshold: 0.42
+
+scriptsPreLoad:
+  global:
+   - /jslib/moment.min.js
+   - /jslib/underscore.js
+   - /jsapi/common.js
+   - /jsapi/http.js
+   - /jsapi/mail.js
+  local:
+   - /jsapi/mail.js
+   - /jsapi/reactions.js

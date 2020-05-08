@@ -1,0 +1,14 @@
+<test>
+    <test-case id="/Services/HowToGetToThePremiumClub">
+        <q>здравствуйте, скажите а как стать членом премиум клуба</q>
+        <a state='/Services/HowToGetToThePremiumClub'/>
+        <q>День добрый! Как попасть в премиум-клуб?</q>
+        <a state='/Services/HowToGetToThePremiumClub'/>
+        <q>Здравствуйте! Как стать участником премиум клуба ?</q>
+        <a state='/Services/HowToGetToThePremiumClub'/>
+        <q>как получить приглашение в премииум клуб ? у меня 17 из 18 наград собраны и я активный участник всех лотерей .</q>
+        <a state='/Services/HowToGetToThePremiumClub'/>
+    </test-case>
+
+
+</test>

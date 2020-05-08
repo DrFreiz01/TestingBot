@@ -1,0 +1,171 @@
+<test>
+	<test-case id='ReceiveWinningCode 04.02 Update'>
+		<q>Пришлите мне код выигрыша</q>
+		<a class='/Lottery/ReceiveWinningCode'/>
+		<timeoutReply interval="60"/>
+		<q>Как получить код выигрыша</q>
+		<a class='/Lottery/ReceiveWinningCode'/>
+		<timeoutReply interval="60"/>
+		<q>Как  можно узнать код выигрыша</q>
+		<a class='/Lottery/ReceiveWinningCode'/>
+		<timeoutReply interval="60"/>
+		<q>Как можно узнать код выйграша</q>
+		<a class='/Lottery/ReceiveWinningCode'/>
+		<timeoutReply interval="60"/>
+		<q>Как получить код/смс для получения выигрыша</q>
+		<a class='/Lottery/ReceiveWinningCode'/>
+		<timeoutReply interval="60"/>
+		<q>Вышлите код выигрыша</q>
+		<a class='/Lottery/ReceiveWinningCode'/>
+		<timeoutReply interval="60"/>
+		<q>Я выиграл, смс нет</q>
+		<a class='/Lottery/ReceiveWinningCode'/>
+		<timeoutReply interval="60"/>
+		<q>Где код выигрыша</q>
+		<a class='/Lottery/ReceiveWinningCode'/>
+		<timeoutReply interval="60"/>
+		<q>Выигрыш есть,а СМС с кодом нет</q>
+		<a class='/Lottery/ReceiveWinningCode'/>
+		<timeoutReply interval="60"/>
+		<q>Добрый день. Подскажите,а что на маленькие выигрыши смс теперь не приходит? Или это просто какой то сбой?</q>
+		<a class='/Lottery/ReceiveWinningCode'/>
+		<timeoutReply interval="60"/>
+		<q>Здравствуйте! Сегодня, после обеда не пришли 2 сообщения о выигрыше...</q>
+		<a class='/Lottery/ReceiveWinningCode'/>
+		<timeoutReply interval="60"/>
+		<q>Здравствуйте удалили смс с кодом что б выйгрышь получить, что делать?</q>
+		<a class='/Lottery/ReceiveWinningCode'/>
+		<timeoutReply interval="60"/>
+		<q>Здравствуйте. Какие данные мне необходимы для получения выигрыша? С меня просят какой то код. Где его взять?</q>
+		<a class='/Lottery/ReceiveWinningCode'/>
+		<timeoutReply interval="60"/>
+		<q>Как узнать код выплаты выйгрыша?</q>
+		<a class='/Lottery/ReceiveWinningCode'/>
+		<timeoutReply interval="60"/>
+	</test-case>
+
+	<test-case id='DidntRecieveCodeOrSMS'>
+		<q>Не приходит смс для входа в приложение</q>
+		<a class="/Lottery/DidntRecieveCodeOrSMS"/>
+		<q>Не приходит смс для подтверждения авторизации на номер телефона</q>
+		<a class="/Lottery/DidntRecieveCodeOrSMS"/>
+		<q>Не приходит смс для пвторизации</q>
+		<a class="/Lottery/DidntRecieveCodeOrSMS"/>
+		<q>Не приходит смс для авторизации</q>
+		<a class="/Lottery/DidntRecieveCodeOrSMS"/>
+		<q>Почему до сих пор не пришёл по смс код авторизации?</q>
+		<a class="/Lottery/DidntRecieveCodeOrSMS"/>
+		<q>89963858295.   Helen-kilikova@mail.ru.   Не пришёл код для входа в личный кабиннт</q>
+		<a class="/Lottery/DidntRecieveCodeOrSMS/GetUserData"/>
+		<q>Здравствуйте. Я загрузила на свой телефон приложение. Но при входе в личный кабинет не приходит смс с кодом на мой номер +7 (996) 385-82-95</q>
+		<a class="/Lottery/DidntRecieveCodeOrSMS/GetUserPhoneNumber"/>
+	</test-case>
+
+	<test-case id="NoUnknownTypeCode">
+		<q>на телефон тоже смс не приходит</q>
+		<a class="/Phone/NoUnknownTypeCode"/>
+		<q>СМС НЕ ПРИХОДЯТ.</q>
+		<a class="/Phone/NoUnknownTypeCode"/>
+		<q>есть доступ к телефону! смс не приходят!</q>
+		<a class="/Phone/NoUnknownTypeCode"/>
+		<q>Теперь не приходит смс</q>
+		<a class="/Phone/NoUnknownTypeCode"/>
+		<q>Почему Не приходит СМС код</q>
+		<a class="/Phone/NoUnknownTypeCode"/>
+		<q>Почему не приходит смс</q>
+		<a class="/Phone/NoUnknownTypeCode"/>
+		<q>Не не приходит смс</q>
+		<a class="/Phone/NoUnknownTypeCode"/>
+		<q>У меня не приходит сообщение</q>
+		<a class="/Phone/NoUnknownTypeCode"/>
+		<q>мне не приходят смс.</q>
+		<a class="/Phone/NoUnknownTypeCode"/>
+		<q>Не приходит СМС</q>
+		<a class="/Phone/NoUnknownTypeCode"/>
+		<q>не пришла смс</q>
+		<a class="/Phone/NoUnknownTypeCode"/>
+		<q>Здравствуйте.Не приходит сообщение</q>
+		<a class="/Phone/NoUnknownTypeCode"/>
+		<q>Не приходят именно смс</q>
+		<a class="/Phone/NoUnknownTypeCode"/>
+		<q>не пришло сообщение</q>
+		<a class="/Phone/NoUnknownTypeCode"/>
+		<q>Здравствуйте не приходит СМС</q>
+		<a class="/Phone/NoUnknownTypeCode"/>
+		<q>Почему нет смс кода доступа</q>
+		<a class="/Phone/NoUnknownTypeCode"/>
+		<q>у меня до сих пор нет смс с кодом</q>
+		<a class="/Phone/NoUnknownTypeCode"/>
+		<q>не пришло sms</q>
+		<a class="/Phone/NoUnknownTypeCode"/>
+		<q>смс не пришло</q>
+		<a class="/Phone/NoUnknownTypeCode"/>
+		<q>Почему не приходит сообщение</q>
+		<a class="/Phone/NoUnknownTypeCode"/>в
+		<q>Не поступает смс для подтверждения</q>
+		<a class="/Phone/NoUnknownTypeCode"/>
+		<q>не приходит смс</q>
+		<a class="/Phone/NoUnknownTypeCode"/>
+		<q>Не пришло сообщение</q>
+		<a class="/Phone/NoUnknownTypeCode"/>
+		<q>не приходит код</q>
+		<a class="/Phone/NoUnknownTypeCode"/>
+		<q>на телефон не пришла смс с кодом.</q>
+		<a class="/Phone/NoUnknownTypeCode"/>
+		<q>Здраствуйте. Не могу получить код подтверждения.</q>
+		<a class="/Phone/NoUnknownTypeCode"/>
+		<q>не пришло код активации</q>
+		<a class="/Phone/NoUnknownTypeCode"/>
+		<q>как получить код</q>
+		<a class="/Phone/NoUnknownTypeCode"/>
+		<q>доброе утро.стер код для подтверждения в точке продаж.как его по новому получить?</q>
+		<a class="/Phone/NoUnknownTypeCode"/>
+		<q>смс с подтверждением нет</q>
+		<a class="/Phone/NoUnknownTypeCode"/>
+		<q>Добрый вечер. Не поступает смс для подтверждения. Вчера тоже не поступило.</q>
+		<a class="/Phone/NoUnknownTypeCode"/>
+		<q>При покупке онлайн не приходит смс</q>
+		<a class="/Phone/NoUnknownTypeCode"/>
+		<q>не приходит смс</q>
+		<a class="/Phone/NoUnknownTypeCode"/>
+		<q>не приходит смс с кодом</q>
+		<a class="/Phone/NoUnknownTypeCode"/>
+		<q>Не приходит код</q>
+		<a class="/Phone/NoUnknownTypeCode"/>
+		<q>Мне не приходит код</q>
+		<a class="/Phone/NoUnknownTypeCode"/>
+		<q>Как получить код?</q>
+		<a class="/Phone/NoUnknownTypeCode"/>
+	</test-case>
+
+
+	<test-case id="EmailNotReceived">
+		<q>Сообщение не приходит на электронный адрес</q>
+		<a class="/Account/EmailNotReceived"/>
+		<timeoutReply interval="60"/>
+		<q>Почему смс не приходит на почту при регистрации?</q>
+		<a class="/Account/EmailNotReceived"/>
+		<timeoutReply interval="60"/>
+		<q>sms о регистрации не пришло на почту? Что делать?</q>
+		<a class="/Account/EmailNotReceived"/>
+		<timeoutReply interval="60"/>
+		<q>Мне на эмейл не приходит сообщение для регистрации, адрес введён верно</q>
+		<a class="/Account/EmailNotReceived"/>
+		<timeoutReply interval="60"/>
+		<q>я забыл пароль и мне не пришло сообщение на электронный адрес</q>
+		<a class="/Account/EmailNotReceived"/>
+		<timeoutReply interval="60"/>
+		<q>Здравствуйте, я пыталась зарегестрироваться, но ко мне на почту не приходит смс с ссылкой</q>
+		<a class="/Account/EmailNotReceived"/>
+		<timeoutReply interval="60"/>
+		<q>Здравствуйте,Не пришло смс на электронную почту</q>
+		<a class="/Account/EmailNotReceived"/>
+		<timeoutReply interval="60"/>
+		<q>Здравствуйте смс не пришло в почту</q>
+		<a class="/Account/EmailNotReceived"/>
+		<timeoutReply interval="60"/>
+		<q>забыл пароль, письмо с кодом на указанный адрес не приходит</q>
+		<a class="/Account/EmailNotReceived"/>
+		<timeoutReply interval="60"/>
+	</test-case>
+</test>

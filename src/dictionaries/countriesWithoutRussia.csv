@@ -1,0 +1,250 @@
+AB;Абхазия;{"name":"Абхазия","genName":"Абхазии", "duplicateName" : "false" , "currency":"RUB", "code":"AB"}
+AD;Андорра, Андора;{"name":"Андорра","genName":"Андорры", "duplicateName" : "false" , "currency":"EUR", "code":"AD"}
+AE;Объединенные Арабские Эмираты,ОАЭ;{"name":"Объединенные Арабские Эмираты","genName":"Объединенных Арабских Эмиратов", "duplicateName" : "false" , "currency":"AED", "code":"AE"}
+AF;Афганистан;{"name":"Афганистан","genName":"Афганистана", "duplicateName" : "false" , "currency":"AFN", "code":"AF"}
+AG;Антигуа и Барбуда;{"name":"Антигуа и Барбуда","genName":"Антигуа и Барбуда", "duplicateName" : "false" , "currency":"XCD", "code":"AG"}
+AI;Ангилья;{"name":"Ангилья","genName":"Ангильи", "duplicateName" : "false" , "currency":"", "code":"AI"}
+AL;Албания;{"name":"Албания","genName":"Албании", "duplicateName" : "false" , "currency":"ALL", "code":"AL"}
+AM;Армения;{"name":"Армения","genName":"Армении", "duplicateName" : "false" , "currency":"AMD", "code":"AM"}
+AO;Ангола;{"name":"Ангола","genName":"Анголы", "duplicateName" : "false" , "currency":"AOA", "code":"AO"}
+AQ;Антарктида;{"name":"Антарктида","genName":"Антарктиды", "duplicateName" : "false" , "currency":"", "code":"AQ"}
+AR;Аргентина;{"name":"Аргентина","genName":"Аргентины", "duplicateName" : "false" , "currency":"ARS", "code":"AR"}
+AS;Американское Самоа;{"name":"Американское Самоа","genName":"Американского Самоа", "duplicateName" : "false" , "currency":"", "code":"AS"}
+AT;Австрия;{"name":"Австрия","genName":"Австрии", "duplicateName" : "false" , "currency":"EUR", "code":"AT"}
+AU;Австралия;{"name":"Австралия","genName":"Австралии", "duplicateName" : "false" , "currency":"AUD", "code":"AU"}
+AW;Аруба;{"name":"Аруба","genName":"Арубы", "duplicateName" : "false" , "currency":"", "code":"AW"}
+AX;Аландские острова;{"name":"Аландские острова","genName":"Аландских островов", "duplicateName" : "false" , "currency":"", "code":"AX"}
+AZ;Азербайджан;{"name":"Азербайджан","genName":"Азербайджана", "duplicateName" : "false" , "currency":"AZN", "code":"AZ"}
+BA;Босния и Герцеговина;{"name":"Босния и Герцеговина","genName":"Боснии и Герцеговины", "duplicateName" : "false" , "currency":"BAM", "code":"BA"}
+BB;Барбадос;{"name":"Барбадос","genName":"Барбадоса", "duplicateName" : "false" , "currency":"BBD", "code":"BB"}
+BD;Бангладеш;{"name":"Бангладеш","genName":"Бангладеша", "duplicateName" : "false" , "currency":"BDT", "code":"BD"}
+BE;Бельгия;{"name":"Бельгия","genName":"Бельгии", "duplicateName" : "false" , "currency":"EUR", "code":"BE"}
+BF;Буркина-Фасо;{"name":"Буркина-Фасо","genName":"Буркина-Фасо", "duplicateName" : "false" , "currency":"XOF", "code":"BF"}
+BG;Болгария, Балгария;{"name":"Болгария","genName":"Болгарии", "duplicateName" : "false" , "currency":"BGN", "code":"BG"}
+BH;Бахрейн;{"name":"Бахрейн","genName":"Бахрейна", "duplicateName" : "false" , "currency":"BHD", "code":"BH"}
+BI;Бурунди;{"name":"Бурунди","genName":"Бурунди", "duplicateName" : "false" , "currency":"BIF", "code":"BI"}
+BJ;Бенин;{"name":"Бенин","genName":"Бенина", "duplicateName" : "false" , "currency":"XOF", "code":"BJ"}
+BL;Сен-Бартельми;{"name":"Сен-Бартельми","genName":"Сен-Бартельми", "duplicateName" : "false" , "currency":"", "code":"BL"}
+BM;Бермудские острова, Бермудские о-ва,Бермудские о ва, Бирмудские острова, Бирмудские о-ва,Бирмудские о ва, Бермуды, Бирмуды;{"name":"Бермудские острова", "duplicateName":"false", "currency":"BMD","genName":"Бермудских островов", "code":"BM"}
+BN;Бруней,Бруней-Даруссалам;{"name":"Бруней","genName":"Брунея", "duplicateName" : "false" , "currency":"BND", "code":"BN"}
+BO;Боливия;{"name":"Боливия","genName":"Боливии", "duplicateName" : "false" , "currency":"BOB", "code":"BO"}
+BQ;Бонайре, Саба и Синт-Эстатиус;{"name":"Бонайре, Саба и Синт-Эстатиус","genName":"Бонайре, Саба и Синт-Эстатиуса", "duplicateName" : "false" , "currency":"", "code":"BQ"}
+BR;Бразилия;{"name":"Бразилия","genName":"Бразилии", "duplicateName" : "false" , "currency":"BRL", "code":"BR"}
+BS;Багамские острова,Багамы;{"name":"Багамские острова","genName":"Багамских островов", "duplicateName" : "false" , "currency":"BSD", "code":"BS"}
+BT;Бутан;{"name":"Бутан","genName":"Бутана", "duplicateName" : "false" , "currency":"BTN", "code":"BT"}
+BV;Остров Буве;{"name":"Остров Буве","genName":"Острова Буве", "duplicateName" : "false" , "currency":"", "code":"BV"}
+BW;Ботсвана;{"name":"Ботсвана","genName":"Ботсваны", "duplicateName" : "false" , "currency":"BWP", "code":"BW"}
+BY;Белоруссия,Беларусь,Беларусия, Белорусь, Белорусия;{"name":"Белоруссия","genName":"Белоруссии", "duplicateName" : "false" , "currency":"BYN", "code":"BY"}
+BZ;Белиз;{"name":"Белиз","genName":"Белиза", "duplicateName" : "false" , "currency":"BZD", "code":"BZ"}
+CA;Канада;{"name":"Канада","genName":"Канады", "duplicateName" : "false" , "currency":"CAD", "code":"CA"}
+CC;Кокосовые (Килинг) острова;{"name":"Кокосовые (Килинг) острова","genName":"Кокосовых (Килинг) островов", "duplicateName" : "false" , "currency":"", "code":"CC"}
+CD;Демократическая Республика Конго;{"name":"Демократическая Республика Конго","genName":"Демократической Республики Конго", "duplicateName" : "false" , "currency":"CDF", "code":"CD"}
+CF;Центральноафриканская Республика,ЦАР,Центрально-Африканская республика,Центрально Африканская республика;{"name":"Центрально-африканская Республика","genName":"Центрально-африканской Республики", "duplicateName" : "false" , "currency":"XAF", "code":"CF"}
+CG;Республика Конго,Конго;{"name":"Республика Конго","genName":"Республики Конго", "duplicateName" : "false" , "currency":"XAF", "code":"CG"}
+CH;Швейцария;{"name":"Швейцария","genName":"Швейцарии", "duplicateName" : "false" , "currency":"CHF", "code":"CH"}
+CI;Кот-дИвуар,Кот дИвуар,Кот-д'Ивуар,Кот д'Ивуар;{"name":"Кот-д'Ивуар","genName":"Кот-д'Ивуара", "duplicateName" : "false" , "currency":"XOF", "code":"CI"}
+CK;Кука острова,острова Кука,Кука о-ва,Кука о ва,о-ва Кука,о ва Кука;{"name":"острова Кука", "duplicateName":"false", "currency":"NDZ","genName":"островов Кука", "code":"CK"}
+CL;Чили;{"name":"Чили","genName":"Чили", "duplicateName" : "false" , "currency":"CLP", "code":"CL"}
+CM;Камерун;{"name":"Камерун","genName":"Камеруна", "duplicateName" : "false" , "currency":"XAF", "code":"CM"}
+CN;Китай,Китайская Народная Республика,КНР;{"name":"Китай","genName":"Китая", "duplicateName" : "false" , "currency":"CNY", "code":"CN"}
+CO;Колумбия;{"name":"Колумбия","genName":"Колумбии", "duplicateName" : "false" , "currency":"COP", "code":"CO"}
+CR;Коста-Рика;{"name":"Коста-Рика","genName":"Коста-Рики", "duplicateName" : "false" , "currency":"CRC", "code":"CR"}
+CU;Куба;{"name":"Куба","genName":"Кубы", "duplicateName" : "false" , "currency":"CUP", "code":"CU"}
+CV;Кабо-Верде,Кабо Верде;{"name":"Кабо-Верде","genName":"Кабо-Верде", "duplicateName" : "false" , "currency":"CVE", "code":"CV"}
+CW;Кюрасао,Кюросао,Кюрасаа,Кюросаа,Курасао,Куросао,Курасаа,Куросаа;{"name":"Кюрасао", "duplicateName":"false", "currency":"ANG","genName":"Кюрасао", "code":"CW"}
+CX;Остров Рождества;{"name":"Остров Рождества", "duplicateName":"false", "currency":"","genName":"Острова Рождества", "code":"CX"}
+CY;Кипр;{"name":"Кипр","genName":"Кипра", "duplicateName" : "false" , "currency":"EUR", "code":"CY"}
+CZ;Чехия,Чешская республика;{"name":"Чехия","genName":"Чехии", "duplicateName" : "false" , "currency":"CZK", "code":"CZ"}
+DE;Германия;{"name":"Германия","genName":"Германии", "duplicateName" : "false" , "currency":"EUR", "code":"DE"}
+DJ;Джибути;{"name":"Джибути","genName":"Джибути", "duplicateName" : "true" , "currency":"DJF", "code":"DJ"}
+DK;Дания;{"name":"Дания","genName":"Дании", "duplicateName" : "false" , "currency":"DKK", "code":"DK"}
+DM;Доминика;{"name":"Доминика","genName":"Доминика", "duplicateName" : "false" , "currency":"XCD", "code":"DM"}
+DO;Доминиканская Республика,Доминикана;{"name":"Доминиканская Республика","genName":"Доминиканской Республики", "duplicateName" : "false" , "currency":"DOP", "code":"DO"}
+DZ;Алжир;{"name":"Алжир","genName":"Алжира", "duplicateName" : "true" , "currency":"DZD", "code":"DZ"}
+EC;Эквадор;{"name":"Эквадор","genName":"Эквадора", "duplicateName" : "false" , "currency":"USD", "code":"EC"}
+EE;Эстония;{"name":"Эстония","genName":"Эстонии", "duplicateName" : "false" , "currency":"EUR", "code":"EE"}
+EG;Египет, Египед;{"name":"Египет","genName":"Египта", "duplicateName" : "false" , "currency":"EGP", "code":"EG"}
+EH;Западная Сахара;{"name":"Западная Сахара","genName":"Западной Сахары", "duplicateName" : "false" , "currency":"", "code":"EH"}
+ER;Эритрея;{"name":"Эритрея","genName":"Эритреи", "duplicateName" : "false" , "currency":"ERN", "code":"ER"}
+ES;Испания;{"name":"Испания","genName":"Испании", "duplicateName" : "false" , "currency":"EUR", "code":"ES"}
+ET;Эфиопия;{"name":"Эфиопия","genName":"Эфиопии", "duplicateName" : "false" , "currency":"ETB", "code":"ET"}
+FI;Финляндия;{"name":"Финляндия","genName":"Финляндии", "duplicateName" : "false" , "currency":"EUR", "code":"FI"}
+FJ;Фиджи;{"name":"Фиджи","genName":"Фиджи", "duplicateName" : "false" , "currency":"FJD", "code":"FJ"}
+FK;Фолклендские острова;{"name":"Фолклендские острова (Мальвинские)","genName":"Фолклендских островов", "duplicateName" : "false" , "currency":"", "code":"FK"}
+FM;Федеративные Штаты Микронезии,Микронезия;{"name":"Федеративные Штаты Микронезии","genName":"Федеративных Штатов Микронезии", "duplicateName" : "false" , "currency":"USD", "code":"FM"}
+FO;Фарерские острова, Форерские острова, Фарерские о-ва, Фарерские о ва, Форерские о-ва,Форерские о ва;{"name":"Фарерские острова", "duplicateName":"false", "currency":"DKK","genName":"Фарерских островов", "code":"FO"}
+FR;Франция;{"name":"Франция","genName":"Франции", "duplicateName" : "false" , "currency":"EUR", "code":"FR"}
+GA;Габон;{"name":"Габон","genName":"Габона", "duplicateName" : "false" , "currency":"XAF", "code":"GA"}
+GB;Великобритания,Англия,Британия;{"name":"Великобритания","genName":"Великобритании", "duplicateName" : "false" , "currency":"GBP", "code":"GB"}
+GD;Гренада, Гринада, остров Гренада, остров Гринада;{"name":"Гренада","genName":"Гренады", "duplicateName" : "false" , "currency":"XCD", "code":"GD"}
+GE;Грузия;{"name":"Грузия","genName":"Грузии", "duplicateName" : "false" , "currency":"GEL", "code":"GE"}
+GF;Французская Гвиана, Французская Гвеана, Франц Гвиана, Франц Гвеана, Фр Гвиана, Фр Гвеана;{"name":"Французская Гвиана", "duplicateName":"false", "currency":"EUR","genName":"Французской Гвианы", "code":"GF"}
+GG;Гернси, остров Гернси, о-в Гернси, о в Гернси;{"name":"Гернси", "duplicateName":"false", "currency":"GBP","genName":"Гернси", "code":"GG"}
+GH;Гана;{"name":"Гана","genName":"Ганы", "duplicateName" : "false" , "currency":"GHS", "code":"GH"}
+GI;Гибралтар, Гибратлар, Гибалтар, Гиралтар, Гибролтар, Гебралтар;{"name":"Гибралтар", "duplicateName":"false", "currency":"GIP","genName":"Гибралтара", "code":"GI"}
+GL;Гренландия, Гринландия, Греландия, Гриландия;{"name":"Гренландия", "duplicateName":"false", "currency":"DKK","genName":"Гренландии", "code":"GL"}
+GM;Гамбия;{"name":"Гамбия","genName":"Гамбии", "duplicateName" : "false" , "currency":"GMD", "code":"GM"}
+GP;Гваделупа;{"name":"Гваделупа", "duplicateName":"false", "currency":"EUR","genName":"Гваделупы", "code":"GP"}
+GQ;Экваториальная Гвинея;{"name":"Экваториальная Гвинея","genName":"Экваториальной Гвинеи", "duplicateName" : "false" , "currency":"XAF", "code":"GQ"}
+GR;Греция;{"name":"Греция","genName":"Греции", "duplicateName" : "false" , "currency":"EUR", "code":"GR"}
+GS;Южная Джорджия и Южные Сандвичевы острова;{"name":"Южная Джорджия и Южные Сандвичевы острова","genName":"Южной Джорджии и Южных Сандвичевых островов", "duplicateName" : "false" , "currency":"", "code":"GS"}
+GT;Гватемала;{"name":"Гватемала","genName":"Гватемалы", "duplicateName" : "true" , "currency":"GTQ", "code":"GT"}
+GU;Гуам;{"name":"Гуам", "duplicateName":"false", "currency":"USD","genName":"Гуама", "code":"GU"}
+GW;Гвинея-Бисау,Гвинея Бисау;{"name":"Гвинея-Бисау","genName":"Гвинеи-Бисау", "duplicateName" : "false" , "currency":"XOF", "code":"GW"}
+GY;Гайана;{"name":"Гайана","genName":"Гайаны", "duplicateName" : "false" , "currency":"GYD", "code":"GY"}
+HK;Гонконг;{"name":"Гонконг", "duplicateName":"true", "currency":"HKD","genName":"Гонконга", "code":"HK"}
+HM;Остров Херд и острова Макдональд;{"name":"Остров Херд и острова Макдональд", "duplicateName":"false", "currency":"","genName":"Острова Херд и островов Макдональд", "code":"HM"}
+HN;Гондурас;{"name":"Гондурас","genName":"Гондураса", "duplicateName" : "false" , "currency":"HNL", "code":"HN"}
+HR;Хорватия;{"name":"Хорватия","genName":"Хорватии", "duplicateName" : "false" , "currency":"HRK", "code":"HR"}
+HT;Гаити;{"name":"Гаити","genName":"Гаити", "duplicateName" : "false" , "currency":"HTG", "code":"HT"}
+HU;Венгрия;{"name":"Венгрия","genName":"Венгрии", "duplicateName" : "false" , "currency":"HUF", "code":"HU"}
+ID;Индонезия;{"name":"Индонезия","genName":"Индонезии", "duplicateName" : "false" , "currency":"IDR", "code":"ID"}
+IE;Ирландия;{"name":"Ирландия","genName":"Ирландии", "duplicateName" : "false" , "currency":"EUR", "code":"IE"}
+IL;Израиль;{"name":"Израиль","genName":"Израиля", "duplicateName" : "false" , "currency":"ILS", "code":"IL"}
+IM;Мэн, остров Мэн, остров Мен, о Мэн, о Мен;{"name":"Мэн", "duplicateName":"false", "currency":"GBP","genName":"острова Мэн", "code":"IM"}
+IN;Индия;{"name":"Индия","genName":"Индии", "duplicateName" : "false" , "currency":"INR", "code":"IN"}
+IQ;Ирак;{"name":"Ирак","genName":"Ирака", "duplicateName" : "false" , "currency":"IQD", "code":"IQ"}
+IR;Иран;{"name":"Иран","genName":"Ирана", "duplicateName" : "false" , "currency":"IRR", "code":"IR"}
+IO;Британская территория в Индийском океане;{"name":"Британская территория в Индийском океане","genName":"Британской территории в Индийском океане", "duplicateName" : "false" , "currency":"", "code":"IO"}
+IS;Исландия;{"name":"Исландия","genName":"Исландии", "duplicateName" : "false" , "currency":"ISK", "code":"IS"}
+IT;Италия;{"name":"Италия","genName":"Италии", "duplicateName" : "false" , "currency":"EUR", "code":"IT"}
+JE;Джерси;{"name":"Джерси", "duplicateName":"false", "currency":"GBP","genName":"Джерси", "code":"JE"}
+JM;Ямайка;{"name":"Ямайка","genName":"Ямайки", "duplicateName" : "false" , "currency":"JMD", "code":"JM"}
+JO;Иордания;{"name":"Иордания","genName":"Иордании", "duplicateName" : "false" , "currency":"JOD", "code":"JO"}
+JP;Япония;{"name":"Япония","genName":"Японии", "duplicateName" : "false" , "currency":"JPY", "code":"JP"}
+KE;Кения;{"name":"Кения","genName":"Кении", "duplicateName" : "false" , "currency":"KES", "code":"KE"}
+KG;Киргизия,Кыргызстан;{"name":"Киргизия","genName":"Киргизии", "duplicateName" : "false" , "currency":"KGS", "code":"KG"}
+KH;Камбоджа;{"name":"Камбоджа","genName":"Камбоджи", "duplicateName" : "false" , "currency":"USD", "code":"KH"}
+KI;Кирибати;{"name":"Кирибати","genName":"Кирибати", "duplicateName" : "false" , "currency":"AUD", "code":"KI"}
+KM;Коморские Острова,коморских островах,коморских островов,Коморы,Союз Коморских Островов;{"name":"Коморские острова","genName":"Коморских островов", "duplicateName" : "false" , "currency":"KMF", "code":"KM"}
+KN;Сент-Китс и Невис;{"name":"Сент-Китс и Невис","genName":"Сент-Китс и Невис", "duplicateName" : "false" , "currency":"XCD", "code":"KN"}
+KP;Корейская Народно-Демократическая Республика,Корейская Народно Демократическая Республика,Северная Корея,КНДР;{"name":"КНДР","genName":"КНДР", "duplicateName" : "false" , "currency":"KPW", "code":"KP"}
+KR;Республика Корея,Корея,Южная Корея;{"name":"Южная Корея","genName":"Южной Кореи", "duplicateName" : "false" , "currency":"KRW", "code":"KR"}
+KW;Кувейт;{"name":"Кувейт","genName":"Кувейта", "duplicateName" : "false" , "currency":"KWD", "code":"KW"}
+KY;Острова Кайман, Каймановы острова, Каймановы о-ва,Каймановы о ва, Кайманы;{"name":"Каймановы острова", "duplicateName":"false", "currency":"KYD","genName":"Каймановых островов", "code":"KY"}
+KZ;Казахстан;{"name":"Казахстан","genName":"Казахстана", "duplicateName" : "false" , "currency":"KZT", "code":"KZ"}
+LA;Лаос;{"name":"Лаос","genName":"Лаоса", "duplicateName" : "false" , "currency":"LAK", "code":"LA"}
+LB;Ливан;{"name":"Ливан","genName":"Ливана", "duplicateName" : "false" , "currency":"LBP", "code":"LB"}
+LC;Сент-Люсия,Сент Люсия;{"name":"Сент-Люсия","genName":"Сент-Люсии", "duplicateName" : "false" , "currency":"XCD", "code":"LC"}
+LI;Лихтенштейн;{"name":"Лихтенштейн","genName":"Лихтенштейна", "duplicateName" : "false" , "currency":"CHF", "code":"LI"}
+LK;Шри-Ланка,Шри Ланка;{"name":"Шри-Ланка","genName":"Шри-Ланки", "duplicateName" : "false" , "currency":"LKR", "code":"LK"}
+LR;Либерия;{"name":"Либерия","genName":"Либерии", "duplicateName" : "false" , "currency":"LRD", "code":"LR"}
+LS;Лесото;{"name":"Лесото","genName":"Лесото", "duplicateName" : "false" , "currency":"LSL", "code":"LS"}
+LT;Литва;{"name":"Литва","genName":"Литвы", "duplicateName" : "false" , "currency":"EUR", "code":"LT"}
+LU;Люксембург;{"name":"Люксембург","genName":"Люксембурга", "duplicateName" : "true" , "currency":"EUR", "code":"LU"}
+LV;Латвия;{"name":"Латвия","genName":"Латвии", "duplicateName" : "false" , "currency":"EUR", "code":"LV"}
+LY;Ливия,Ливийская Арабская Джамахирия;{"name":"Ливия","genName":"Ливии", "duplicateName" : "false" , "currency":"LYD", "code":"LY"}
+MA;Марокко;{"name":"Марокко","genName":"Марокко", "duplicateName" : "false" , "currency":"MAD", "code":"MA"}
+MC;Монако;{"name":"Монако","genName":"Монако", "duplicateName" : "true" , "currency":"EUR", "code":"MC"}
+MD;Молдавия, Молдова;{"name":"Молдавия","genName":"Молдавии", "duplicateName" : "false" , "currency":"MDL", "code":"MD"}
+ME;Черногория;{"name":"Черногория","genName":"Черногории", "duplicateName" : "false" , "currency":"EUR", "code":"ME"}
+MF;Сен-Мартен, Сан-Мартен, Сен Мартен, СенМартен;{"name":"Сен-Мартен", "duplicateName":"false", "currency":"EUR","genName":"Сен-Мартена", "code":"MF"}
+MG;Мадагаскар;{"name":"Мадагаскар","genName":"Мадагаскара", "duplicateName" : "false" , "currency":"MGA", "code":"MG"}
+MH;Маршалловы Острова;{"name":"Маршалловы Острова","genName":"Маршалловых Островов", "duplicateName" : "false" , "currency":"USD", "code":"MH"}
+MK;Македония;{"name":"Македония","genName":"Македонии", "duplicateName" : "false" , "currency":"MKD", "code":"MK"}
+ML;Мали;{"name":"Мали","genName":"Мали", "duplicateName" : "false" , "currency":"XOF", "code":"ML"}
+MM;Мьянма;{"name":"Мьянма","genName":"Мьянмы", "duplicateName" : "false" , "currency":"MMK", "code":"MM"}
+MN;Монголия;{"name":"Монголия","genName":"Монголии", "duplicateName" : "false" , "currency":"MNT", "code":"MN"}
+MO;Макао, Макаа, Мокаа, Мокао;{"name":"Макао", "duplicateName":"false", "currency":"МОР","genName":"Макао", "code":"MO"}
+MP;Северные Марианские острова, Марианские острова;{"name":"Северные Марианские острова", "duplicateName":"false", "currency":"USD","genName":"Северных Марианских островов", "code":"MP"}
+MQ;Мартиника,Мартиники;{"name":"Мартиника", "duplicateName":"false", "currency":"EUR","genName":"Мартиники", "code":"MQ"}
+MR;Мавритания;{"name":"Мавритания","genName":"Мавритании", "duplicateName" : "false" , "currency":"MRO", "code":"MR"}
+MS;Монтсеррат;{"name":"Мавритания","genName":"Мавритании", "duplicateName" : "false" , "currency":"MRO", "code":"MS"}
+MT;Мальта;{"name":"Мальта","genName":"Мальты", "duplicateName" : "false" , "currency":"EUR", "code":"MT"}
+MU;Маврикий;{"name":"Маврикий","genName":"Маврикия", "duplicateName" : "false" , "currency":"MUR", "code":"MU"}
+MV;Мальдивские Острова,Мальдивы;{"name":"Мальдивские Острова","genName":"Мальдивских Островов", "duplicateName" : "false" , "currency":"MVR", "code":"MV"}
+MW;Малави;{"name":"Малави","genName":"Малави", "duplicateName" : "false" , "currency":"MWK", "code":"MW"}
+MX;Мексика;{"name":"Мексика","genName":"Мексики", "duplicateName" : "false" , "currency":"MXN", "code":"MX"}
+MY;Малайзия;{"name":"Малайзия","genName":"Малайзии", "duplicateName" : "false" , "currency":"MYR", "code":"MY"}
+MZ;Мозамбик;{"name":"Мозамбик","genName":"Мозамбика", "duplicateName" : "false" , "currency":"MZN", "code":"MZ"}
+NA;Намибия;{"name":"Намибия","genName":"Намибии", "duplicateName" : "false" , "currency":"ZAR", "code":"NA"}
+NE;Нигер;{"name":"Нигер","genName":"Нигера", "duplicateName" : "false" , "currency":"XOF", "code":"NE"}
+NG;Нигерия;{"name":"Нигерия","genName":"Нигерии", "duplicateName" : "false" , "currency":"NGN", "code":"NG"}
+NI;Никарагуа;{"name":"Никарагуа","genName":"Никарагуа", "duplicateName" : "false" , "currency":"NIO", "code":"NI"}
+NF;Остров Норфолк;{"name":"Остров Норфолк","genName":"Острова Норфолк", "duplicateName" : "false" , "currency":"", "code":"NF"}
+NL;Нидерланды,Голландия;{"name":"Нидерланды","genName":"Нидерландов", "duplicateName" : "false" , "currency":"EUR", "code":"NL"}
+NO;Норвегия;{"name":"Норвегия","genName":"Норвегии", "duplicateName" : "false" , "currency":"NOK", "code":"NO"}
+NP;Непал;{"name":"Непал","genName":"Непала", "duplicateName" : "false" , "currency":"NPR", "code":"NP"}
+NR;Науру;{"name":"Науру", "duplicateName":"false", "currency":"AUD","genName":"Науру", "code":"NR"}
+NU;Ниуэ;{"name":"Ниуэ", "duplicateName":"false", "currency":"","genName":"Ниуэ", "code":"NU"}
+NZ;Новая Зеландия;{"name":"Новая Зеландия","genName":"Новой Зеландии", "duplicateName" : "false" , "currency":"NZD", "code":"NZ"}
+OM;Оман;{"name":"Оман","genName":"Омана", "duplicateName" : "false" , "currency":"OMR", "code":"OM"}
+OS;Южная Осетия, Южной Осетии, Южной Осетией;{"name":"Южная Осетия","genName":"Южной Осетии", "duplicateName" : "false" , "currency":"RUB", "code":"OS"}
+PA;Панама;{"name":"Панама","genName":"Панамы", "duplicateName" : "true" , "currency":"USD", "code":"PA"}
+PE;Перу;{"name":"Перу","genName":"Перу", "duplicateName" : "false" , "currency":"PEN", "code":"PE"}
+PF;Французская Полинезия, Фр Полинезия, Франц Полинезия;{"name":"Французская Полинезия", "duplicateName":"false", "currency":"XPF","genName":"Французской Полинезии", "code":"PF"}
+GN;Гвинея;{"name":"Гвинея","genName":"Гвинеи", "duplicateName" : "false" , "currency":"GNF", "code":"PG"}
+PG;Папуа - Новая Гвинея, Папуа Новая Гвинея,Папуа-Новая Гвинея;{"name":"Папуа - Новая Гвинея","genName":"Папуа - Новой Гвинеи", "duplicateName" : "false" , "currency":"PGK", "code":"PG"}
+PH;Филиппины;{"name":"Филиппины","genName":"Филиппин", "duplicateName" : "false" , "currency":"PHP", "code":"PH"}
+PK;Пакистан;{"name":"Пакистан","genName":"Пакистана", "duplicateName" : "false" , "currency":"PKR", "code":"PK"}
+PL;Польша;{"name":"Польша","genName":"Польши", "duplicateName" : "false" , "currency":"PLN", "code":"PL"}
+PM;Сент-Пьер и Микелон;{"name":"Сент-Пьер и Микелон","genName":"Сент-Пьера и Микелона", "duplicateName" : "false" , "currency":"", "code":"PM"}
+PN;Питкерн;{"name":"Питкерн","genName":"Питкерн", "duplicateName" : "false" , "currency":"", "code":"PN"}
+PR;Пуэрто-Рико,Пуэрто Рико, Пуэрторико, Пуерто-Рико,Пуерто Рико, Пуэрта-Рико,Пуэрта Рико, Пуерта-Рико,Пуерта Рико, Пуэрто-Рика,Пуэрто Рика, Пуерто-Рика,Пуерто Рика, Пуэрта-Рика,Пуэрта Рика, Пуерта-Рика; {"name":"Пуэрто-Рико", "duplicateName":"false", "currency":"USD","genName":"Пуэрто-Рико", "code":"PR"}
+PS;Государство Палестина,Палестина;{"name":"Государство Палестина","genName":"Государства Палестина", "duplicateName" : "false" , "currency":"ILS", "code":"PS"}
+PT;Португалия;{"name":"Португалия","genName":"Португалии", "duplicateName" : "false" , "currency":"EUR", "code":"PT"}
+PW;Палау;{"name":"Палау","genName":"Палау", "duplicateName" : "false" , "currency":"USD", "code":"PW"}
+PY;Парагвай;{"name":"Парагвай","genName":"Парагвая", "duplicateName" : "false" , "currency":"PYG", "code":"PY"}
+QA;Катар;{"name":"Катар","genName":"Катара", "duplicateName" : "false" , "currency":"QAR", "code":"QA"}
+RE;Реюньон,Риюньон,Реюнон;{"name":"Реюньон", "duplicateName":"false", "currency":"EUR","genName":"Реюньона", "code":"RE"}
+RO;Румыния;{"name":"Румыния","genName":"Румынии", "duplicateName" : "false" , "currency":"RON", "code":"RO"}
+RS;Сербия;{"name":"Сербия","genName":"Сербии", "duplicateName" : "false" , "currency":"RSD", "code":"RS"}
+RW;Руанда;{"name":"Руанда","genName":"Руанды", "duplicateName" : "false" , "currency":"RWF", "code":"RW"}
+SA;Саудовская Аравия;{"name":"Саудовская Аравия","genName":"Саудовской Аравии", "duplicateName" : "false" , "currency":"SAR", "code":"SA"}
+SB;Соломоновы Острова;{"name":"Соломоновы Острова","genName":"Соломоновых Островов", "duplicateName" : "false" , "currency":"SBD", "code":"SB"}
+SC;Сейшельские Острова,Сейшелы;{"name":"Сейшельские Острова","genName":"Сейшельских Островов", "duplicateName" : "false" , "currency":"SCR", "code":"SC"}
+SD;Судан;{"name":"Судан","genName":"Судана", "duplicateName" : "false" , "currency":"SDG", "code":"SD"}
+SE;Швеция;{"name":"Швеция","genName":"Швеции", "duplicateName" : "false" , "currency":"SEK", "code":"SE"}
+SG;Сингапур;{"name":"Сингапур","genName":"Сингапура", "duplicateName" : "true" , "currency":"SGD", "code":"SG"}
+SH;Святая Елена, Остров вознесения, Тристан-да-Кунья;{"name":"Святая Елена, Остров вознесения, Тристан-да-Кунья","genName":"Святой Елены, Острова вознесения, Тристан-да-Кунья", "duplicateName" : "false" , "currency":"", "code":"SH"}
+SJ;Шпицберген и Ян Майен;{"name":"Шпицберген и Ян Майен","genName":"Шпицбергена и Ян Майен", "duplicateName" : "false" , "currency":"", "code":"SJ"}
+SI;Словения;{"name":"Словения","genName":"Словении", "duplicateName" : "false" , "currency":"EUR", "code":"SI"}
+SK;Словакия;{"name":"Словакия","genName":"Словакии", "duplicateName" : "false" , "currency":"EUR", "code":"SK"}
+SL;Сьерра-Леоне, Сьерра Леоне, Сьера Леоне;{"name":"Сьерра-Леоне","genName":"Сьерра-Леоне", "duplicateName" : "false" , "currency":"SLL", "code":"SL"}
+SM;Сан-Марино;{"name":"Сан-Марино","genName":"Сан-Марино", "duplicateName" : "true" , "currency":"EUR", "code":"SM"}
+SN;Сенегал;{"name":"Сенегал","genName":"Сенегала", "duplicateName" : "false" , "currency":"XOF", "code":"SN"}
+SO;Сомали;{"name":"Сомали","genName":"Сомали", "duplicateName" : "false" , "currency":"SOS", "code":"SO"}
+SR;Суринам;{"name":"Суринам","genName":"Суринама", "duplicateName" : "false" , "currency":"SRD", "code":"SR"}
+SS;Южный Судан;{"name":"Южный Судан","genName":"Южного Судана", "duplicateName" : "false" , "currency":"SSP", "code":"SS"}
+ST;Сан-Томе и Принсипи;{"name":"Сан-Томе и Принсипи","genName":"Сан-Томе и Принсипи", "duplicateName" : "false" , "currency":"STD", "code":"ST"}
+SV;Сальвадор, Эль-Сальвадорб Эль Сальвадор;{"name":"Сальвадор","genName":"Сальвадора", "duplicateName" : "false" , "currency":"USD", "code":"SV"}
+SX;Синт-Мартен;{"name":"Синт-Мартен","genName":"Синт-Мартен", "duplicateName" : "false" , "currency":"", "code":"SX"}
+SY;Сирия;{"name":"Сирия","genName":"Сирии", "duplicateName" : "false" , "currency":"SYP", "code":"SY"}
+SZ;Свазиленд;{"name":"Свазиленд","genName":"Свазиленда", "duplicateName" : "false" , "currency":"SZL", "code":"SZ"}
+TC;Острова Теркс и Кайкос, Теркс и Кайкос;{"name":"Теркс и Кайкос", "duplicateName":"false", "currency":"USD","genName":"Теркса и Кайкоса", "code":"TC"}
+TD;Чад;{"name":"Чад","genName":"Чада", "duplicateName" : "false" , "currency":"XAF", "code":"TD"}
+TF;Французские Южные территории;{"name":"Французские Южные территории","genName":"Французских Южных территорий", "duplicateName" : "false" , "currency":"", "code":"TF"}
+TG;страна Того;{"name":"Того","genName":"Того", "duplicateName" : "false" , "currency":"XOF", "code":"TG"}
+TH;Таиланд,Тайланд;{"name":"Таиланд","genName":"Таиланда", "duplicateName" : "false" , "currency":"THB", "code":"TH"}
+TJ;Таджикистан;{"name":"Таджикистан","genName":"Таджикистана", "duplicateName" : "false" , "currency":"TJS", "code":"TJ"}
+TK;Токелау;{"name":"Токелау","genName":"Токелау", "duplicateName" : "false" , "currency":"", "code":"TK"}
+TL;Восточный Тимор, Тимор-Лесте,Тимор Лесте, Тимор;{"name":"Восточный Тимор","genName":"Восточного Тимора", "duplicateName" : "false" , "currency":"USD", "code":"TL"}
+TM;Туркмения,Туркменистан;{"name":"Туркмения","genName":"Туркмении", "duplicateName" : "false" , "currency":"TMT", "code":"TM"}
+TN;Тунис;{"name":"Тунис","genName":"Туниса", "duplicateName" : "true" , "currency":"TND", "code":"TN"}
+TO;Тонга;{"name":"Тонга","genName":"Тонга", "duplicateName" : "false" , "currency":"TOP", "code":"TO"}
+TR;Турция;{"name":"Турция","genName":"Турции", "duplicateName" : "false" , "currency":"TRY", "code":"TR"}
+TT;Тринидад и Тобаго;{"name":"Тринидад и Тобаго","genName":"Тринидада и Тобаго", "duplicateName" : "false" , "currency":"TTD", "code":"TT"}
+TV;Тувалу;{"name":"Тувалу","genName":"Тувалу", "duplicateName" : "false" , "currency":"AUD", "code":"TV"}
+TW;Тайвань;{"name":"Тайвань", "duplicateName":"false", "currency":"TWD","genName":"Тайвань", "code":"TW"}
+TZ;Танзания;{"name":"Танзания","genName":"Танзании", "duplicateName" : "false" , "currency":"TZS", "code":"TZ"}
+UA;Украина;{"name":"Украина","genName":"Украины", "duplicateName" : "false" , "currency":"UAH", "code":"UA"}
+UG;Уганда;{"name":"Уганда","genName":"Уганды", "duplicateName" : "false" , "currency":"UGX", "code":"UG"}
+UM;Малые Тихоокеанские отдаленные острова Соединенных Штатов;{"name":"Малые Тихоокеанские отдаленные острова Соединенных Штатов","genName":"Малых Тихоокеанских отдаленных островов Соединенных Штатов", "duplicateName" : "false" , "currency":"", "code":"UM"}
+US;Соединённые Штаты Америки,США,штаты,Америка;{"name":"США","genName":"США", "duplicateName" : "false" , "currency":"USD", "code":"US"}
+UY;Уругвай;{"name":"Уругвай","genName":"Уругвая", "duplicateName" : "false" , "currency":"UYU", "code":"UY"}
+UZ;Узбекистан;{"name":"Узбекистан","genName":"Узбекистана", "duplicateName" : "false" , "currency":"UZS", "code":"UZ"}
+VA;Ватикан;{"name":"Ватикан","genName":"Ватикана", "duplicateName" : "false" , "currency":"EUR", "code":"VA"}
+VC;Сент-Винсент и Гренадины;{"name":"Сент-Винсент и Гренадины","genName":"Сент-Винсента и Гренадины", "duplicateName" : "false" , "currency":"XCD", "code":"VC"}
+VE;Венесуэла;{"name":"Венесуэла","genName":"Венесуэлы", "duplicateName" : "false" , "currency":"VEF", "code":"VE"}
+VG;Британские Виргинские острова, Британские Виргинские о-ва,Британские Виргинские о ва, Брит Виргинские острова, Брит Виргинские о-ва,Брит Виргинские о ва, Британские вергинские острова, Британские вергинские о-ва,Британские вергинские о ва, Брит вергинские острова, Брит вергинские о-ва,Брит вергинские о ва;{"name":"Британские Виргинские острова", "duplicateName":"false", "currency":"USD","genName":"Британских Виргинских островов", "code":"VG"}
+VI;Виргинские острова, Виргинские о-ва,Виргинские о ва, вергинские острова, вергинские о-ва,вергинские о ва;{"name":"Виргинские острова", "duplicateName":"false", "currency":"USD","genName":"Виргинских островов", "code":"VI"}
+VN;Вьетнам;{"name":"Вьетнам","genName":"Вьетнама", "duplicateName" : "false" , "currency":"VND", "code":"VN"}
+VU;Вануату;{"name":"Вануату","genName":"Вануату", "duplicateName" : "false" , "currency":"VUV", "code":"VU"}
+WF;Уоллис и Футуна;{"name":"Уоллис и Футуна","genName":"Уоллиса и Футуны", "duplicateName" : "false" , "currency":"", "code":"WF"}
+WS;Самоа;{"name":"Самоа","genName":"Самоа", "duplicateName" : "false" , "currency":"USD", "code":"WS"}
+YE;Йемен;{"name":"Йемен","genName":"Йемена", "duplicateName" : "false" , "currency":"YER", "code":"YE"}
+YT;Майотта, Майота;{"name":"остров Майотта", "duplicateName":"false", "currency":"EUR","genName":"острова Майотта", "code":"YT"}
+ZA;Южно-Африканская Республика,ЮАР,Южноафриканская Республика,Южно Африканская Республика, Южная Африка;{"name":"ЮАР","genName":"ЮАР", "duplicateName" : "false" , "currency":"ZAR", "code":"ZA"}
+ZM;Замбия;{"name":"Замбия","genName":"Замбии", "duplicateName" : "false" , "currency":"ZMW", "code":"ZM"}
+ZW;Зимбабве;{"name":"Зимбабве","genName":"Зимбабве", "duplicateName" : "false" , "currency":"ZAR", "code":"ZW"}
+NC;Новая Каледония;{"name":"Новая Каледония","genName":"Новой Каледонии", "duplicateName" : "false" , "currency":"XPF", "code":"NC"}
