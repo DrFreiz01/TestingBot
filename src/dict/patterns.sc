@@ -1,5 +1,6 @@
 patterns:
-    $depCode = $regexp<([A-Z]{0,3})>
+    $mytest = $regexp<[ABC]{0,3}>
+    $depCode = $regexp<[A-Z]{0,3}>
     $arrCode = $regexp<arrCode[A-Z]{0,3}>
     $cityCode = $entity<cityCodeLib> || converter = $converters.cityCodeConv
     $iataAndRailway = $entity<IataRailwayLib> || converter = $converters.cityAllConv
