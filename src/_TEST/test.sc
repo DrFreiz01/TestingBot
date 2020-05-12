@@ -8,16 +8,35 @@ theme: /test
 
 
 
-    state: testRegex
-        q!: testRegex ($depCode/$arrCode)
-        a: {{toPrettyString($parseTree)}}
+    state: testGetCities
+        q!: testGetCities $orderNumber
+        if: $temp.begin == undefined
+            script:
+                $temp.begin = true;
+                $client.executeState = $context.currentState;
+                $temp.orderNumber = $parseTree._orderNumber;
+            go!: /orderInfo/getOrderInfo
+        else:
+            script:
+                $temp.begin = undefined;
+                $response.actions = [{
+                   type:"call_external_callback",
+                   callbackName:"getDestinations",
+                   args: [{arg1: $session.orderId}]
+                }];
+            a: {{toPrettyString($session.call_external_callback)}}
 
 
 
     state: getClientUrl
-        q!: getClientUrl * $iataAndRailway::fromCode * [$to] [$cityPreName] $iataAndRailway::destCode * [на] {($dateDig/$dateLetters/$thatDay) [$morning/$evening]} * $depCode * $arrCode *
-        q!: getClientUrl * [на] {($dateDig/$dateLetters/$thatDay) [$morning/$evening]} * $iataAndRailway::fromCode [$to] [$cityPreName] $iataAndRailway::destCode * $depCode * $arrCode *
-        q!: getClientUrl * [на] {($dateDig/$dateLetters/$thatDay) [$morning/$evening]} * $depCode * $arrCode *
+        q!: getClientUrl * $iataAndRailway::fromCode * $iataAndRailway::destCode * {($dateDig/$dateLetters/$thatDay) [$morning/$evening]} * $depCode * $arrCode * $weight<+1>
+        q!: getClientUrl * {($dateDig/$dateLetters/$thatDay) [$morning/$evening]} * $iataAndRailway::fromCode $iataAndRailway::destCode * $depCode * $arrCode * $weight<+1>
+        q!: getClientUrl * {($dateDig/$dateLetters/$thatDay) [$morning/$evening]} * $depCode * $arrCode * $weight<+1>
+        q!: getClientUrl * $from $iataAndRailway::fromCode * [$iataAndRailway::destCode] * $depCode * $arrCode * $weight<+1>
+        # 4EX: getClientUrl билеты на полслеавтрф из Саратова depCodeMOW arrCodeLED
+        q!: getClientUrl * [$iataAndRailway::fromCode] * $iataAndRailway::destCode * $depCode * $arrCode * $weight<+1>
+        q!: getClientUrl * $to $iataAndRailway::destCode * $from $iataAndRailway::fromCode * $depCode * $arrCode * $weight<+1>
+        q!: getClientUrl * $depCode * $arrCode * $weight<+1>
         # чистим переменные
         if: $temp.begin0 == undefined
             script:
@@ -38,113 +57,58 @@ theme: /test
                 script:
                     $temp.begin2 = undefined;
                     $temp.begin0 = undefined;
-                    // DEBUG
-                    $reactions.answer(toPrettyString($parseTree));
-                    /*
-                    $reactions.answer('ДО: from: ' + $session.from + ', dest: ' + $session.dest + ', dates: ' + $session.dates + ', passengers: ' + $session.adults + ', direct: ' + $session.direct);
-                    // проверяем, что дата не в прошлом
-                    if ($session.dates && (datesComparison($session.dates) == false)) {
-                        $reactions.answer("https://www.ozon.travel/");
-                    } else {
-                        // проверяем, что данных хватает
-                        if (!$session.dates || !$session.from) {
-                            if (!$session.from && $parseTree._depCode.match(/dep_code=[A-Z]{3}/)) {
-                                $session.from = $parseTree._depCode.replace(/dep_code=([A-Z]{3})/, "$1");
-                            }
-                            if (!$session.dest && $parseTree._arrCode.match(/arr_code=[A-Z]{3}/)) {
-                                $session.dest = $parseTree._arrCode.replace(/arr_code=([A-Z]{3})/, "$1");
-                            }
+                    if (!$session.dates || !$session.from) {
+                        if (!$session.from && $parseTree._depCode.match(/depCode[A-Z]{3}/)) {
+                            $session.from = $parseTree._depCode.replace(/depCode([A-Z]{3})/, "$1");
                         }
-                        if ($session.dates && $session.from && $session.dest && $session.from != $session.dest) {
-                            var result = aviaSearchPost({from: $session.from, dest: $session.dest, date: $session.dates, passengers: $session.adults}, $session.direct);
-                            $session.httpResponse = result.data;
-                            $session.httpStatus = result.status;
-                            $session.urlOzon = urlOzonAvia({from: $session.from, dest: $session.dest, date: $session.dates, passengers: $session.adults, direct: $session.direct, baggage: $session.baggage}, $session.yandex);
-                        } else {
-                            $reactions.answer("https://www.ozon.travel/");
-                        }
-                        // DEBUG
-                        $reactions.answer('ПОСЛЕ: from: ' + $session.from + ', dest: ' + $session.dest + ', dates: ' + $session.dates + ', passengers: ' + $session.adults + ', direct: ' + $session.direct);
-                        // проверяем, что есть ответ
-                        if (result.isOk && (!isArrayEmpty($session.httpResponse.tariffs)) && result.status >= 200 && result.status < 300) {
-
-                            var filterRes, tariffIndex, flightIndex, variantIndex;
-                            // БАГАЖ и УТРО/ВЕЧЕР
-                            if ($session.baggage && $session.dayTime) {
-                                filterRes = dayTimeBaggFilter($session.httpResponse);
-                                tariffIndex = filterRes.tariffIndex;
-                                flightIndex = filterRes.flightIndex;
-                                variantIndex = filterRes.variantIndex;
-                                if (tariffIndex == undefined || flightIndex == undefined || variantIndex == undefined) {
-                                    $reactions.answer("https://www.ozon.travel/");
-                                }
-                            }
-                            // БАГАЖ
-                            else if ($session.baggage) {
-                                tariffIndex = baggageFilter($session.httpResponse);
-                                flightIndex = 0;
-                                variantIndex = 0;
-                                if (tariffIndex == undefined) {
-                                    $reactions.answer("https://www.ozon.travel/");
-                                }
-                            }
-                            // УТРО ВЕЧЕР
-                            else if ($session.dayTime) {
-                                filterRes = dayTimeFilter($session.httpResponse);
-                                tariffIndex = filterRes.tariffIndex;
-                                flightIndex = filterRes.flightIndex;
-                                variantIndex = filterRes.variantIndex;
-                                if (tariffIndex == undefined || flightIndex == undefined || variantIndex == undefined) {
-                                    $reactions.answer("https://www.ozon.travel/");
-                                }
-
-                            } else {
-                                tariffIndex = 0;
-                                flightIndex = 0;
-                                variantIndex = 0;
-                            }
-
-                            if ($session.httpResponse.tariffs && $session.httpResponse.tariffs[tariffIndex] && $session.httpResponse.tariffs[tariffIndex].flights && $session.httpResponse.tariffs[tariffIndex].flights[flightIndex] && $session.httpResponse.tariffs[tariffIndex].flights[flightIndex].variants && $session.httpResponse.tariffs[tariffIndex].flights[flightIndex].variants[variantIndex]) {
-                                // ОТВЕТ
-                                if ($session.direct == true) {
-                                    $reactions.transition("/aviaSearchAns/aviaDirectResults");
-                                } else {
-                                    $reactions.answer($session.urlOzon);
-                                }
-                            } else {
-                                $reactions.answer("https://www.ozon.travel/");
-                            }
-                        } else {
-                            $reactions.answer("https://www.ozon.travel/");
+                        if (!$session.dest && $parseTree._arrCode.match(/arrCode[A-Z]{3}/)) {
+                            $session.dest = $parseTree._arrCode.replace(/arrCode([A-Z]{3})/, "$1");
                         }
                     }
-                    */
+                    $reactions.transition('/test/getClientUrlAns');
+
+
+
+    state: getClientUrlAns
+        script:
+            // проверяем, что данных хватает
+            if ($session.dates && $session.from && $session.dest && $session.from != $session.dest) {
+                $session.urlOzon = urlOzonAvia({from: $session.from, dest: $session.dest, date: $session.dates, passengers: $session.adults, direct: $session.direct, baggage: $session.baggage}, $session.yandex);
+                $reactions.answer($session.urlOzon);
+            } else {
+                //https://uniapi.ozon.travel/flight-min-price-follow?from=mow&to=led
+                $reactions.answer("https://uniapi.ozon.travel/flight-min-price-follow?from=" + $session.from + "&to=" + $session.dest);
+            }
 
 
 
     state: call_external_callback
-        event!: call_external_callback
+        event!: external_action_request
         script:
             var call_external_callback = $request;
             if (call_external_callback && call_external_callback.data && call_external_callback.data.eventData) {
                 $session.call_external_callback = call_external_callback.data.eventData;
             }
+        #a: {{$request.data.eventData}}
 
 
 
     state: testCallbackFunc
         q!: testCallbackFunc
         script:
-            if ($session.call_external_callback) {
-                $response.actions = [{
-                   type:"call_external_callback",
-                   callbackName:"testHandler",
-                   args: [{argName1: "это успех"}]
-                }];
-            } else {
-                $reactions.answer('у нас нет $session.call_external_callback');
-            }
+            $response.actions = [{
+               type:"call_external_callback",
+               callbackName:"testHandler",
+               args: [{arg1: "это успех!"}]
+            }];
+            $reactions.transition('/test/testCallbackFunc/answer');
 
+
+        state: answer
+            if: $session.call_external_callback
+                a: {{toPrettyString($session.call_external_callback)}}
+            else:
+                a: у нас нет $session.call_external_callback
 
 
     state: testApiQuery

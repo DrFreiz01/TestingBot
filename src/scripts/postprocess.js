@@ -28,6 +28,17 @@ function postprocess($context) {
         if ($session.lastAnswer && (answer == $session.lastAnswer)) {
             $session.answerRepetition = $session.answerRepetition || 0;
             $session.answerRepetition += 1;
+        } else if ($session.lastAnswer) {
+            var answerRegexp = new RegExp(".+text= .+, state=.+");
+            if (answer.match(answerRegexp)) {
+                var answerText = answer.replace(/.+text= (.+), state=.+/, "$1");
+                var lastAnswerRegexp = new RegExp(".+text= Здравствуйте\! " + answerText + ".+");
+                if ($session.lastAnswer.match(lastAnswerRegexp)) {
+                    $session.answerRepetition += 1;
+                } else {
+                    $session.answerRepetition = 0;
+                }
+            }
         } else {
             $session.answerRepetition = 0;
         }
@@ -39,5 +50,9 @@ function postprocess($context) {
             //    });
         }
         $session.lastAnswer = answer;
+        //if ($session.answerRepetition) {
+        //    $reactions.answer('$session.answerRepetition: ' + $session.answerRepetition);
+        //}
+        //$session.lastAnswer = 'Reply(type=text, text= Здравствуйте! Чем я могу вам помочь?, state=/helloBye/hello, interval=null, targetState=null)';
     }
 }

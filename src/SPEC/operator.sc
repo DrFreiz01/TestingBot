@@ -10,7 +10,7 @@ theme: /operator
                 $reactions.answer('Перевод на оператора6547658765')
                 $response.replies.push({
                     type:"switch"
-                    });
+                });
             }
 
 

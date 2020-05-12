@@ -48,7 +48,7 @@ theme: /helloBye
 
     state: howAreYou
         # 4EX: как дела
-        q!: * {как  ([$your2](дела/жизн*/делиш*)/сам/сама/живешь/пожив*) } [$markQuestion]
+        q!: [$beginningWords] {как  ([$your2/у $youGenAcc](дела/жизн*/делиш*)/сам/сама/живешь/пожив*) } [$markQuestion]
         # 4EX: как ты?
         q!: [$beginningWords] (как ты/какты) [$markQuestion]
         # 4EX: какие дела
@@ -89,11 +89,11 @@ theme: /helloBye
 
     state: whatsUp
         # 4EX: че как
-        q!: * [$beginningWords] (чо/че/чё) (как/какк/ккак/каг) *
+        q!: [$beginningWords] (чо/че/чё) (как/какк/ккак/каг)
         # 4EX: как ты тама
-        q!: * [$beginningWords] (как/какк/ккак/каг) $you [тама/там/$ruVoobshe ] *
+        q!: [$beginningWords] (как/какк/ккак/каг) $you [тама/там/$ruVoobshe ]
         # 4EX: как оно там
-        q!: * [$beginningWords] (как/какк/ккак/каг) (оно/ано/сам/сама) [тама/там/$ruVoobshe] *
+        q!: [$beginningWords] (как/какк/ккак/каг) (оно/ано/сам/сама) [тама/там/$ruVoobshe]
         a: У меня все отлично! Надеюсь, у вас тоже все хорошо.
 
 
