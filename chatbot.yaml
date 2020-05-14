@@ -1,69 +1,36 @@
-name: hoff-bot-clients
+name: echo-template
 
-botEngine: v2
-language: ru
-
-sts:
-    noMatchThreshold: 0.2
-
-caila:
-    noMatchThreshold: 0.2
-
-
-entryPoint: main.sc
+entryPoint:
+  - main.sc
 
 tests:
-    include:
-        - test.xml
-        - test_main-sc.xml
-#        - test_003-LKB-01-Loyalty-faq.xml
-#        - test_003-LKB-02-Loyalty-faq.xml
-#        - test_003-LKB-03-Loyalty-faq.xml
-#        - test_003-LKB-04-Loyalty-faq.xml
+  include:
+   - test.xml
 
-    exclude:
-            
-#injector:
-
-
-messages:
-    onError:
-        defaultMessage: Ошибка.
-        locales:
-            ru: Ошибка.
-            en: Oops! I have a bug in my program.
+nlp:
+  tokenizer: myStem
+  speller:
+    dictionary: dict/ruscorpora-main.dict
+  modifyRequestInPreMatch: true
+  morphology: aot
+  lengthLimit:
+    enabled: true
+    symbols: 500
+    words: 100000
+  timeLimit:
+    enabled: true
+    timeout: 30000
 
 dependencies:
-  - name: common
-    type: git
-    url: https://bitbucket.org/just-ai/zb-common
-    version: heads/master
-    
-nlp:
-    morphology: pyMorphy
-    tokenizer: myStem
-    lengthLimit:
-        symbols: 1200
-    vocabFile: common-vocabulary.json
-    speller:
-        dictionary: prepared-ruscorpora.txt
-    vocabulary: common-vocabulary.json
-    timeLimit: 
-        timeout: 1500
+- name: common
+  type: git
+  url: https://bitbucket.org/just-ai/zb-common
+  version: heads/master
 
-classifier:
-    enable: true
-    engine: sts
-    noMatchThreshold: 0.2
-    parameters:
-        algorithm: aligner2
+#language: ru
+#botEngine: v2
+#sts:
+#  noMatchThreshold: 0.2
+#caila:
+# noMatchThreshold: 0.2
 
-scriptsPreLoad:
-  global:
-   - /jslib/moment.min.js
-   - /jslib/underscore.js
-   - /jsapi/common.js
-   - /jsapi/http.js
-  local:
-   - /jsapi/mail.js
-   - /jsapi/reactions.js

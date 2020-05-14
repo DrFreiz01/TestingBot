@@ -89,7 +89,7 @@ theme: /test
             if (call_external_callback && call_external_callback.data && call_external_callback.data.eventData) {
                 $session.call_external_callback = call_external_callback.data.eventData;
             }
-        #a: {{$request.data.eventData}}
+        a: {{$request.data.eventData}}
 
 
 

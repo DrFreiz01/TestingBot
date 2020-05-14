@@ -29,30 +29,25 @@ function postprocess($context) {
             $session.answerRepetition = $session.answerRepetition || 0;
             $session.answerRepetition += 1;
         } else if ($session.lastAnswer) {
-            var answerRegexp = new RegExp(".+text= .+, state=.+");
-            if (answer.match(answerRegexp)) {
-                var answerText = answer.replace(/.+text= (.+), state=.+/, "$1");
-                var lastAnswerRegexp = new RegExp(".+text= Здравствуйте\! " + answerText + ".+");
-                if ($session.lastAnswer.match(lastAnswerRegexp)) {
-                    $session.answerRepetition += 1;
-                } else {
-                    $session.answerRepetition = 0;
-                }
+            var lastAnswerRegexp = new RegExp(" Здравствуйте\!" + answer);
+            if ($session.lastAnswer.match(lastAnswerRegexp)) {
+                log('💪💪💪💪💪💪💪💪💪 попали в lastAnswer.match(lastAnswerRegexp)');
+                $session.answerRepetition += 1;
+            } else {
+                $session.answerRepetition = 0;
             }
         } else {
             $session.answerRepetition = 0;
         }
         if ($session.answerRepetition == 2) {
             $reactions.transition("/operator/goToOpeartor");
-            //$response.replies = [];
-            //$response.replies.push({
-            //    type: "switch"
-            //    });
         }
         $session.lastAnswer = answer;
-        //if ($session.answerRepetition) {
-        //    $reactions.answer('$session.answerRepetition: ' + $session.answerRepetition);
-        //}
-        //$session.lastAnswer = 'Reply(type=text, text= Здравствуйте! Чем я могу вам помочь?, state=/helloBye/hello, interval=null, targetState=null)';
+        //$session.lastAnswer:  Здравствуйте! Вы можете восстановить пароль, пройдя по этой ссылке: https://www.ozon.travel/my/remind-password
+        //answer:  Вы можете восстановить пароль, пройдя по этой ссылке: https://www.ozon.travel/my/remind-password
     }
 }
+
+
+
+
