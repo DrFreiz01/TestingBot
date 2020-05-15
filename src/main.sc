@@ -1,4 +1,5 @@
 require: _require.sc
+require: dict/patterns.sc
 #require: slotfilling/slotFilling.sc
 #  module = sys.zb-common
 theme: /
