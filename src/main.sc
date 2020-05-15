@@ -201,8 +201,8 @@ theme: /
                 if (landing_page_title.match(/.*Авиаперелёт [А-Яа-яё -]+ — [А-Яа-яё -]+[ ,].+/)) {
                     landing_page_title = landing_page_title.replace(/.*Авиаперелёт ([А-Яа-яё -]+) — ([А-Яа-яё -]+)[ ,].+/, '$1#$2');
                     landing_page_title = landing_page_title.split('#');
-                    $session.from4User = landing_page_title[0];
-                    $session.dest4User = landing_page_title[1];
+                    $session.landingFrom = landing_page_title[0];
+                    $session.landingDest = landing_page_title[1];
                 }
             }
             if (newChatStarted && newChatStarted.data && newChatStarted.data.eventData && newChatStarted.data.eventData.visitor && newChatStarted.data.eventData.visitor.info) {
@@ -252,7 +252,10 @@ theme: /
 
     state: sessionDataHardLimitExceeded
         event!: sessionDataHardLimitExceeded
-        go!: /operator/goToOpeartor
+        script:
+            if ($session.otherCalendarOpt) {
+                $session.otherCalendarOpt = undefined;
+            }
 
 
 

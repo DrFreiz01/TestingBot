@@ -21,6 +21,8 @@ theme: /ticketReturn
         # 4EX: Задать можно билет
         q!: [$beginningWords] ($annulInf/$returnInf/сдать/задать/слать/отменить) ($how/$want/$need2/$canSg1 ([ли] (я/йа)/ли [я/йа]) / (я/йа) $canSg1/$possiblePredic) {[$my2/$ruSvoi] ($ticket/$airplaneTicket/$flight/$order)} [$markQuestion]
         q!: * ($ticket/$airplaneTicket/$flight/$order) ($how/$want/$need2/$canSynPossible [ли] [я/йа/$meDat]) ($annulNoun/$cancelInf/$return/$returnInf/сдать/сдачу/сдачи/отмены) *
+        # 4EX: Расскажи, пожалуйста, про возможность возврата билетов и как это будет происходить
+        q!: * $tellMe возможност* {($annulNoun/$return/отмена/отмены/отмену/сдача/сдачу) ([$my2/$ruSvoi] ($ticket/$airplaneTicket/$flight/$order/~поездка/~рейс))} *
         script:
             if ($client.orderList && $client.orderList.length == 1) {
                 if ($temp.begin == undefined) {

@@ -4,45 +4,43 @@ theme: /railwaySearchAns
     state: railwayResults
         if: $session.category
             if: $session.adults
-                a: Стоимость {{getTicketNumb4User($session.adults)}} {{$session.category}} {{$session.stationF}} - {{$session.stationT}} на {{$session.dates4User}} - от {{$session.railwayPrice}} руб. \nВсе варианты по ссылке: {{$session.urlRailway}} || tts = "", ttsEnabled = false
+                a: Стоимость {{getTicketNumb4User($session.adults)}} {{$session.category}} {{$session.stationF}} - {{$session.stationT}} на {{$session.dates4User}} - от {{$session.railwayPrice}} руб. \nВсе варианты по ссылке: {{$session.urlRailway}}
             else:
-                a: Стоимость билета {{$session.category}} {{$session.stationF}} - {{$session.stationT}} на {{$session.dates4User}} - от {{$session.railwayPrice}} руб. \nВсе варианты по ссылке: {{$session.urlRailway}} || tts = "", ttsEnabled = false
+                a: Стоимость билета {{$session.category}} {{$session.stationF}} - {{$session.stationT}} на {{$session.dates4User}} - от {{$session.railwayPrice}} руб. \nВсе варианты по ссылке: {{$session.urlRailway}}
         else:
             if: $session.adults
-                a: Стоимость {{getTicketNumb4User($session.adults)}} {{$session.stationF}} - {{$session.stationT}} на {{$session.dates4User}} - от {{$session.railwayPrice}} руб. \nВсе варианты по ссылке: {{$session.urlRailway}} || tts = "", ttsEnabled = false
+                a: Стоимость {{getTicketNumb4User($session.adults)}} {{$session.stationF}} - {{$session.stationT}} на {{$session.dates4User}} - от {{$session.railwayPrice}} руб. \nВсе варианты по ссылке: {{$session.urlRailway}}
             else:
-                a: Стоимость билета {{$session.stationF}} - {{$session.stationT}} на {{$session.dates4User}} - от {{$session.railwayPrice}} руб. \nВсе варианты по ссылке: {{$session.urlRailway}} || tts = "", ttsEnabled = false
-                #Отправление {{$session.dates4User}} в {{$session.fromTime4User}}. \nЦены и количество билетов постоянно меняются, актуальные результаты смотрите по ссылке: {{$session.urlRailway}} || tts = "", ttsEnabled = false
+                a: Стоимость билета {{$session.stationF}} - {{$session.stationT}} на {{$session.dates4User}} - от {{$session.railwayPrice}} руб. \nВсе варианты по ссылке: {{$session.urlRailway}}
         go: /railwaySearchAns/anotherSearch
 
 
 
     state: railwayRoundtripResults
         if: $session.adults
-            a: Маршрут {{$session.stationF1}} - {{$session.stationT1}} - {{$session.stationT2}} \nСтоимость {{getTicketNumb4User($session.adults)}} - от {{$session.railwayPrice}} руб. \nВсе варианты на {{$session.dates4User1}}: \n{{$session.urlRailway1}} \nВсе варианты на {{$session.dates4User2}}: \n{{$session.urlRailway2}} || tts = "", ttsEnabled = false
+            a: Маршрут {{$session.stationF1}} - {{$session.stationT1}} - {{$session.stationT2}} \nСтоимость {{getTicketNumb4User($session.adults)}} - от {{$session.railwayPrice}} руб. \nВсе варианты на {{$session.dates4User1}}: \n{{$session.urlRailway1}} \nВсе варианты на {{$session.dates4User2}}: \n{{$session.urlRailway2}}
         else:
-            a: Маршрут {{$session.stationF1}} - {{$session.stationT1}} - {{$session.stationT2}} \nСтоимость билетов - от {{$session.railwayPrice}} руб. \nВсе варианты на {{$session.dates4User1}}: \n{{$session.urlRailway1}} \nВсе варианты на {{$session.dates4User2}}: \n{{$session.urlRailway2}} || tts = "", ttsEnabled = false
+            a: Маршрут {{$session.stationF1}} - {{$session.stationT1}} - {{$session.stationT2}} \nСтоимость билетов - от {{$session.railwayPrice}} руб. \nВсе варианты на {{$session.dates4User1}}: \n{{$session.urlRailway1}} \nВсе варианты на {{$session.dates4User2}}: \n{{$session.urlRailway2}}
 
 
 
     state: railwayResultsNoPrice
         if: $session.category
             if: $session.adults
-                a: Билеты {{$session.category}} {{$session.stationF}} - {{$session.stationT}} на {{$session.dates4User}} можно купить по ссылке: {{$session.urlRailway}} || tts = "", ttsEnabled = false
+                a: Билеты {{$session.category}} {{$session.stationF}} - {{$session.stationT}} на {{$session.dates4User}} можно купить по ссылке: {{$session.urlRailway}}
             else:
-                a: Купить билет {{$session.category}} {{$session.stationF}} - {{$session.stationT}} на {{$session.dates4User}} можно по ссылке: {{$session.urlRailway}} || tts = "", ttsEnabled = false
+                a: Купить билет {{$session.category}} {{$session.stationF}} - {{$session.stationT}} на {{$session.dates4User}} можно по ссылке: {{$session.urlRailway}}
         else:
             if: $session.adults
-                a: Билеты {{$session.stationF}} - {{$session.stationT}} на {{$session.dates4User}} можно купить по ссылке: {{$session.urlRailway}} || tts = "", ttsEnabled = false
+                a: Билеты {{$session.stationF}} - {{$session.stationT}} на {{$session.dates4User}} можно купить по ссылке: {{$session.urlRailway}}
             else:
-                a: Купить билет {{$session.stationF}} - {{$session.stationT}} на {{$session.dates4User}} можно по ссылке: {{$session.urlRailway}} || tts = "", ttsEnabled = false
-                #Отправление {{$session.dates4User}} в {{$session.fromTime4User}}. \nЦены и количество билетов постоянно меняются, актуальные результаты смотрите по ссылке: {{$session.urlRailway}} || tts = "", ttsEnabled = false
+                a: Купить билет {{$session.stationF}} - {{$session.stationT}} на {{$session.dates4User}} можно по ссылке: {{$session.urlRailway}}
         go: /railwaySearchAns/anotherSearch
 
 
 
     state: railwayRoundtripResultsNoPrice
-        a: Билеты {{$session.stationF1}} - {{$session.stationT1}} - {{$session.stationT2}} на {{$session.dates4User1}}: \n{{$session.urlRailway1}} \nВсе варианты на {{$session.dates4User2}}: \n{{$session.urlRailway2}} || tts = "", ttsEnabled = false
+        a: Билеты {{$session.stationF1}} - {{$session.stationT1}} - {{$session.stationT2}} на {{$session.dates4User1}}: \n{{$session.urlRailway1}} \nВсе варианты на {{$session.dates4User2}}: \n{{$session.urlRailway2}}
 
 
 

@@ -29,6 +29,7 @@ function getMinValue (array) {
 
 // формат месяца
 function addZero (date) {
+    date = date.toString();
     if (date.length == 1) {
         date = "0" + date;
     }

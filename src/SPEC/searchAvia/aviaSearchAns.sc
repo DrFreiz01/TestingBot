@@ -3,74 +3,74 @@ theme: /aviaSearchAns
 
     state: aviaResults
         script:
-            $session.dates4User = getDate4User($session.dates);
-            $session.fromTime4User = getTime4User($session.fromTime);
+            $temp.dates4User = getDate4User($session.dates);
+            $temp.fromTime4User = getTime4User($session.fromTime);
         if: $session.adults
             if: $session.baggage
-                a: Маршрут {{$session.cityF}} {{$session.airportF}} - {{$session.cityT}} {{$session.airportT}}.\nМинимальная цена {{getTicketNumb4User($session.adults)}} с багажом - {{$session.prices}} руб. \nВылет {{$session.dates4User}} в {{$session.fromTime4User}}. \nЦены и количество билетов постоянно меняются, актуальные результаты смотрите по ссылке: {{$session.urlOzon}} || tts = "", ttsEnabled = false
+                a: Маршрут {{$session.cityF}} {{$session.airportF}} - {{$session.cityT}} {{$session.airportT}}.\nМинимальная цена {{getTicketNumb4User($session.adults)}} с багажом - {{$session.prices}} руб. \nВылет {{$temp.dates4User}} в {{$temp.fromTime4User}}. \nЦены и количество билетов постоянно меняются, актуальные результаты смотрите по ссылке: {{$session.urlOzon}}
             else:
-                a: Маршрут {{$session.cityF}} {{$session.airportF}} - {{$session.cityT}} {{$session.airportT}}.\nМинимальная цена {{getTicketNumb4User($session.adults)}} - {{$session.prices}} руб. \nВылет {{$session.dates4User}} в {{$session.fromTime4User}}. \nЦены и количество билетов постоянно меняются, актуальные результаты смотрите по ссылке: {{$session.urlOzon}} || tts = "", ttsEnabled = false
+                a: Маршрут {{$session.cityF}} {{$session.airportF}} - {{$session.cityT}} {{$session.airportT}}.\nМинимальная цена {{getTicketNumb4User($session.adults)}} - {{$session.prices}} руб. \nВылет {{$temp.dates4User}} в {{$temp.fromTime4User}}. \nЦены и количество билетов постоянно меняются, актуальные результаты смотрите по ссылке: {{$session.urlOzon}}
         else:
             if: $session.baggage
-                a: Маршрут {{$session.cityF}} {{$session.airportF}} - {{$session.cityT}} {{$session.airportT}}.\nМинимальная цена билета c багажом - {{$session.prices}} руб. \nВылет {{$session.dates4User}} в {{$session.fromTime4User}}. \nЦены и количество билетов постоянно меняются, актуальные результаты смотрите по ссылке: {{$session.urlOzon}} || tts = "", ttsEnabled = false
+                a: Маршрут {{$session.cityF}} {{$session.airportF}} - {{$session.cityT}} {{$session.airportT}}.\nМинимальная цена билета c багажом - {{$session.prices}} руб. \nВылет {{$temp.dates4User}} в {{$temp.fromTime4User}}. \nЦены и количество билетов постоянно меняются, актуальные результаты смотрите по ссылке: {{$session.urlOzon}}
             else:
-                a: Маршрут {{$session.cityF}} {{$session.airportF}} - {{$session.cityT}} {{$session.airportT}}.\nМинимальная цена билета - {{$session.prices}} руб. \nВылет {{$session.dates4User}} в {{$session.fromTime4User}}. \nЦены и количество билетов постоянно меняются, актуальные результаты смотрите по ссылке: {{$session.urlOzon}} || tts = "", ttsEnabled = false
+                a: Маршрут {{$session.cityF}} {{$session.airportF}} - {{$session.cityT}} {{$session.airportT}}.\nМинимальная цена билета - {{$session.prices}} руб. \nВылет {{$temp.dates4User}} в {{$temp.fromTime4User}}. \nЦены и количество билетов постоянно меняются, актуальные результаты смотрите по ссылке: {{$session.urlOzon}}
         go: /aviaSearchAns/anotherSearch
 
 
 
     state: aviaRoundtripResults
         script:
-            $session.dates4User1 = getDate4User($session.dates1);
-            $session.dates4User2 = getDate4User($session.dates2);
-            $session.fromTime4User1 = getTime4User($session.fromTime1);
-            $session.fromTime4User2 = getTime4User($session.fromTime2);
+            $temp.dates4User1 = getDate4User($session.dates1);
+            $temp.dates4User2 = getDate4User($session.dates2);
+            $temp.fromTime4User1 = getTime4User($session.fromTime1);
+            $temp.fromTime4User2 = getTime4User($session.fromTime2);
         if: $session.adults
             if: $session.baggage
-                a: Маршрут {{$session.cityF}} {{$session.airportF}} - {{$session.cityT}} {{$session.airportT}} - {{$session.cityF}} {{$session.airportF}}. \nМинимальная цена {{getTicketNumb4User($session.adults)}} с багажом - {{$session.prices}} руб. \nТуда: {{$session.dates4User1}} в {{$session.fromTime4User1}}. \nОбратно: {{$session.dates4User2}} в {{$session.fromTime4User2}}. \nРезультаты поиска здесь: {{$session.urlOzon}} || tts = "", ttsEnabled = false
+                a: Маршрут {{$session.cityF}} {{$session.airportF}} - {{$session.cityT}} {{$session.airportT}} - {{$session.cityF}} {{$session.airportF}}. \nМинимальная цена {{getTicketNumb4User($session.adults)}} с багажом - {{$session.prices}} руб. \nТуда: {{$temp.dates4User1}} в {{$temp.fromTime4User1}}. \nОбратно: {{$temp.dates4User2}} в {{$temp.fromTime4User2}}. \nРезультаты поиска здесь: {{$session.urlOzon}}
             else:
-                a: Маршрут {{$session.cityF}} {{$session.airportF}} - {{$session.cityT}} {{$session.airportT}} - {{$session.cityF}} {{$session.airportF}}. \nМинимальная цена {{getTicketNumb4User($session.adults)}} - {{$session.prices}} руб. \nТуда: {{$session.dates4User1}} в {{$session.fromTime4User1}}. \nОбратно: {{$session.dates4User2}} в {{$session.fromTime4User2}}. \nРезультаты поиска здесь: {{$session.urlOzon}} || tts = "", ttsEnabled = false
+                a: Маршрут {{$session.cityF}} {{$session.airportF}} - {{$session.cityT}} {{$session.airportT}} - {{$session.cityF}} {{$session.airportF}}. \nМинимальная цена {{getTicketNumb4User($session.adults)}} - {{$session.prices}} руб. \nТуда: {{$temp.dates4User1}} в {{$temp.fromTime4User1}}. \nОбратно: {{$temp.dates4User2}} в {{$temp.fromTime4User2}}. \nРезультаты поиска здесь: {{$session.urlOzon}}
         else:
             if: $session.baggage
-                a: Маршрут {{$session.cityF}} {{$session.airportF}} - {{$session.cityT}} {{$session.airportT}} - {{$session.cityF}} {{$session.airportF}}. \nМинимальная цена билетов с багажом - {{$session.prices}} руб. \nТуда: {{$session.dates4User1}} в {{$session.fromTime4User1}}. \nОбратно: {{$session.dates4User2}} в {{$session.fromTime4User2}}. \nРезультаты поиска здесь: {{$session.urlOzon}} || tts = "", ttsEnabled = false
+                a: Маршрут {{$session.cityF}} {{$session.airportF}} - {{$session.cityT}} {{$session.airportT}} - {{$session.cityF}} {{$session.airportF}}. \nМинимальная цена билетов с багажом - {{$session.prices}} руб. \nТуда: {{$temp.dates4User1}} в {{$temp.fromTime4User1}}. \nОбратно: {{$temp.dates4User2}} в {{$temp.fromTime4User2}}. \nРезультаты поиска здесь: {{$session.urlOzon}}
             else:
-                a: Маршрут {{$session.cityF}} {{$session.airportF}} - {{$session.cityT}} {{$session.airportT}} - {{$session.cityF}} {{$session.airportF}}. \nМинимальная цена перелета - {{$session.prices}} руб. \nТуда: {{$session.dates4User1}} в {{$session.fromTime4User1}}. \nОбратно: {{$session.dates4User2}} в {{$session.fromTime4User2}}. \nРезультаты поиска здесь: {{$session.urlOzon}} || tts = "", ttsEnabled = false
+                a: Маршрут {{$session.cityF}} {{$session.airportF}} - {{$session.cityT}} {{$session.airportT}} - {{$session.cityF}} {{$session.airportF}}. \nМинимальная цена перелета - {{$session.prices}} руб. \nТуда: {{$temp.dates4User1}} в {{$temp.fromTime4User1}}. \nОбратно: {{$temp.dates4User2}} в {{$temp.fromTime4User2}}. \nРезультаты поиска здесь: {{$session.urlOzon}}
 
 
 
     state: aviaDirectRoundtripResults
         script:
-            $session.dates4User1 = getDate4User($session.dates1);
-            $session.dates4User2 = getDate4User($session.dates2);
-            $session.fromTime4User1 = getTime4User($session.fromTime1);
-            $session.fromTime4User2 = getTime4User($session.fromTime2);
+            $temp.dates4User1 = getDate4User($session.dates1);
+            $temp.dates4User2 = getDate4User($session.dates2);
+            $temp.fromTime4User1 = getTime4User($session.fromTime1);
+            $temp.fromTime4User2 = getTime4User($session.fromTime2);
         if: $session.adults
             if: $session.baggage
-                a: Маршрут {{$session.cityF}} {{$session.airportF}} - {{$session.cityT}} {{$session.airportT}} - {{$session.cityF}} {{$session.airportF}}. \nМинимальная цена {{getTicketNumb4User($session.adults)}} без пересадок с багажом - {{$session.prices}} руб. \nТуда: {{$session.dates4User1}} в {{$session.fromTime4User1}}. \nОбратно: {{$session.dates4User2}} в {{$session.fromTime4User2}}. \nРезультаты поиска здесь: {{$session.urlOzon}} || tts = "", ttsEnabled = false
+                a: Маршрут {{$session.cityF}} {{$session.airportF}} - {{$session.cityT}} {{$session.airportT}} - {{$session.cityF}} {{$session.airportF}}. \nМинимальная цена {{getTicketNumb4User($session.adults)}} без пересадок с багажом - {{$session.prices}} руб. \nТуда: {{$temp.dates4User1}} в {{$temp.fromTime4User1}}. \nОбратно: {{$temp.dates4User2}} в {{$temp.fromTime4User2}}. \nРезультаты поиска здесь: {{$session.urlOzon}}
             else:
-                a: Маршрут {{$session.cityF}} {{$session.airportF}} - {{$session.cityT}} {{$session.airportT}} - {{$session.cityF}} {{$session.airportF}}. \nМинимальная цена {{getTicketNumb4User($session.adults)}} без пересадок - {{$session.prices}} руб. \nТуда: {{$session.dates4User1}} в {{$session.fromTime4User1}}. \nОбратно: {{$session.dates4User2}} в {{$session.fromTime4User2}}. \nРезультаты поиска здесь: {{$session.urlOzon}} || tts = "", ttsEnabled = false
+                a: Маршрут {{$session.cityF}} {{$session.airportF}} - {{$session.cityT}} {{$session.airportT}} - {{$session.cityF}} {{$session.airportF}}. \nМинимальная цена {{getTicketNumb4User($session.adults)}} без пересадок - {{$session.prices}} руб. \nТуда: {{$temp.dates4User1}} в {{$temp.fromTime4User1}}. \nОбратно: {{$temp.dates4User2}} в {{$temp.fromTime4User2}}. \nРезультаты поиска здесь: {{$session.urlOzon}}
         else:
             if: $session.baggage
-                a: Маршрут {{$session.cityF}} {{$session.airportF}} - {{$session.cityT}} {{$session.airportT}} - {{$session.cityF}} {{$session.airportF}}. \nМинимальная цена билетов без пересадок с багажом - {{$session.prices}} руб. \nТуда: {{$session.dates4User1}} в {{$session.fromTime4User1}}. \nОбратно: {{$session.dates4User2}} в {{$session.fromTime4User2}}. \nРезультаты поиска здесь: {{$session.urlOzon}} || tts = "", ttsEnabled = false
+                a: Маршрут {{$session.cityF}} {{$session.airportF}} - {{$session.cityT}} {{$session.airportT}} - {{$session.cityF}} {{$session.airportF}}. \nМинимальная цена билетов без пересадок с багажом - {{$session.prices}} руб. \nТуда: {{$temp.dates4User1}} в {{$temp.fromTime4User1}}. \nОбратно: {{$temp.dates4User2}} в {{$temp.fromTime4User2}}. \nРезультаты поиска здесь: {{$session.urlOzon}}
             else:
-                a: Маршрут {{$session.cityF}} {{$session.airportF}} - {{$session.cityT}} {{$session.airportT}} - {{$session.cityF}} {{$session.airportF}}. \nМинимальная цена билетов без пересадок - {{$session.prices}} руб. \nТуда: {{$session.dates4User1}} в {{$session.fromTime4User1}}. \nОбратно: {{$session.dates4User2}} в {{$session.fromTime4User2}}. \nРезультаты поиска здесь: {{$session.urlOzon}} || tts = "", ttsEnabled = false
+                a: Маршрут {{$session.cityF}} {{$session.airportF}} - {{$session.cityT}} {{$session.airportT}} - {{$session.cityF}} {{$session.airportF}}. \nМинимальная цена билетов без пересадок - {{$session.prices}} руб. \nТуда: {{$temp.dates4User1}} в {{$temp.fromTime4User1}}. \nОбратно: {{$temp.dates4User2}} в {{$temp.fromTime4User2}}. \nРезультаты поиска здесь: {{$session.urlOzon}}
 
 
 
     state: aviaDirectResults
         script:
-            $session.dates4User = getDate4User($session.dates);
-            $session.fromTime4User = getTime4User($session.fromTime);
+            $temp.dates4User = getDate4User($session.dates);
+            $temp.fromTime4User = getTime4User($session.fromTime);
         if: $session.adults
             if: $session.baggage
-                a: Маршрут {{$session.cityF}} {{$session.airportF}} - {{$session.cityT}} {{$session.airportT}}.\nМинимальная цена {{getTicketNumb4User($session.adults)}} без пересадок c багажом - {{$session.prices}} руб. \nВылет {{$session.dates4User}} в {{$session.fromTime4User}}. \nЦены и количество билетов постоянно меняются, актуальные результаты смотрите по ссылке: {{$session.urlOzon}} || tts = "", ttsEnabled = false
+                a: Маршрут {{$session.cityF}} {{$session.airportF}} - {{$session.cityT}} {{$session.airportT}}.\nМинимальная цена {{getTicketNumb4User($session.adults)}} без пересадок c багажом - {{$session.prices}} руб. \nВылет {{$temp.dates4User}} в {{$temp.fromTime4User}}. \nЦены и количество билетов постоянно меняются, актуальные результаты смотрите по ссылке: {{$session.urlOzon}}
             else:
-                a: Маршрут {{$session.cityF}} {{$session.airportF}} - {{$session.cityT}} {{$session.airportT}}.\nМинимальная цена {{getTicketNumb4User($session.adults)}} без пересадок - {{$session.prices}} руб. \nВылет {{$session.dates4User}} в {{$session.fromTime4User}}. \nЦены и количество билетов постоянно меняются, актуальные результаты смотрите по ссылке: {{$session.urlOzon}} || tts = "", ttsEnabled = false
+                a: Маршрут {{$session.cityF}} {{$session.airportF}} - {{$session.cityT}} {{$session.airportT}}.\nМинимальная цена {{getTicketNumb4User($session.adults)}} без пересадок - {{$session.prices}} руб. \nВылет {{$temp.dates4User}} в {{$temp.fromTime4User}}. \nЦены и количество билетов постоянно меняются, актуальные результаты смотрите по ссылке: {{$session.urlOzon}}
         else:
             if: $session.baggage
-                a: Маршрут {{$session.cityF}} {{$session.airportF}} - {{$session.cityT}} {{$session.airportT}}.\nМинимальная цена прямых билетов с багажом - {{$session.prices}} руб. \nВылет {{$session.dates4User}} в {{$session.fromTime4User}}. \nЦены и количество билетов постоянно меняются, актуальные результаты смотрите по ссылке: {{$session.urlOzon}} || tts = "", ttsEnabled = false
+                a: Маршрут {{$session.cityF}} {{$session.airportF}} - {{$session.cityT}} {{$session.airportT}}.\nМинимальная цена прямых билетов с багажом - {{$session.prices}} руб. \nВылет {{$temp.dates4User}} в {{$temp.fromTime4User}}. \nЦены и количество билетов постоянно меняются, актуальные результаты смотрите по ссылке: {{$session.urlOzon}}
             else:
-                a: Маршрут {{$session.cityF}} {{$session.airportF}} - {{$session.cityT}} {{$session.airportT}}.\nМинимальная цена без пересадок - {{$session.prices}} руб. \nВылет {{$session.dates4User}} в {{$session.fromTime4User}}. \nЦены и количество билетов постоянно меняются, актуальные результаты смотрите по ссылке: {{$session.urlOzon}} || tts = "", ttsEnabled = false
+                a: Маршрут {{$session.cityF}} {{$session.airportF}} - {{$session.cityT}} {{$session.airportT}}.\nМинимальная цена без пересадок - {{$session.prices}} руб. \nВылет {{$temp.dates4User}} в {{$temp.fromTime4User}}. \nЦены и количество билетов постоянно меняются, актуальные результаты смотрите по ссылке: {{$session.urlOzon}}
 
 
 

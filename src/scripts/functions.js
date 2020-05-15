@@ -421,14 +421,14 @@ function getTicketNumb4User (numb, age) {
 
 // отлов даты с буквами
 function dateLetters (date, month) {
-    if (date.match(/^числ. \d{1,2}$/i) || date.match(/^\d{1,2} +числ.$/i)) {
+    if (date.match(/^числ. \d{1,2}( |-)?(ого|го|uj|juj)?$/i) || date.match(/^\d{1,2}( |-)?(ого|го|uj|juj)? +числ.$/i)) {
         // числа 16
-        if (date.match(/^числ. \d{1,2}$/i)) {
+        if (date.match(/^числ. \d{1,2}( |-)?(ого|го|uj|juj)?$/i)) {
             date = date.split(' ');
             var day = addZero(date[1]);
         }
         // 16 числа
-        if (date.match(/^\d{1,2} +числ.$/i)) {
+        if (date.match(/^\d{1,2}( |-)?(ого|го|uj|juj)? +числ.$/i)) {
             var re = (/ +/);
             date = date.split(re);
             var day = addZero(date[0]);
@@ -464,17 +464,27 @@ function dateLetters (date, month) {
             var day = date.replace(/^[а-яё]+ ?(\d{1,2})( |-)?(ого|го|uj|juj)? ?(20)?(\d{2})?г?$/i, '$1');
             var year = date.replace(/^[а-яё]+ ?\d{1,2}( |-)?(ого|го|uj|juj)? ?(20)?(\d{2})?г?$/i, '$4');
         }
-        var day = addZero(day);
+        // сегодня
+        var currentDate = new Date();
+        var currentYear = currentDate.getFullYear();
+        var currentMonth = currentDate.getMonth() + 1;
+        var currentDay = currentDate.getDate();
+        if (!month) {
+            var month = currentMonth;
+            if (day < currentDay) {
+                month = month + 1;
+            }
+            var month = addZero(month);
+        }
         if (year) {
             year = '20' + year;
         } else {
-            var currentDate = new Date();
-            var year = currentDate.getFullYear();
-            var currentMonth = currentDate.getMonth() + 1;
+            year = currentYear;
             if (month < currentMonth) {
                 year = year + 1;
             }
         }
+        var day = addZero(day);
         date = year + '-' + month + '-' + day;
     }
     return date;

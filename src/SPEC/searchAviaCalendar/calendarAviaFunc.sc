@@ -3,23 +3,21 @@ theme: /calendarAviaFunc
 
     state: neighborDates
         script:
-            var result1 = calendarSearchPost({from: $session.from, dest: $session.dest, passengers: $session.adults});
-            $session.httpResponse = result1.data;
-            $session.httpStatus = result1.status;
+            var result = calendarSearchPost({from: $session.from, dest: $session.dest, passengers: $session.adults});
             //проверяем, что есть ответ
-            if (result1.isOk && (!isArrayEmpty($session.httpResponse.prices)) && result1.status >= 200 && result1.status < 300) {
+            if (result.isOk && (!isArrayEmpty(result.data.prices)) && result.status >= 200 && result.status < 300) {
                 var neighborDates = [];
                 var index;
                 // ищем дату пользователя
-                for (var i = 0; i < $session.httpResponse.prices.length; i++) {
-                    if ($session.httpResponse.prices[i].date == $session.dates) {
+                for (var i = 0; i < result.data.prices.length; i++) {
+                    if (result.data.prices[i].date == $session.dates) {
                         index = i;
                     }
                 }
                 // ищем подходящие даты вокруг
                 for (i = index-7; i < index + 8; i++) {
-                    if ($session.httpResponse.prices[i] && $session.httpResponse.prices[i].price < $session.prices && $session.httpResponse.prices[i].date != $session.date) {
-                        neighborDates.push($session.httpResponse.prices[i]);
+                    if (result.data.prices[i] && result.data.prices[i].price < $session.prices && result.data.prices[i].date != $session.date) {
+                        neighborDates.push(result.data.prices[i]);
                     }
                 }
                 //$reactions.answer('neighborDates: ' + toPrettyString(neighborDates));
@@ -98,15 +96,13 @@ theme: /calendarAviaFunc
         script:
             if ($session.from != $session.dest) {
                 var result = calendarSearchPost({from: $session.from, dest: $session.dest, passengers: $session.adults});
-                $session.httpResponse = result.data;
-                $session.httpStatus = result.status;
-                //проверяем, что есть ответ
-                if (result.isOk && (!isArrayEmpty($session.httpResponse.prices)) && result.status >= 200 && result.status < 300) {
+                                //проверяем, что есть ответ
+                if (result.isOk && (!isArrayEmpty(result.data.prices)) && result.status >= 200 && result.status < 300) {
                     $session.calendarList = [];
                     //проходим по календарю цен и собираем минимальные
-                    for (var i = 0; i < $session.httpResponse.prices.length; i++) {
-                        if ($session.httpResponse.prices[i].hasOwnProperty('isMin') && $session.httpResponse.prices[i].isMin == true) {
-                            $session.calendarList.push($session.httpResponse.prices[i]);
+                    for (var i = 0; i < result.data.prices.length; i++) {
+                        if (result.data.prices[i].hasOwnProperty('isMin') && result.data.prices[i].isMin == true) {
+                            $session.calendarList.push(result.data.prices[i]);
                         } else {
                             $reactions.transition("/aviaSearchAns/aviaSearchError");
                         }
@@ -133,13 +129,12 @@ theme: /calendarAviaFunc
             $session.monthCheapest = true;
             var result = calendarSearchPost({from: $session.from, dest: $session.dest, passengers: $session.adults});
             if (result && result.data && result.data.prices) {
-                $session.httpResponse = result.data.prices;
-                $session.httpStatus = result.status;
+                var pricesArray = result.data.prices;
             } else {
                 $reactions.transition("/aviaSearchAns/aviaSearchError");
             }
             //проверяем, что есть ответ
-            if (result.isOk && (!isArrayEmpty($session.httpResponse)) && result.status >= 200 && result.status < 300) {
+            if (result.isOk && (!isArrayEmpty(pricesArray)) && result.status >= 200 && result.status < 300) {
                 // НАХОДИМ НУЖНЫЙ МЕСЯЦ
                 var currentDate = new Date();
                 var year = currentDate.getFullYear();
@@ -171,7 +166,7 @@ theme: /calendarAviaFunc
                         }
                     }
                 }
-                neededMonth = $session.httpResponse.filter(isItRightDate);
+                neededMonth = pricesArray.filter(isItRightDate);
 
                 // функции
                 var isMin = function(value) {
@@ -243,7 +238,7 @@ theme: /calendarAviaFunc
         script:
             var result = calendarSearchPost({from: $session.from, dest: $session.dest, passengers: $session.adults});
             if (result && result.data && result.data.prices) {
-                $session.httpResponse = result.data.prices;
+                var pricesArray = result.data.prices;
             } else {
                 $reactions.transition("/aviaSearchAns/aviaSearchError");
             }
@@ -287,7 +282,7 @@ theme: /calendarAviaFunc
                     }
                 }
             }
-            var list = $session.httpResponse.filter(isItRightDate);
+            var list = pricesArray.filter(isItRightDate);
             // НАХОДИМ САМЫЕ ДЕШЕВЫЕ В СПИСКЕ
             var lowestDate, neededIndex, lowestPrice = 1000000000;
             for (var i=0;i<list.length;i++) {

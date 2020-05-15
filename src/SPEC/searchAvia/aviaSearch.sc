@@ -391,6 +391,9 @@ theme: /aviaSearch
         q!: * [$withBaggage] * [на] {($dateDig/$dateLetters/$thatDay) [$morning/$evening]} * {($howMuch $cost/почем/почём) ($ticket/$airplaneTicket/$flight)} *
         q!: * [на] {($dateDig/$dateLetters/$thatDay) [$morning/$evening]} * [$withBaggage] * {($howMuch $cost/почем/почём) ($ticket/$airplaneTicket/$flight)} *
         q!: * [на] {($dateDig/$dateLetters/$thatDay) [$morning/$evening]} * {($howMuch $cost/почем/почём) ($ticket/$airplaneTicket/$flight)} * [$withBaggage] *
+        # 4EX: Здравствуйте можно забранировать на 5 ого числа
+        q!: * ($bookInf/$buyInf/$buyNoun) * [на] {($dateDig/$dateLetters/$thatDay) [$morning/$evening]} *
+        q!: * [на] {($dateDig/$dateLetters/$thatDay) [$morning/$evening]} * ($bookInf/$buyInf/$buyNoun) *
         # 4EX: Найдите мне дешевле самый дешевле билет хорошо 15-го июля
         q!: * [$withBaggage] * {($cheap/$cheaper/$cheapest) ($ticket/$airplaneTicket/$flight)} * [на] {($dateDig/$dateLetters/$thatDay) [$morning/$evening]} *
         q!: * {($cheap/$cheaper/$cheapest) ($ticket/$airplaneTicket/$flight)} * [$withBaggage] * [на] {($dateDig/$dateLetters/$thatDay) [$morning/$evening]} *
@@ -468,6 +471,7 @@ theme: /aviaSearch
                         $temp.begin0 = undefined;
                     if: $session.from && $session.dest && $session.dates
                         go!: /aviaSearchFunc/aviaSearch
+                    #elseif: $session.landingFrom && $session.landingDest && $session.dates
                     else:
                         a: Уточните, пожалуйста, направление вашей поездки.
 

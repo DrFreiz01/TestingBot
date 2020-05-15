@@ -16,38 +16,32 @@ theme: /aviaSearchFunc
                     // 1 запрос
                     if ((datesComparison($session.dates1) == true)) {
                         var result0 = aviaSearchPost({from: $session.from, dest: $session.dest, date: $session.dates1, passengers: $session.adults}, $session.direct);
-                        $session.httpResponse0 = result0.data;
-                        $session.httpStatus0 = result0.status;
-                        if (result0.isOk && (!isArrayEmpty($session.httpResponse0.tariffs)) && result0.status >= 200 && result0.status < 300) {
-                            $session.prices0 = $session.httpResponse0.tariffs[0].price.rub;
+                        if (result0.isOk && (!isArrayEmpty(result0.data.tariffs)) && result0.status >= 200 && result0.status < 300) {
+                            $session.prices0 = result0.data.tariffs[0].price.rub;
                         }
                     }
                     // 2 запрос
                     if (datesComparison($session.dates2) == true) {
                         var result1 = aviaSearchPost({from: $session.from, dest: $session.dest, date: $session.dates2, passengers: $session.adults}, $session.direct);
-                        $session.httpResponse1 = result1.data;
-                        $session.httpStatus1 = result1.status;
-                        if (result1.isOk && (!isArrayEmpty($session.httpResponse1.tariffs)) && result1.status >= 200 && result1.status < 300) {
-                            $session.prices1 = $session.httpResponse1.tariffs[0].price.rub;
+                        if (result1.isOk && (!isArrayEmpty(result1.data.tariffs)) && result1.status >= 200 && result1.status < 300) {
+                            $session.prices1 = result1.data.tariffs[0].price.rub;
                         }
                     }
                     // сравнение цен
                     if ($session.prices0 == $session.prices1 || $session.prices0 < $session.prices1) {
                         $session.prices = $session.prices0;
-                        var neededPrice = $session.httpResponse0;
+                        var neededResult = result0.data;
                         $session.dates = $session.dates1;
                     } else {
                         $session.prices = $session.prices1;
-                        var neededPrice = $session.httpResponse1;
+                        var neededResult = result1.data;
                         $session.dates = $session.dates2;
                     }
                     // ищем пункты прибытия в пересадках
-                    var neededIndex = getLastElInArray(neededPrice.tariffs[0].flights[0].variants[0].segments);
-                    $session.cityF = $session.from4User;
-                    $session.cityT = $session.dest4User;
-                    $session.airportF = neededPrice.tariffs[0].flights[0].variants[0].segments[0].departureAirportCode;
-                    $session.fromTime = neededPrice.tariffs[0].flights[0].variants[0].segments[0].departureTime.time;
-                    $session.airportT = neededPrice.tariffs[0].flights[0].variants[0].segments[neededIndex].arrivalAirportCode;
+                    var neededIndex = getLastElInArray(neededResult.tariffs[0].flights[0].variants[0].segments);
+                    $session.airportF = neededResult.tariffs[0].flights[0].variants[0].segments[0].departureAirportCode;
+                    $session.fromTime = neededResult.tariffs[0].flights[0].variants[0].segments[0].departureTime.time;
+                    $session.airportT = neededResult.tariffs[0].flights[0].variants[0].segments[neededIndex].arrivalAirportCode;
                     $session.urlOzon = urlOzonAvia({from: $session.from, dest: $session.dest, date: $session.dates, passengers: $session.adults, direct: $session.direct, baggage: $session.baggage}, $session.yandex);
                     //ответ
                     if ($session.direct == true) {
@@ -71,19 +65,17 @@ theme: /aviaSearchFunc
                         // DEBUG
                         // $reactions.answer('from: ' + $session.from + ', dest: ' + $session.dest + ', date: ' + $session.dates + ', passengers: ' + $session.adults + ', direct: ' + $session.direct);
                         var result = aviaSearchPost({from: $session.from, dest: $session.dest, date: $session.dates, passengers: $session.adults}, $session.direct);
-                        $session.httpResponse = result.data;
-                        $session.httpStatus = result.status;
                         $session.urlOzon = urlOzonAvia({from: $session.from, dest: $session.dest, date: $session.dates, passengers: $session.adults, direct: $session.direct, baggage: $session.baggage}, $session.yandex);
                     } else {
                         $reactions.transition("/aviaSearchAns/aviaSearchError");
                     }
                     // проверяем, что есть ответ
-                    if (result.isOk && (!isArrayEmpty($session.httpResponse.tariffs)) && result.status >= 200 && result.status < 300) {
+                    if (result.isOk && (!isArrayEmpty(result.data.tariffs)) && result.status >= 200 && result.status < 300) {
 
                         var filterRes, tariffIndex, flightIndex, variantIndex;
                         // БАГАЖ и УТРО/ВЕЧЕР
                         if ($session.baggage && $session.dayTime) {
-                            filterRes = dayTimeBaggFilter($session.httpResponse);
+                            filterRes = dayTimeBaggFilter(result.data);
                             tariffIndex = filterRes.tariffIndex;
                             flightIndex = filterRes.flightIndex;
                             variantIndex = filterRes.variantIndex;
@@ -93,7 +85,7 @@ theme: /aviaSearchFunc
                         }
                         // БАГАЖ
                         else if ($session.baggage) {
-                            tariffIndex = baggageFilter($session.httpResponse);
+                            tariffIndex = baggageFilter(result.data);
                             flightIndex = 0;
                             variantIndex = 0;
                             if (tariffIndex == undefined) {
@@ -102,7 +94,7 @@ theme: /aviaSearchFunc
                         }
                         // УТРО ВЕЧЕР
                         else if ($session.dayTime) {
-                            filterRes = dayTimeFilter($session.httpResponse);
+                            filterRes = dayTimeFilter(result.data);
                             tariffIndex = filterRes.tariffIndex;
                             flightIndex = filterRes.flightIndex;
                             variantIndex = filterRes.variantIndex;
@@ -116,15 +108,13 @@ theme: /aviaSearchFunc
                             variantIndex = 0;
                         }
 
-                        if ($session.httpResponse.tariffs && $session.httpResponse.tariffs[tariffIndex] && $session.httpResponse.tariffs[tariffIndex].flights && $session.httpResponse.tariffs[tariffIndex].flights[flightIndex] && $session.httpResponse.tariffs[tariffIndex].flights[flightIndex].variants && $session.httpResponse.tariffs[tariffIndex].flights[flightIndex].variants[variantIndex]) {
+                        if (result.data.tariffs && result.data.tariffs[tariffIndex] && result.data.tariffs[tariffIndex].flights && result.data.tariffs[tariffIndex].flights[flightIndex] && result.data.tariffs[tariffIndex].flights[flightIndex].variants && result.data.tariffs[tariffIndex].flights[flightIndex].variants[variantIndex]) {
                             // записываем результат
-                            var segmentIndex = getLastElInArray($session.httpResponse.tariffs[tariffIndex].flights[flightIndex].variants[variantIndex].segments);
-                            $session.cityF = $session.from4User;
-                            $session.cityT = $session.dest4User;
-                            $session.prices = $session.httpResponse.tariffs[tariffIndex].price.rub;
-                            $session.airportF = $session.httpResponse.tariffs[tariffIndex].flights[flightIndex].variants[variantIndex].segments[0].departureAirportCode;
-                            $session.fromTime = $session.httpResponse.tariffs[tariffIndex].flights[flightIndex].variants[variantIndex].segments[0].departureTime.time;
-                            $session.airportT = $session.httpResponse.tariffs[tariffIndex].flights[flightIndex].variants[variantIndex].segments[segmentIndex].arrivalAirportCode;
+                            var segmentIndex = getLastElInArray(result.data.tariffs[tariffIndex].flights[flightIndex].variants[variantIndex].segments);
+                            $session.prices = result.data.tariffs[tariffIndex].price.rub;
+                            $session.airportF = result.data.tariffs[tariffIndex].flights[flightIndex].variants[variantIndex].segments[0].departureAirportCode;
+                            $session.fromTime = result.data.tariffs[tariffIndex].flights[flightIndex].variants[variantIndex].segments[0].departureTime.time;
+                            $session.airportT = result.data.tariffs[tariffIndex].flights[flightIndex].variants[variantIndex].segments[segmentIndex].arrivalAirportCode;
                             // ответ
                             if ($session.direct == true) {
                                 $reactions.transition("/aviaSearchAns/aviaDirectResults");
@@ -169,16 +159,14 @@ theme: /aviaSearchFunc
                     // проверяем, что топонимы не одинаковые
                     if ($session.from != $session.dest) {
                         var result = aviaSearchPost({from: $session.from, dest: $session.dest, dates1: $session.dates1, dates2: $session.dates2, passengers: $session.adults}, $session.direct);
-                        $session.httpResponse = result.data;
-                        $session.httpStatus = result.status;
                         $session.urlOzon = urlOzonAvia({from: $session.from, dest: $session.dest, dates1: $session.dates1, dates2: $session.dates2, passengers: $session.adults, direct: $session.direct, baggage: $session.baggage}, $session.yandex);
                         // проверяем, что есть ответ
-                        if (result.isOk && (!isArrayEmpty($session.httpResponse.tariffs)) && result.status >= 200 && result.status < 300) {
+                        if (result.isOk && (!isArrayEmpty(result.data.tariffs)) && result.status >= 200 && result.status < 300) {
 
                             // БАГАЖ
                             var filterRes, tariffIndex, flightIndex, variantIndex;
                             if ($session.baggage) {
-                                tariffIndex = baggageFilter($session.httpResponse);
+                                tariffIndex = baggageFilter(result.data);
                                 flightIndex = 0;
                                 variantIndex = 0;
                                 if (tariffIndex == undefined) {
@@ -191,17 +179,15 @@ theme: /aviaSearchFunc
                                 variantIndex = 0;
                             }
 
-                            if ($session.httpResponse.tariffs && $session.httpResponse.tariffs[tariffIndex] && $session.httpResponse.tariffs[tariffIndex].flights && $session.httpResponse.tariffs[tariffIndex].flights[flightIndex] && $session.httpResponse.tariffs[tariffIndex].flights[flightIndex].variants && $session.httpResponse.tariffs[tariffIndex].flights[flightIndex].variants[variantIndex]) {
+                            if (result.data.tariffs && result.data.tariffs[tariffIndex] && result.data.tariffs[tariffIndex].flights && result.data.tariffs[tariffIndex].flights[flightIndex] && result.data.tariffs[tariffIndex].flights[flightIndex].variants && result.data.tariffs[tariffIndex].flights[flightIndex].variants[variantIndex]) {
 
                                 // ищем пункты прибытия в пересадках
-                                var segmentIndex = getLastElInArray($session.httpResponse.tariffs[tariffIndex].flights[flightIndex].variants[variantIndex].segments);
-                                $session.cityF = $session.from4User;
-                                $session.cityT = $session.dest4User;
-                                $session.prices = $session.httpResponse.tariffs[tariffIndex].price.rub;
-                                $session.airportF = $session.httpResponse.tariffs[tariffIndex].flights[flightIndex].variants[variantIndex].segments[0].departureAirportCode;
-                                $session.fromTime1 = $session.httpResponse.tariffs[tariffIndex].flights[flightIndex].variants[variantIndex].segments[0].departureTime.time;
-                                $session.fromTime2 = $session.httpResponse.tariffs[tariffIndex].flights[1].variants[variantIndex].segments[0].departureTime.time;
-                                $session.airportT = $session.httpResponse.tariffs[tariffIndex].flights[flightIndex].variants[variantIndex].segments[segmentIndex].arrivalAirportCode;
+                                var segmentIndex = getLastElInArray(result.data.tariffs[tariffIndex].flights[flightIndex].variants[variantIndex].segments);
+                                $session.prices = result.data.tariffs[tariffIndex].price.rub;
+                                $session.airportF = result.data.tariffs[tariffIndex].flights[flightIndex].variants[variantIndex].segments[0].departureAirportCode;
+                                $session.fromTime1 = result.data.tariffs[tariffIndex].flights[flightIndex].variants[variantIndex].segments[0].departureTime.time;
+                                $session.fromTime2 = result.data.tariffs[tariffIndex].flights[1].variants[variantIndex].segments[0].departureTime.time;
+                                $session.airportT = result.data.tariffs[tariffIndex].flights[flightIndex].variants[variantIndex].segments[segmentIndex].arrivalAirportCode;
 
                                 // ответ
                                 if ($session.direct == true) {
@@ -211,12 +197,12 @@ theme: /aviaSearchFunc
                                 }
 
                             } else {
-                                //$reactions.answer('не $session.httpResponse.tariffs && $session.httpResponse.tariffs[tariffIndex] && $session.httpResponse.tariffs[tariffIndex].flights && $session.httpResponse.tariffs[tariffIndex].flights[flightIndex] && $session.httpResponse.tariffs[tariffIndex].flights[flightIndex].variants && $session.httpResponse.tariffs[tariffIndex].flights[flightIndex].variants[variantIndex]');
+                                //$reactions.answer('не result.data.tariffs && result.data.tariffs[tariffIndex] && result.data.tariffs[tariffIndex].flights && result.data.tariffs[tariffIndex].flights[flightIndex] && result.data.tariffs[tariffIndex].flights[flightIndex].variants && result.data.tariffs[tariffIndex].flights[flightIndex].variants[variantIndex]');
                                 $reactions.transition("/aviaSearchAns/aviaSearchError");
                             }
 
                         } else {
-                            //$reactions.answer('не result.isOk && (!isArrayEmpty($session.httpResponse.tariffs)) && result.status >= 200 && result.status < 300');
+                            //$reactions.answer('не result.isOk && (!isArrayEmpty(result.data.tariffs)) && result.status >= 200 && result.status < 300');
                             $reactions.transition("/aviaSearchAns/aviaSearchError");
                         }
                     } else {
@@ -238,11 +224,11 @@ theme: /aviaSearchFunc
             }
             if ($parseTree._fromCode) {
                $session.from = $parseTree._fromCode.airport;
-               $session.from4User = $parseTree._fromCode.name;
+               $session.cityF = $parseTree._fromCode.name;
             }
             if ($parseTree._destCode) {
                 $session.dest = $parseTree._destCode.airport;
-                $session.dest4User = $parseTree._destCode.name;
+                $session.cityT = $parseTree._destCode.name;
             }
             if ($parseTree._dateDig) {
                 $session.dates = catchDate($parseTree._dateDig);
@@ -357,15 +343,11 @@ theme: /aviaSearchFunc
             $session.dates2 = undefined;
             $session.dayTime = undefined;
             $session.dest = undefined;
-            $session.dest4User = undefined;
             $session.direct = undefined;
             $session.endOfMonth = undefined;
             $session.from = undefined;
-            $session.from4User = undefined;
             $session.fromTime1 = undefined;
             $session.fromTime2 = undefined;
-            $session.httpResponse = undefined;
-            $session.httpStatus = undefined;
             $session.month = undefined;
             $session.monthCheapest = undefined;
             $session.otherCalendarOpt = undefined;

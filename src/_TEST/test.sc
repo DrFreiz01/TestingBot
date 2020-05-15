@@ -111,55 +111,6 @@ theme: /test
                 a: у нас нет $session.call_external_callback
 
 
-    state: testApiQuery
-        q!: testApiQuery
-        script:
-            var headers = {
-            };
-            var result = $http.query("http://algvil.ru/test_json1.php", {
-                method: "GET",
-                headers: headers,
-                query: $session,
-                dataType: "json",
-                timeout: 0 || 10000
-            });
-            $temp.httpResponse = result.data;
-            $session.httpStatus = result.status;
-            $session.httpResponse = $temp.httpResponse;
-            if (result && result.status >= 200 && result.status < 300) {
-                $reactions.answer($temp.httpResponse);
-            } else {
-                $reactions.answer("Oops");
-                toPrettyString($parseTree);
-            }
-
-
-    state: testApiQueryWithVar
-        q!: testApiQuery $testApi
-        script:
-            var part = $parseTree._testApi;
-            var url = 'http://algvil.ru/test_' + part + '.php';
-            var
-            headers = {
-            };
-            var result = $http.query(url, {
-                method: "c",
-                headers: headers,
-                query: $session,
-                dataType: "json",
-                timeout: 0 || 10000
-            });
-            $temp.httpResponse = result.data;
-            $session.httpStatus = result.status;
-            $session.httpResponse = $temp.httpResponse;
-            if (result && result.status >= 200 && result.status < 300) {
-                $reactions.answer($temp.httpResponse);
-            } else {
-                $reactions.answer("Oops");
-                $reactions.answer(toPrettyString($parseTree));
-            }
-
-
 
     state: testLibNames
         q!: testLibNames $namesRus
@@ -312,15 +263,13 @@ theme: /test
                 timeout: 0 || 10000
             });
             $temp.httpResponse = result.data;
-            $session.httpStatus = result.status;
-            $session.httpResponse = $temp.httpResponse;
             if (result.isOk && result.status >= 200 && result.status < 300) {
                 $reactions.transition('/test/testRailwaySuggestion/ans');
             } else {
                 $reactions.answer('🤷‍♀️');
             }
         state: ans
-            a: {{toPrettyString($session.httpResponse.locations[0].code)}}
+            a: {{toPrettyString($temp.httpResponse.locations[0].code)}}
 
 
 
@@ -476,16 +425,14 @@ theme: /test
 
                 if ($session.from != $session.dest) {
                     var result = calendarSearchPost({from: $session.from, dest: $session.dest, passengers: $session.adults});
-                    $session.httpResponse = result.data;
-                    $session.httpStatus = result.status;
                     //проверяем, что есть ответ
-                    if (result.isOk && (!isArrayEmpty($session.httpResponse.prices)) && result.status >= 200 && result.status < 300) {
+                    if (result.isOk && (!isArrayEmpty(result.data.prices)) && result.status >= 200 && result.status < 300) {
                         $session.calendarList = [];
                         //проходим по календарю цен и собираем минимальные
-                        for (var i = 0; i < $session.httpResponse.prices.length; i++) {
-                            if ($session.httpResponse.prices[i].hasOwnProperty('isMin')) {
-                                var minPrice = $session.httpResponse.prices[i].price;
-                                var date = $session.httpResponse.prices[i].date;
+                        for (var i = 0; i < result.data.prices.length; i++) {
+                            if (result.data.prices[i].hasOwnProperty('isMin')) {
+                                var minPrice = result.data.prices[i].price;
+                                var date = result.data.prices[i].date;
                                 var date4user = getDate4User(date);
                                 $session.calendarList.push({'minprice': minPrice, 'date': date, 'date4user': date4user});
                             }
