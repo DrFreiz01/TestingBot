@@ -152,6 +152,10 @@ theme: /
     state: restartAns
         q!: start
         a: session restarted
+        
+    state: testRegex
+        q!: testRegex ($depCode/$arrCode)
+        a: {{toPrettyString($parseTree)}}
 
 
 
