@@ -46,10 +46,10 @@ theme: /
         state: GetVariant
             a: Какой из вариантов вы хотите выбрать: {{ $session.varchoice }} ?
             a: Паттерн для обработки {{ $session.varpat }}
+            patterns: $test = {{ $session.varpat }}
             
             state:
-                a: {{ $session.varpat }}
-                # q: * {{ $session.varpat }}  *
+                q: * $test  *
                 script:
                 a: Вы сказали  {{$request.query}}
                 
