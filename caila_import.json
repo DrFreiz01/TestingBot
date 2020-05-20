@@ -1,7 +1,7 @@
 {
   "project" : {
-    "id" : "ozontravelproject-118460027-Zxl",
-    "name" : "ozontravelproject-118460027-Zxl",
+    "id" : "bot_test_order-249193874-Lrb",
+    "name" : "bot_test_order-249193874-Lrb",
     "folder" : "/"
   },
   "settings" : {
@@ -11,14 +11,97 @@
     "timezone" : "UTC",
     "shared" : false
   },
-  "intents" : [ ],
-  "entities" : [ ],
+  "intents" : [
+    {
+      "id" : 12866,
+      "path" : "/service",
+      "enabled" : true,
+      "shared" : false,
+      "phrases" : [
+        {
+          "text" : "$service"
+        }
+      ],
+      "patterns" : [ ]
+    },
+    {
+      "id" : 12847,
+      "path" : "/пока",
+      "enabled" : true,
+      "shared" : false,
+      "phrases" : [
+        {
+          "text" : "пока"
+        }
+      ]
+    },
+    {
+      "id" : 12848,
+      "path" : "/привет",
+      "enabled" : true,
+      "shared" : false,
+      "phrases" : [
+        {
+          "text" : "привет"
+        }
+      ]
+    }
+  ],
+  "entities" : [
+    {
+      "entity" : {
+        "id" : 8598,
+        "name" : "service",
+        "enabled" : true,
+        "shared" : false,
+        "type" : "annotation",
+        "priority" : 1,
+        "noSpelling" : false,
+        "noMorph" : false
+      },
+      "records" : [
+        {
+          "id" : 328688,
+          "type" : "synonyms",
+          "rule" : [
+            "Маргарита"
+          ],
+          "value" : "{\n  \"title\": \"Маргарита\",\n  \"variations\": [\n    {\n      \"id\": 1,\n      \"name\": \"Большая на тонком тесте\",\n      \"price\": 299\n    },\n    {\n      \"id\": 2,\n      \"name\": \"Большая на толстом тесте\",\n      \"price\": 399\n    },\n    {\n      \"id\": 3,\n      \"name\": \"Маленькая на тонком тесте\",\n      \"price\": 199\n    },\n    {\n      \"id\": 4,\n      \"name\": \"Маленькая на толстом тесте\",\n      \"price\": 249\n    }\n  ]\n}"
+        },
+        {
+          "id" : 328689,
+          "type" : "synonyms",
+          "rule" : [
+            "Пепперони"
+          ],
+          "value" : "{\n  \"title\": \"Пепперони\",\n  \"variations\": [\n    {\n      \"id\": 5,\n      \"name\": \"Большая на тонком тесте\",\n      \"price\": 399\n    },\n    {\n      \"id\": 6,\n      \"name\": \"Большая на толстом тесте\",\n      \"price\": 499\n    },\n    {\n      \"id\": 7,\n      \"name\": \"Маленькая на тонком тесте\",\n      \"price\": 299\n    },\n    {\n      \"id\": 8,\n      \"name\": \"Маленькая на толстом тесте\",\n      \"price\": 349\n    }\n  ]\n}"
+        },
+        {
+          "id" : 328690,
+          "type" : "synonyms",
+          "rule" : [
+            "С грибами"
+          ],
+          "value" : "{\n  \"title\": \"С грибами\",\n  \"variations\": [\n    {\n      \"id\": 9,\n      \"name\": \"Большая на тонком тесте\",\n      \"price\": 249\n    },\n    {\n      \"id\": 10,\n      \"name\": \"Большая на толстом тесте\",\n      \"price\": 349\n    },\n    {\n      \"id\": 11,\n      \"name\": \"Маленькая на тонком тесте\",\n      \"price\": 149\n    },\n    {\n      \"id\": 12,\n      \"name\": \"Маленькая на толстом тесте\",\n      \"price\": 209\n    }\n  ]\n}"
+        },
+        {
+          "id" : 328691,
+          "type" : "synonyms",
+          "rule" : [
+            "Четыре сыра"
+          ],
+          "value" : "{\n  \"title\": \"Четыре сыра\",\n  \"variations\": [\n    {\n      \"id\": 13,\n      \"name\": \"Большая на тонком тесте\",\n      \"price\": 399\n    },\n    {\n      \"id\": 14,\n      \"name\": \"Большая на толстом тесте\",\n      \"price\": 499\n    },\n    {\n      \"id\": 15,\n      \"name\": \"Маленькая на тонком тесте\",\n      \"price\": 399\n    },\n    {\n      \"id\": 16,\n      \"name\": \"Маленькая на толстом тесте\",\n      \"price\": 449\n    }\n  ]\n}"
+        }
+      ]
+    }
+  ],
   "enabledSystemEntities" : [
     "duckling.number",
     "duckling.time",
     "duckling.duration",
     "duckling.phone-number",
     "duckling.email",
-    "duckling.url"
+    "duckling.url",
+    "pymorphy.geox"
   ]
 }
