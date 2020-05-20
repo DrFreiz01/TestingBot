@@ -1,8 +1,5 @@
 require: slotfilling/slotFilling.sc
     module = sys.zb-common
-    
-patterns:
-    $test
 
 theme: /
 
