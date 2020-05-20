@@ -1,5 +1,8 @@
 require: slotfilling/slotFilling.sc
     module = sys.zb-common
+    
+patterns:
+    $test
 
 theme: /
 
@@ -45,8 +48,7 @@ theme: /
 
         state: GetVariant
             a: Какой из вариантов вы хотите выбрать: {{ $session.varchoice }} ?
-            a: Паттерн для обработки {{ $session.varpat }}
-            patterns: $test = {{ $session.varpat }}
+            a: Паттерн для обработки {{ $session.varpat }} 
             
             state:
                 q: * $test  *
