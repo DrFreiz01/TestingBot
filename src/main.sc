@@ -48,7 +48,7 @@ theme: /
             a: Паттерн для обработки {{ $session.varpat }} 
             
             state:
-                q: * $test  *
+                q: * 
                 script:
                 a: Вы сказали  {{$request.query}}
                 
