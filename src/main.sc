@@ -2,6 +2,8 @@ theme: /
 
     state: Start
         q!: * *statr
-        a: Добрый день!
-        
+        random:
+            a: И тебе привет!
+            a: Здрасте!
+            a: Привет
     
