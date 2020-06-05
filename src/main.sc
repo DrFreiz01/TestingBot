@@ -1,7 +1,7 @@
 theme: /
 
     state: Start
-        q!: * *statr
+        q!: * *start
         random:
             a: И тебе привет!
             a: Здрасте!
