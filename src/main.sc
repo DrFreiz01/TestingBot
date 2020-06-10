@@ -1,9 +1,9 @@
 theme: /
 
     state: Test
-        intent!: /Тест
+        intent!: /Yes
         a: kdjhgdfkjghfdkjghfdjkghd
         
     state: tyu
-        q!: asd
+        q!: *
         a: fuckyou
