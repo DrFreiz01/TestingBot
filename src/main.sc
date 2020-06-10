@@ -5,5 +5,5 @@ theme: /
         a: kdjhgdfkjghfdkjghfdjkghd
         
     state: tyu
-        q!: *
+        q!: asd
         a: fuckyou
