@@ -2,32 +2,92 @@
   "positions" : [ {
     "id" : "/Start",
     "name" : "1",
-    "actionTitles" : [ null, null ],
-    "x" : 200,
-    "y" : 496
-  }, {
-    "id" : "/Start/GetCity",
-    "name" : "2",
     "actionTitles" : [ null ],
-    "x" : 736,
-    "y" : 546
+    "x" : 249,
+    "y" : 244
   }, {
-    "id" : "/Start/GetCity/1",
+    "id" : "/Start/Start$IF-1$0",
+    "name" : "2",
+    "actionTitles" : [ null, null ],
+    "x" : 647,
+    "y" : 152
+  }, {
+    "id" : "/Start/Start$IF-1$ELSE",
     "name" : "3",
     "actionTitles" : [ null ],
-    "x" : 1272,
-    "y" : 521
+    "x" : 647,
+    "y" : 337
   }, {
-    "id" : "/Start/GetCity/2",
+    "id" : "/Start/GetName",
     "name" : "4",
-    "actionTitles" : [ null ],
-    "x" : 200,
-    "y" : 348
+    "actionTitles" : [ ],
+    "x" : 1045,
+    "y" : 152
   }, {
-    "id" : "/1",
+    "id" : "/Start/GetName/1",
     "name" : "5",
+    "actionTitles" : [ null, null, null ],
+    "x" : 249,
+    "y" : 549
+  }, {
+    "id" : "/Start/GetName/2",
+    "name" : "6",
+    "actionTitles" : [ null, null, null ],
+    "x" : 249,
+    "y" : 837
+  }, {
+    "id" : "/Choose_game",
+    "name" : "7",
     "actionTitles" : [ null ],
-    "x" : 200,
-    "y" : 200
+    "x" : 249,
+    "y" : 1064
+  }, {
+    "id" : "/Choose_game/CitiesGame",
+    "name" : "8",
+    "actionTitles" : [ null ],
+    "x" : 249,
+    "y" : 1231
+  }, {
+    "id" : "/Choose_game/CowsGame",
+    "name" : "9",
+    "actionTitles" : [ null ],
+    "x" : 249,
+    "y" : 1641
+  }, {
+    "id" : "/Choose_game/TellMore",
+    "name" : "10",
+    "actionTitles" : [ null ],
+    "x" : 249,
+    "y" : 1808
+  }, {
+    "id" : "/Play",
+    "name" : "11",
+    "actionTitles" : [ null, null, null ],
+    "x" : 249,
+    "y" : 1436
+  }, {
+    "id" : "/Play/Cities",
+    "name" : "12",
+    "actionTitles" : [ ],
+    "x" : 249,
+    "y" : 1955
+  }, {
+    "id" : "/CityPattern",
+    "name" : "13",
+    "actionTitles" : [ null ],
+    "x" : 249,
+    "y" : 2125
+  }, {
+    "id" : "/NoMatch",
+    "name" : "14",
+    "actionTitles" : [ null ],
+    "x" : 249,
+    "y" : 2336
+  }, {
+    "id" : "/reset",
+    "name" : "15",
+    "actionTitles" : [ null, null ],
+    "x" : 249,
+    "y" : 2566
   } ]
 }
