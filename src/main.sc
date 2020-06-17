@@ -7,8 +7,8 @@ theme: /
     state: tyu
         q!: asd
         script:
-        var lat_test = "59.934280";
-        var lon_test = "30.335099";
+            var lat_test = "59.934280";
+            var lon_test = "30.335099";
             var reply2 = {
                 "type": "location",   
                 "lat": lat_test,     
