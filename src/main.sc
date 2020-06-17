@@ -13,6 +13,6 @@ theme: /
                 "lon": 30.335099      
             };
 
-            $reactions.answer(JSON.stringify(reply1));
+            $reactions.answer(JSON.stringify(reply2));
             
         a: {{ session.reply2 }}
