@@ -11,8 +11,8 @@ theme: /
             var lon_test = "30.335099";
             var reply2 = {
                 "type": "location",   
-                "lat": lat_test,     
-                "lon": lon_test      
+                "lat": Number(lat_test),     
+                "lon": Number(lon_test)      
             };
 
             $reactions.answer(JSON.stringify(reply2));
