@@ -5,5 +5,14 @@ theme: /
         a: kdjhgdfkjghfdkjghfdjkghd
         
     state: tyu
-        q!: *
-        a: fuckyou
+        q!: asd
+        script:
+            var reply2 = {
+                "type": "location",   
+                "lat": 59.934280,     
+                "lon": 30.335099      
+            };
+
+            $reactions.answer(JSON.stringify(reply1));
+            
+        a: {{ session.reply2 }}
