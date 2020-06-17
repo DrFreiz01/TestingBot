@@ -14,5 +14,4 @@ theme: /
             };
 
             $reactions.answer(JSON.stringify(reply2));
-            
-        a: {{ $session.reply2 }}
+            $response.replies.push(reply2);
